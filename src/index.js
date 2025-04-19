@@ -1,12 +1,11 @@
-// 1. Instrumentación y entorno
 require('./instrument.js');
 require('dotenv').config();
+const ping = require('./commands/ping.js')
+// wait, check the commands loop
 
-// 2. Sentry (captura errores globales)
 const Sentry = require('@sentry/node');
 Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1.0 });
 
-// 3. Servidor HTTP (para keep-alive en Fly.io)
 const { createServer } = require('node:http');
 const server = createServer((req, res) => res.end('OK'));
 server.listen(3000, '0.0.0.0'); // NO NECESITAS USAR 0.0.0.0
@@ -26,15 +25,11 @@ const client = new Client({
 const gemini = new GoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
 client.gemini = gemini;    // Lo pasamos a comandos/eventos si es necesario
 
-// 5. Carga dinámica de comandos
 const fs = require('fs');
-client.commands = new Map();
-for (const file of fs.readdirSync('./src/commands').filter(f => f.endsWith('.js'))) {
-  const cmd = require(`./commands/${file}`);
-  client.commands.set(cmd.name, cmd);
-}
 
-// 6. Carga dinámica de eventos
+// COMMANDS // DEJALO ASI
+ping; // OK 
+
 for (const file of fs.readdirSync('./src/events').filter(f => f.endsWith('.js'))) {
   const event = require(`./events/${file}`);
   if (event.once) client.once(event.name, (...args) => event.execute(...args, client));
@@ -44,6 +39,8 @@ for (const file of fs.readdirSync('./src/events').filter(f => f.endsWith('.js'))
 client.login(process.env.DISCORD_TOKEN);
 
 
+client.on('ready', () => {
+  console.log('Boombarden  Peruuuuuuuu     <>')
+})
 
-
-
+/// How do we check if the thing is working ? 

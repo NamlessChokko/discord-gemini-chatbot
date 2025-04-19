@@ -7,7 +7,7 @@
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org osmaoficial0gmailcom --project discord-gemini-bot ./src && sentry-cli sourcemaps upload --org osmaoficial0gmailcom --project discord-gemini-bot ./src"
   },
   "keywords": [],
-  "author": "",
+  "author": "spectre and Mr skill issues",
   "license": "ISC",
   "description": "",
   "dependencies": {
