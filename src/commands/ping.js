@@ -1,5 +1,3 @@
-const { Client } = require('discord.js');
-
 function ping(client) {
     client.on('messageCreate', async (message) => {
         try {
