@@ -19,9 +19,3 @@ const gemini = new GoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
 
 
 
-const Sentry = require("@sentry/node");
-try {
-  foo();
-} catch (e) {
-  Sentry.captureException(e);
-}
