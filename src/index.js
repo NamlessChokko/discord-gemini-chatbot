@@ -19,8 +19,3 @@ const gemini = new GoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
 
 
 
-try {
-  throw new Error('Esto es un error capturado');
-} catch (e) {
-  Sentry.captureException(e);
-}
