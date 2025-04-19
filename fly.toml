@@ -10,10 +10,6 @@ kill_signal = 'SIGINT'
 [build]
   dockerfile = 'Dockerfile'
 
-[env]
-  DISCORD_TOKEN = '${DISCORD_TOKEN}'
-  GEMINI_API_KEY = '${GEMINI_API_KEY}'
-
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
