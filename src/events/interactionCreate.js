@@ -9,7 +9,7 @@ module.exports = {
     } catch (err) {
         Sentry.captureException(err);
         console.error(err);
-        await interaction.reply({ content: '¡Error al ejecutar el comando!', ephemeral: true });
+        await interaction.reply({ content: 'Error executing the command!', ephemeral: true });
         }
     },
 };

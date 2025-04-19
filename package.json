@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "spectre and Mr skill issues",
   "license": "ISC",
-  "description": "",
+  "description": "A discord bot that use the Gemini api (kinda chatbot)",
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
     "@sentry/cli": "^2.43.0",
