@@ -5,7 +5,7 @@ function ping(client) {
         try {
             if (message.author.bot) return;
 
-            if (message.content.toLowerCase() === 'G ping') {
+            if (message.content.toLowerCase() === 'g ping') {
                 message.reply('Pong');
                 console.log('The word "ping" was read correctly');
             }
