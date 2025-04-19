@@ -1,21 +1,45 @@
-require("./instrument.js");
+// 1. Instrumentación y entorno
+require('./instrument.js');
 require('dotenv').config();
 
-// All other imports below
-const { createServer } = require("node:http");
+// 2. Sentry (captura errores globales)
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1.0 });
 
-const server = createServer((req, res) => {
-    // server code
-});
+// 3. Servidor HTTP (para keep-alive en Fly.io)
+const { createServer } = require('node:http');
+const server = createServer((req, res) => res.end('OK'));
+server.listen(3000, '0.0.0.0');
 
-server.listen(3000, "127.0.0.1");
-
-
-const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages ] });
+// 4. Cliente de Discord y Gemini
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.DirectMessages,
+  ],
+  partials: [Partials.Channel],
+});
 const gemini = new GoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
+client.gemini = gemini;    // Lo pasamos a comandos/eventos si es necesario
 
+// 5. Carga dinámica de comandos
+const fs = require('fs');
+client.commands = new Map();
+for (const file of fs.readdirSync('./src/commands').filter(f => f.endsWith('.js'))) {
+  const cmd = require(`./commands/${file}`);
+  client.commands.set(cmd.name, cmd);
+}
 
+// 6. Carga dinámica de eventos
+for (const file of fs.readdirSync('./src/events').filter(f => f.endsWith('.js'))) {
+  const event = require(`./events/${file}`);
+  if (event.once) client.once(event.name, (...args) => event.execute(...args, client));
+  else client.on(event.name, (...args) => event.execute(...args, client));
+}
 
+// 7. Login
+client.login(process.env.DISCORD_TOKEN);
