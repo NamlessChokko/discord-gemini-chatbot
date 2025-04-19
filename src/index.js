@@ -9,7 +9,7 @@ Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1.0 });
 // 3. Servidor HTTP (para keep-alive en Fly.io)
 const { createServer } = require('node:http');
 const server = createServer((req, res) => res.end('OK'));
-server.listen(3000, '0.0.0.0');
+server.listen(3000, '0.0.0.0'); // NO NECESITAS USAR 0.0.0.0
 
 // 4. Cliente de Discord y Gemini
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
@@ -41,5 +41,9 @@ for (const file of fs.readdirSync('./src/events').filter(f => f.endsWith('.js'))
   else client.on(event.name, (...args) => event.execute(...args, client));
 }
 
-// 7. Login
 client.login(process.env.DISCORD_TOKEN);
+
+
+
+
+
