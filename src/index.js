@@ -1,4 +1,4 @@
-require("./instrument.js");
+require("..instrument.js");
 require('dotenv').config();
 
 // All other imports below
