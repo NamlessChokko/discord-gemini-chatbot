@@ -6,9 +6,6 @@ module.exports = {
         // DM
         if (message.channel.type === 1) { // DM = 1
             try {
-                // const model = client.gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
-                // const result = await model.generateContent(message.content);
-
                 const response = await client.gemini.models.generateContent({
                     model: "gemini-2.0-flash",
                     contents: message.content,
@@ -29,13 +26,13 @@ module.exports = {
             if (content.length === 0) return message.reply('Did you call me? Use `!help` if you need anything');
 
             try {
-                // const model = client.gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
-                // const result = await model.generateContent(content);
-
-                
                 const response = await client.gemini.models.generateContent({
                     model: "gemini-2.0-flash",
                     contents: message.content,
+                    temperature: 2.0,
+                    config: {
+                        systemInstruction: "You are a discord chatbot called Gemini because you use Gemini 2.0 flash API. Your messages have to be less than 2000 chars long.",
+                    },
                 });
             
                 return message.reply(response.text);
