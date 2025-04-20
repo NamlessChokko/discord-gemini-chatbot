@@ -38,7 +38,7 @@ module.exports = {
                     contents: message.content,
                 });
             
-                return message.channel.send(response.text);
+                return message.reply(response.text);
             } catch (err) {
                 const currentTime = new Date().toLocaleTimeString();
                 console.log('At: ', currentTime);
