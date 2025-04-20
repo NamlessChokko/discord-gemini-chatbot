@@ -4,7 +4,7 @@
 #
 
 app = 'discord-gemini-bot'
-primary_region = 'dfw'
+primary_region = 'mia'
 kill_signal = 'SIGINT'
 
 [build]
