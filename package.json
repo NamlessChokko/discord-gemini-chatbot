@@ -1,7 +1,7 @@
 {
   "name": "discord-gemini-chatbot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org osmaoficial0gmailcom --project discord-gemini-bot ./src && sentry-cli sourcemaps upload --org osmaoficial0gmailcom --project discord-gemini-bot ./src"
