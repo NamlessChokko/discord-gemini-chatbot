@@ -2,9 +2,9 @@ const {SlashCommandBuilder} = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('echo')
-		.setDescription('Repeat what you just say'),
+		.setName('help')
+		.setDescription('Show information about how to use'),
 	async execute(interaction) {
-		await interaction.reply(message);
+		await interaction.reply('This feature is under developing');
 	},
 };
