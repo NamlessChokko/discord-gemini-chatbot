@@ -1,47 +1,54 @@
 module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
-        if (message.author.bot) return; // No bots can call Gemini
+        if (message.author.bot) return;
 
-        // DM
-        if (message.channel.type === 1) { // DM = 1
-            try {
-                const response = await client.gemini.models.generateContent({
-                    model: "gemini-2.0-flash",
-                    contents: message.content,
-                });
-            
-                return message.channel.send(response.text);
-            } catch (error) {
-                const currentTime = new Date().toLocaleTimeString();
-                console.log('At: ', currentTime);
-                console.error('Error in DM: ', error);
-                return message.channel.send('Sorry, I can\'t  talk right now...');
-            }
-        }
+        const currentTime = new Date().toLocaleTimeString();
+        const authorName = message.author.globalName;
+        const content = message.content.replace(`<@${client.user.id}>`, '').trim();
 
-        // Mention
-        if (message.mentions.has(client.user)) {
-            const content = message.content.replace(`<@${client.user.id}>`, '').trim();
-            if (content.length === 0) return message.reply('Did you call me? Use `!help` if you need anything');
+        const systemInstructions = [
+            "YOUR ROLE: You are a discord chatbot",
+            "You are called Gemini",
+            "You use Gemini 2.0 flash API.",
+            "Your responses should be as neutral and informative as possible but if you detect a joking tone in a message, you can answer with a funny tone",
+            "Some users will prompt in other languages, but you have to answer always in english",
+            "If a user start its prompt with 'DEBUG' or 'DEV' you have to send exactly what the user is asking you. No jokes, just the petition.",
+            "LIMITATION: Your messages have to be less than 2000 chars long because of the discord limits.",
+            `EXTRA INFORMATION: Current time is: ${currentTime}`,
+            `User to respond: ${authorName}`
+        ];
 
-            try {
-                const response = await client.gemini.models.generateContent({
-                    model: "gemini-2.0-flash",
-                    contents: message.content,
+        const generateResponse = async () => {
+            return await client.gemini.models.generateContent({
+                model: "gemini-2.0-flash",
+                contents: message.content,
+                config: {
                     temperature: 2.0,
-                    config: {
-                        systemInstruction: "You are a discord chatbot called Gemini because you use Gemini 2.0 flash API. Your messages have to be less than 2000 chars long.",
-                    },
-                });
-            
+                    maxOutputTokens: 499,
+                    systemInstruction: systemInstructions,
+                },
+            });
+        };
+
+        try {
+            if (message.channel.type === 1) {
+                const response = await generateResponse();
+                console.log('New DM interaction at:', currentTime, '\nMessage content:', content);
                 return message.reply(response.text);
-            } catch (err) {
-                const currentTime = new Date().toLocaleTimeString();
-                console.log('At: ', currentTime);
-                console.error('Error in mention: ', err);
-                return message.reply('Sorry, I can\'t talk right now...');
             }
+
+            if (message.mentions.has(client.user)) {
+                if (content.length === 0) return message.reply('Did you call me? Use `!help` for more information!');
+                const response = await generateResponse();
+                console.log('New interaction in', message.guild.name, '-', message.channel.name, 'at:', currentTime, '\nMessage content:', content, 'by', authorName);
+                return message.reply(response.text);
+            }
+
+        } catch (error) {
+            console.log('At:', currentTime);
+            console.error('Error during Gemini interaction:', error);
+            return message.reply('Sorry, I can\'t talk right now...');
         }
     },
 };

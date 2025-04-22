@@ -1,15 +1,24 @@
 module.exports = {
     name: 'interactionCreate',
-    async execute(interaction, client) {
-    if (!interaction.isCommand()) return;
-    const cmd = client.commands.get(interaction.commandName);
-    if (!cmd) return;
-    try {
-        await cmd.execute(interaction, client);
-    } catch (err) {
-        Sentry.captureException(err);
-        console.error(err);
-        await interaction.reply({ content: 'Error executing the command!', ephemeral: true });
+    async execute(interaction) {
+        if (!interaction.isChatInputCommand()) return;
+
+        const command = interaction.client.commands.get(interaction.commandName);
+    
+        if (!command) {
+            console.error(`No command matching ${interaction.commandName} was found.`);
+            return;
+        }
+    
+        try {
+            await command.execute(interaction);
+        } catch (error) {
+            console.error(error);
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+            } else {
+                await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+            }
         }
     },
 };
