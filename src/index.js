@@ -7,11 +7,11 @@ Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1.0 });
 
 
 const { createServer } = require('node:http');
-const server = createServer((req, res) => res.end('OK'));
+const server = createServer((res) => res.end('OK'));
 server.listen(3000, '0.0.0.0');
 
 
-const { Client, GatewayIntentBits, Partials, Message, Collection } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, Partials } = require('discord.js');
 const { GoogleGenAI } = require ("@google/genai")
 
 
@@ -31,25 +31,27 @@ client.gemini = gemini;
 const fs = require('fs');
 
 
-
 // Getting commands:
 client.commands = new Collection();
-const commandFiles = fs.readdirSync('./src/commands').filter(f => f.endsWith('.js'));
+
+const path = require('path');
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
-  
   if ('data' in command && 'execute' in command) {
     client.commands.set(command.data.name, command);
   } else {
-    console.log(`[WARNING] The command at ${file} is missing a required "data" or "execute" property.`);
+    console.log(`[WARNING] ${file} expected 'data' & 'execute'`);
   }
 }
 
 
-
-
 // Getting Event: 
-const eventFiles = fs.readdirSync('./src/events').filter(f => f.endsWith('.js'));
+const eventPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventPath).filter(file => file.endsWith('.js'));
+
 for (const file of eventFiles) {
   const event = require(`./events/${file}`);
   if (event.once) {

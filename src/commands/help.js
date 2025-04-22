@@ -1,10 +1,32 @@
-const {SlashCommandBuilder} = require('discord.js'); 
+const { SlashCommandBuilder } = require('discord.js');
+
+const helpMessage = `
+**🤖 Gemini Chat Bot Help**
+
+Gemini is powered by Google's Gemini 2.0 Flash API, enabling natural conversations directly inside Discord.
+
+**🗨️ How to Use**
+- **Mention the bot**: Just mention \`@Gemini\` in any message and ask anything.
+- **Direct Messages**: You can chat with Gemini privately via DMs.
+- **Slash Commands**: Use slash commands like \`/code\`, \`/imagine\`, and more (coming soon).
+
+**📏 Limits**
+- Max response size: ~2000 characters.
+- Gemini API max tokens per response: **499 tokens**.
+
+**⚙️ Notes**
+- Answers are always in **English** regardless of the input.
+- If you joke, Gemini might joke back 😉
+
+Use \`@Gemini\` or try a command to begin!
+`;
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('Show information about how to use'),
+		.setDescription('Displays usage instructions and bot capabilities.'),
 	async execute(interaction) {
-		await interaction.reply('This feature is under developing');
+		
+		await interaction.reply(helpMessage);
 	},
 };
