@@ -8,7 +8,7 @@ Gemini is powered by Google's Gemini 2.0 Flash API, enabling natural conversatio
 **🗨️ How to Use**
 - **Mention the bot**: Just mention \`@Gemini\` in any message and ask anything.
 - **Direct Messages**: You can chat with Gemini privately via DMs.
-- **Slash Commands**: Use slash commands like \`/code\`, \`/imagine\`, and more (coming soon).
+- **Slash Commands**: Use slash commands like \`/code\`, \`/image\`, and more (coming soon).
 
 **📏 Limits**
 - Max response size: ~2000 characters.
