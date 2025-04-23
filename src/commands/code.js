@@ -23,7 +23,7 @@ module.exports = {
 				"If you want to let know something to the user use comments in the code",
 				"Some users will prompt in other languages, but you have to answer always in english",
 				`User to respond: ${interaction.user.username}`,
-				"Make sure to use markdown format",
+				"Don't use Markdown format",
 				"Try to be as neutral and formal as possible in your code unless user ask you for specific behavior",
 			];
 			
@@ -31,8 +31,7 @@ module.exports = {
 				const prompt = interaction.options.getString('prompt')
 				const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); 
 
-				const generateResponse = async () => {
-					return await gemini.models.generateContent({
+				const response = await gemini.models.generateContentStream({
 						model: "gemini-2.0-flash",
 						contents: prompt,
 						config: {
@@ -41,10 +40,22 @@ module.exports = {
 							systemInstruction: systemInstructions,
 						},
 					});
-				};
-				const response = await generateResponse();
+			
 
-				await interaction.editReply(response.text);
+				
+					let fullResponse = '';
+					for await (const chunk of response) {
+						if (chunk.text) {
+							fullResponse += chunk.text;
+							if (fullResponse.length > 1995) {
+								fullResponse = fullResponse.slice(0, 1995) + '...';
+								interaction.editReply("Sorry, the message is too long...");
+								break;
+							}
+							await interaction.editReply(fullResponse);
+						}
+					}
+					
 			}catch(error){
 				const currentTime = new Date().toLocaleTimeString();
 				console.log('At:', currentTime);
