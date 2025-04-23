@@ -1,68 +1,61 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { GoogleGenAI } = require ("@google/genai")
-
+const { GoogleGenAI } = require('@google/genai');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('code')
-		.setDescription('Generate a code ')
-        .addStringOption(option => (
-			option.setName('prompt')
-				.setDescription('What you want to code?')
-				.setRequired(true)
-		)),
-        async execute(interaction) {
-			await interaction.reply({content: 'Cooking...', withResponse: true})
-			
-			const systemInstructions = [
-				"YOUR ROLE: You are a discord bot code generator AI",
-				"You are called Gemini",
-				"You use Gemini 2.0 flash API",
-				"Users will ask you for codes",
-				"You have to anser with code",
-				"If you want to let know something to the user use comments in the code",
-				"Some users will prompt in other languages, but you have to answer always in english",
-				`User to respond: ${interaction.user.username}`,
-				"Don't use Markdown format",
-				"Try to be as neutral and formal as possible in your code unless user ask you for specific behavior",
-			];
-			
-			try {
-				const prompt = interaction.options.getString('prompt')
-				const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); 
+    data: new SlashCommandBuilder()
+        .setName('code')
+        .setDescription('Generate code based on your prompt')
+        .addStringOption(option =>
+            option.setName('prompt')
+                .setDescription('Describe what kind of code you need')
+                .setRequired(true)
+        ),
 
-				const response = await gemini.models.generateContentStream({
-						model: "gemini-2.0-flash",
-						contents: prompt,
-						config: {
-							temperature: 2.0,
-							maxOutputTokens: 499,
-							systemInstruction: systemInstructions,
-						},
-					});
-			
+    async execute(interaction) {
+        await interaction.reply({ content: 'Generating code...', fetchReply: true });
 
-				
-					let fullResponse = '';
-					for await (const chunk of response) {
-						if (chunk.text) {
-							fullResponse += chunk.text;
-							if (fullResponse.length > 1995) {
-								fullResponse = fullResponse.slice(0, 1995) + '...';
-								interaction.editReply("Sorry, the message is too long...");
-								break;
-							}
-							await interaction.editReply(fullResponse);
-						}
-					}
-					
-			}catch(error){
-				const currentTime = new Date().toLocaleTimeString();
-				console.log('At:', currentTime);
-				console.error('Error during Gemini interaction:', error);
-				await interaction.editReply('Sorry, I can\'t talk right now...');
-			}
+        const contextInstructions = [
+            "YOUR ROLE: You are a code generator bot for Discord.",
+            "Your name is Gemini.",
+            "You use the Gemini 2.0 Flash API.",
+            "Respond only with code unless context requires clarification.",
+            "Use comments inside code if you need to explain something.",
+            "Always respond in English, regardless of the prompt's language.",
+            `User to respond: ${interaction.user.username}`,
+            "Do not use Markdown formatting.",
+            "Maintain a formal and neutral tone unless otherwise requested.",
+        ];
 
-	},
+        try {
+            const prompt = interaction.options.getString('prompt');
+            const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+            const responseStream = await gemini.models.generateContentStream({
+                model: 'gemini-2.0-flash',
+                contents: prompt,
+                config: {
+                    temperature: 1.5,
+                    maxOutputTokens: 512,
+                    systemInstruction: contextInstructions,
+                },
+            });
+
+            let result = '';
+            for await (const chunk of responseStream) {
+                if (chunk.text) {
+                    result += chunk.text;
+                    if (result.length > 1995) {
+                        result = result.slice(0, 1995) + '...';
+                        break;
+                    }
+                    await interaction.editReply(result);
+                }
+            }
+
+        } catch (error) {
+            const currentTime = new Date().toLocaleTimeString();
+            console.error(`Error at ${currentTime}:`, error);
+            await interaction.editReply('Oops! Something went wrong while generating your code.');
+        }
+    },
 };
-
