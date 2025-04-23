@@ -1,5 +1,8 @@
 {
     "githubPullRequests.ignoredPullRequestBranches": [
         "master"
+    ],
+    "cSpell.words": [
+        "genai"
     ]
 }
