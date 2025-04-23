@@ -12,7 +12,7 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        await interaction.reply({ content: 'Generating code...', fetchReply: true });
+        await interaction.reply({ content: 'Generating code...', withReply: true });
 
         const contextInstructions = [
             "YOUR ROLE: You are a code generator bot for Discord.",
