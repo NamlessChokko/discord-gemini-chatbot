@@ -44,7 +44,7 @@ module.exports = {
                     if (chunk.text) {
                         fullResponse += chunk.text;
                         if (fullResponse.length > 1995) {
-                            fullResponse = fullResponse.slice(0, 1995) + '...';
+                            replyMessage.edit('Sorry, the message is too long...');
                             break;
                         }
                         await replyMessage.edit(fullResponse);
