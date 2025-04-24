@@ -2,7 +2,8 @@ module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
         if (message.author.bot) return;
-
+   if (!message.content || message.content.trim().length === 0) return;
+   if (message.voiceMessage) return;
         const currentTime = new Date().toLocaleTimeString();
         const authorName = message.author.globalName;
         const content = message.content.replace(`<@${client.user.id}>`, '').trim();
@@ -16,10 +17,15 @@ module.exports = {
             "If a user start its prompt with 'DEV' you have to send exactly what the user is asking you. No jokes, just the petition.",
             "LIMITATION: Your messages have to be less than 2000 chars long because of the discord limits.",
             `EXTRA INFORMATION: Current time is: ${currentTime}`,
-            `User to respond: ${authorName}`
+            `User to respond: ${authorName}`,
+            "DO NOT REPLY TO MEDIA IF THE USERS DONT MENTIONS U"
+
         ];
 
-        if (content.length === 0) return message.reply('Did you call me? Use `/help` for more information!');
+        if(message.mentions.has(client.user)) {
+            message.reply(`Hello! I am Gemini, your friendly AI assistant. How can I help you today?`);
+            message.react('👋');
+         }
 
         try {
             if (message.channel.type === 1 || message.mentions.has(client.user)) {
