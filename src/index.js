@@ -28,6 +28,7 @@ const client = new Client({
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 client.gemini = gemini;   
 
+
 const fs = require('fs');
 
 
