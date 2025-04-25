@@ -80,5 +80,4 @@ This project is licensed for educational and personal use. For any public deploy
 
 ---
 
-*Created with 💻 by NamlessChokko and Spectre*
-
+_Created with 💻 by NamlessChokko and Spectre_
