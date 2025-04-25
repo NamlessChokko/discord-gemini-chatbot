@@ -2,13 +2,14 @@ module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
         if (message.author.bot) return;
-   if (!message.content || message.content.trim().length === 0) return;
-   if (message.voiceMessage) return;
+        if (!message.content || message.content.trim().length === 0) return;
+        if (message.voiceMessage) return;
+        
         const currentTime = new Date().toLocaleTimeString();
         const authorName = message.author.globalName;
         const content = message.content.replace(`<@${client.user.id}>`, '').trim();
 
-        const systemInstructions = [
+        const systemInstruction = [
             "YOUR ROLE: You are a discord chatbot",
             "You are called Gemini",
             "You use Gemini 2.0 flash API",
@@ -18,14 +19,8 @@ module.exports = {
             "LIMITATION: Your messages have to be less than 2000 chars long because of the discord limits.",
             `EXTRA INFORMATION: Current time is: ${currentTime}`,
             `User to respond: ${authorName}`,
-            "DO NOT REPLY TO MEDIA IF THE USERS DONT MENTIONS U"
-
         ];
 
-        if(message.mentions.has(client.user)) {
-            message.reply(`Hello! I am Gemini, your friendly AI assistant. How can I help you today?`);
-            message.react('👋');
-         }
 
         try {
             if (message.channel.type === 1 || message.mentions.has(client.user)) {
@@ -35,16 +30,47 @@ module.exports = {
                     '\nMessage content:', content
                 );
 
-                const response = await client.gemini.models.generateContentStream({
-                    model: "gemini-2.0-flash",
-                    contents: message.content,
-                    config: {
-                        temperature: 2.0,
-                        maxOutputTokens: 499,
-                        systemInstruction: systemInstructions,
-                    },
-                });
 
+                const history = [];
+                let cursor = message;
+
+                while (cursor.reference) {
+                    const parent = await message.channel.messages.fetch(cursor.reference.messageId);
+                    const role = parent.author.id === client.user.id ? 'model' : 'user';
+                    history.unshift({
+                        role,
+                        parts: [{ text: parent.content }]
+                    });
+                    cursor = parent;
+                }
+
+                let chat
+                try{
+                        chat = await client.gemini.chats.create({
+                        model: "gemini-2.0-flash",
+                        config: {
+                            temperature: 1.5,
+                            maxOutputTokens: 499,
+                            systemInstruction: systemInstruction,
+                        },  
+                        history: history,
+                    }); 
+                } catch (error){
+                    console.error('Chat.sendMessage error:', error);
+                    console.log(history);
+                    return replyMessage.edit('Sorry, I can\'t talk right now...');
+                }
+
+
+                let response;
+                try {
+                    response = await chat.sendMessageStream({ message: content });
+                } catch (error) {
+                    console.error('Chat.sendMessage error:', error);
+                    return replyMessage.edit('Sorry, I can\'t talk right now...');
+                }
+                
+                
                 let fullResponse = '';
                 for await (const chunk of response) {
                     if (chunk.text) {
@@ -56,13 +82,13 @@ module.exports = {
                         await replyMessage.edit(fullResponse);
                     }
                 }
-
+                
                 return;
             }
         } catch (error) {
             console.log('At:', currentTime);
             console.error('Error during Gemini interaction:', error);
-            return message.reply('Sorry, I can\'t talk right now...');
+            return message.editReply('Sorry, I can\'t talk right now...');
         }
     },
 };

@@ -14,7 +14,7 @@ module.exports = {
     async execute(interaction) {
         await interaction.reply({ content: 'Generating code...', withReply: true });
 
-        const contextInstructions = [
+        const systemInstructions = [
             "YOUR ROLE: You are a code generator bot for Discord.",
             "Your name is Gemini.",
             "You use the Gemini 2.0 Flash API.",
@@ -35,8 +35,8 @@ module.exports = {
                 contents: prompt,
                 config: {
                     temperature: 1.5,
-                    maxOutputTokens: 512,
-                    systemInstruction: contextInstructions,
+                    maxOutputTokens: 499,
+                    systemInstruction: systemInstructions,
                 },
             });
 
