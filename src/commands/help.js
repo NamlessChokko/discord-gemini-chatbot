@@ -22,11 +22,10 @@ Use \`@Gemini\` or try a command to begin!
 `;
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('help')
-		.setDescription('Displays usage instructions and bot capabilities.'),
-	async execute(interaction) {
-		
-		await interaction.reply(helpMessage);
-	},
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Displays usage instructions and bot capabilities.'),
+    async execute(interaction) {
+        await interaction.reply(helpMessage);
+    },
 };
