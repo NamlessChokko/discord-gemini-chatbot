@@ -4,5 +4,9 @@
     ],
     "cSpell.words": [
         "genai"
-    ]
+    ],
+    
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    
 }
