@@ -10,7 +10,6 @@ module.exports = {
         if (message.voiceMessage) {
             return;
         }
-
         if (
             !message.channel.isDMBased() ||
             !message.mentions.has(client.user)
