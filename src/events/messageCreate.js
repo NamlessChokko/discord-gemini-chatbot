@@ -10,6 +10,12 @@ module.exports = {
         if (message.voiceMessage) {
             return;
         }
+        if (
+            !message.channel.isDMBased() ||
+            !message.mentions.has(client.user)
+        ) {
+            return;
+        }
 
         const currentTime = new Date().toLocaleTimeString();
         const authorName = message.author.globalName;
@@ -29,89 +35,79 @@ module.exports = {
             `User to respond: ${authorName}`,
         ];
 
+        const replyMessage = await message.reply('Thinking...');
+        const isDM = message.channel.isDMBased();
+        const location = isDM
+            ? 'DM'
+            : `${message.guild.name} -> ${message.channel.name}`;
+
+        console.log(
+            `
+            New ${isDM ? 'DM' : 'mention'} interaction at: ${currentTime}
+            By ${message.author.globalName}
+            In ${location}
+            Message content: "${content}"
+            `.trim(),
+        );
+
+        const history = [];
+        let cursor = message;
+
+        while (cursor.reference) {
+            const parent = await message.channel.messages.fetch(
+                cursor.reference.messageId,
+            );
+            const role = parent.author.id === client.user.id ? 'model' : 'user';
+            history.unshift({
+                role,
+                parts: [{ text: parent.content }],
+            });
+            cursor = parent;
+        }
+
+        let chat;
         try {
-            if (
-                message.channel.type === 1 ||
-                message.mentions.has(client.user)
-            ) {
-                const replyMessage = await message.reply('Thinking...');
-                console.log(
-                    `New ${message.channel.type === 1 ? 'DM' : 'mention'} interaction at: ${currentTime}`,
-                    '\nMessage content:',
-                    content,
-                );
-
-                const history = [];
-                let cursor = message;
-
-                while (cursor.reference) {
-                    const parent = await message.channel.messages.fetch(
-                        cursor.reference.messageId,
-                    );
-                    const role =
-                        parent.author.id === client.user.id ? 'model' : 'user';
-                    history.unshift({
-                        role,
-                        parts: [{ text: parent.content }],
-                    });
-                    cursor = parent;
-                }
-
-                let chat;
-                try {
-                    chat = await client.gemini.chats.create({
-                        model: 'gemini-2.0-flash',
-                        config: {
-                            temperature: 1.5,
-                            maxOutputTokens: 499,
-                            systemInstruction: systemInstruction,
-                        },
-                        history: history,
-                    });
-                } catch (error) {
-                    console.log('At:', currentTime);
-                    console.error('Creating chat error:', error);
-                    console.log(history);
-                    replyMessage.edit("Sorry, I can't talk right now...");
-                    return;
-                }
-
-                let response;
-                try {
-                    response = await chat.sendMessageStream({
-                        message: content,
-                    });
-                } catch (error) {
-                    console.log('At:', currentTime);
-                    console.error('Chat.sendMessage error:', error);
-                    replyMessage.edit("Sorry, I can't talk right now...");
-                    return;
-                }
-
-                let fullResponse = '';
-                for await (const chunk of response) {
-                    if (chunk.text) {
-                        fullResponse += chunk.text;
-                        if (fullResponse.length > 1995) {
-                            replyMessage.edit(
-                                'Sorry, the message is too long...',
-                            );
-                            break;
-                        }
-                        await replyMessage.edit(fullResponse);
-                    }
-                }
-
-                return;
-            }
+            chat = await client.gemini.chats.create({
+                model: 'gemini-2.0-flash',
+                config: {
+                    temperature: 1.5,
+                    maxOutputTokens: 499,
+                    systemInstruction: systemInstruction,
+                },
+                history: history,
+            });
         } catch (error) {
             console.log('At:', currentTime);
-            console.error(
-                'Error during Gemini messageCreate interaction:',
-                error,
-            );
-            message.editReply("Sorry, I can't talk right now...");
+            console.error('Creating chat error:', error);
+            console.log(history);
+            replyMessage.edit("Sorry, I can't talk right now...");
             return;
         }
+
+        let response;
+        try {
+            response = await chat.sendMessageStream({
+                message: content,
+            });
+        } catch (error) {
+            console.log('At:', currentTime);
+            console.error('Chat.sendMessage error:', error);
+            replyMessage.edit("Sorry, I can't talk right now...");
+            return;
+        }
+
+        let fullResponse = '';
+        for await (const chunk of response) {
+            if (chunk.text) {
+                fullResponse += chunk.text;
+                if (fullResponse.length > 1995) {
+                    replyMessage.edit('Sorry, the message is too long...');
+                    break;
+                }
+                await replyMessage.edit(fullResponse);
+            }
+        }
+
+        return;
     },
 };
