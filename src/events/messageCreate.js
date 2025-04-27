@@ -11,7 +11,7 @@ module.exports = {
             return;
         }
         if (
-            !message.channel.isDMBased() ||
+            !message.channel.isDMBased() &&
             !message.mentions.has(client.user)
         ) {
             return;
