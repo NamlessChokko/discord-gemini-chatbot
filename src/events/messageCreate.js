@@ -1,7 +1,7 @@
 module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
-        if (message.author.bot) {
+        if (message.author.tag === client.tag) {
             return;
         }
         if (!message.content || message.content.trim().length === 0) {
@@ -70,7 +70,7 @@ module.exports = {
             chat = await client.gemini.chats.create({
                 model: 'gemini-2.0-flash',
                 config: {
-                    temperature: 1.5,
+                    temperature: 1.0,
                     maxOutputTokens: 499,
                     systemInstruction: systemInstruction,
                 },
