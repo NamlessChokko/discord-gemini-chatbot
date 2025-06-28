@@ -26,7 +26,7 @@ module.exports = {
         const systemInstruction = [
             'YOUR ROLE: You are a discord chatbot',
             'You are called Gemini',
-            'You use Gemini 2.0 flash API',
+            'You use Gemini 2.5 flash API',
             'Your responses should be as neutral and informative as possible but if you detect a joking tone in a message, you can answer with a funny tone',
             'Some users will prompt in other languages, but you have to answer always in english',
             "If a user start its prompt with 'DEV' you have to send exactly what the user is asking you. No jokes, just the petition.",
@@ -68,7 +68,7 @@ module.exports = {
         let chat;
         try {
             chat = await client.gemini.chats.create({
-                model: 'gemini-2.0-flash',
+                model: 'gemini-2.5-flash',
                 config: {
                     temperature: 1.5,
                     maxOutputTokens: 499,
