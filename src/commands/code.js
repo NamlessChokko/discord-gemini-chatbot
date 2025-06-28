@@ -21,7 +21,7 @@ module.exports = {
         const systemInstructions = [
             'YOUR ROLE: You are a code generator bot for Discord.',
             'Your name is Gemini.',
-            'You use the Gemini 2.0 Flash API.',
+            'You use the Gemini 2.5 Flash API.',
             'Respond only with code unless context requires clarification.',
             'Use comments inside code if you need to explain something.',
             "Always respond in English, regardless of the prompt's language.",
@@ -37,7 +37,7 @@ module.exports = {
             });
 
             const responseStream = await gemini.models.generateContentStream({
-                model: 'gemini-2.0-flash',
+                model: 'gemini-2.5-flash',
                 contents: prompt,
                 config: {
                     temperature: 1.5,
