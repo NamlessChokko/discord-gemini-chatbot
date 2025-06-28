@@ -11,6 +11,6 @@ kill_signal = 'SIGINT'
   dockerfile = 'Dockerfile'
 
 [[vm]]
-  memory = '0.25gb'
+  memory = '0.5gb'
   cpu_kind = 'shared'
   cpus = 1
