@@ -2,13 +2,11 @@ import {
     substituteMentionUsernames,
     substituteNamesWithMentions,
 } from '../utils/utils.js';
-
 export const name = 'messageCreate';
 export async function execute(message, client) {
     if (!message.channel.isDMBased() && !message.mentions.has(client.user)) {
         return;
     }
-
     if (message.mentions.everyone) {
         return;
     }
@@ -21,7 +19,6 @@ export async function execute(message, client) {
     if (message.voiceMessage) {
         return;
     }
-
     const errorMessage =
         'Sorry, there was an error while processing your message. Please try again later.';
     const currentTime = new Date().toLocaleTimeString();
@@ -30,7 +27,6 @@ export async function execute(message, client) {
         message.content,
         message.mentions.users,
     );
-
     const systemInstruction = [
         'YOUR ROLE: You are a discord chatbot',
         'You are called Gemini Chatbot',
@@ -44,13 +40,11 @@ export async function execute(message, client) {
         `EXTRA INFORMATION: Current time is: ${currentTime}`,
         `User to respond: ${authorName}`,
     ];
-
     const replyMessage = await message.reply('Thinking...');
     const isDM = message.channel.isDMBased();
     const location = isDM
         ? 'DM'
-        : `${message.guild.name} -> ${message.channel.name}`;
-
+        : `${message.guild?.name} -> ${message.channel.id}`;
     console.log(
         `
             New ${isDM ? 'DM' : 'mention'} interaction at: ${currentTime}
@@ -59,22 +53,19 @@ export async function execute(message, client) {
             Message content: "${content}"
             `.trim(),
     );
-
     const history = [];
     let cursor = message;
-
-    while (cursor.reference) {
+    while (cursor.reference && cursor.reference.messageId) {
         const parent = await message.channel.messages.fetch(
             cursor.reference.messageId,
         );
-        const role = parent.author.id === client.user.id ? 'model' : 'user';
+        const role = parent.author.id === client.user?.id ? 'model' : 'user';
         history.unshift({
             role,
             parts: [{ text: parent.content }],
         });
         cursor = parent;
     }
-
     let chat;
     try {
         chat = await client.gemini.chats.create({
@@ -98,7 +89,6 @@ export async function execute(message, client) {
         replyMessage.edit(errorMessage);
         return;
     }
-
     let response;
     try {
         response = await chat.sendMessage({
@@ -110,12 +100,11 @@ export async function execute(message, client) {
         replyMessage.edit(errorMessage);
         return;
     }
-
     if (
         !response ||
         !response.text ||
         response.text.trim().length === 0 ||
-        response.text.trim().lenght >= 2000
+        response.text.trim().length >= 2000
     ) {
         console.log('At:', currentTime);
         console.error(
@@ -129,15 +118,11 @@ export async function execute(message, client) {
         replyMessage.edit(errorMessage);
         return;
     }
-
     const finalResponse = substituteNamesWithMentions(
         response.text,
         message.mentions.users,
     );
-
     console.log('Response: ', JSON.stringify(response, null, 2));
     replyMessage.edit(finalResponse);
-
     return;
 }
-

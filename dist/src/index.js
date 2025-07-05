@@ -1,17 +1,14 @@
 import 'dotenv/config';
+import fs from 'fs';
+import path from 'path';
 import { createServer } from 'node:http';
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
-import fs from 'fs';
-import path from 'path';
 import { fileURLToPath } from 'url';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const server = createServer((res) => res.end('OK'));
+const server = createServer((req, res) => res.end('OK'));
 server.listen(3000, '0.0.0.0');
-
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -21,17 +18,13 @@ const client = new Client({
     ],
     partials: [Partials.Channel],
 });
-
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 client.gemini = gemini;
-
 client.commands = new Collection();
-
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith('.js'));
-
+    .filter((file) => file.endsWith('.ts'));
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = await import(filePath);
@@ -41,12 +34,10 @@ for (const file of commandFiles) {
         console.log(`[WARNING] ${file} expected 'data' & 'execute'`);
     }
 }
-
 const eventPath = path.join(__dirname, 'events');
 const eventFiles = fs
     .readdirSync(eventPath)
-    .filter((file) => file.endsWith('.js'));
-
+    .filter((file) => file.endsWith('.ts'));
 for (const file of eventFiles) {
     const filePath = path.join(eventPath, file);
     const event = await import(filePath);
@@ -56,10 +47,7 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args, client));
     }
 }
-
 client.login(process.env.DISCORD_TOKEN);
-
 client.on('ready', () => {
     console.log('Gemini is ready 7u7');
 });
-

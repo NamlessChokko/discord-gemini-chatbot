@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
-
 export const data = new SlashCommandBuilder()
     .setName('code')
     .setDescription('Generate code based on your prompt')
@@ -10,13 +9,11 @@ export const data = new SlashCommandBuilder()
             .setDescription('Describe what kind of code you need')
             .setRequired(true),
     );
-
 export async function execute(interaction) {
     await interaction.reply({
         content: 'Generating code...',
-        withReply: true,
+        fetchReply: true,
     });
-
     const systemInstructions = [
         'YOUR ROLE: You are a code generator bot for Discord.',
         'Your name is Gemini.',
@@ -28,13 +25,15 @@ export async function execute(interaction) {
         'Do not use Markdown formatting.',
         'Maintain a formal and neutral tone unless otherwise requested.',
     ];
-
     try {
         const prompt = interaction.options.getString('prompt');
+        if (!prompt) {
+            await interaction.editReply('Prompt cannot be empty.');
+            return;
+        }
         const gemini = new GoogleGenAI({
             apiKey: process.env.GEMINI_API_KEY,
         });
-
         const responseStream = await gemini.models.generateContentStream({
             model: 'gemini-2.5-flash',
             contents: prompt,
@@ -44,7 +43,6 @@ export async function execute(interaction) {
                 systemInstruction: systemInstructions,
             },
         });
-
         let result = '';
         for await (const chunk of responseStream) {
             if (chunk.text) {
@@ -64,4 +62,3 @@ export async function execute(interaction) {
         );
     }
 }
-

@@ -1,11 +1,14 @@
 {
     "name": "discord-gemini-chatbot",
     "version": "1.0.0",
-    "main": "src/index.js",
+    "main": "dist/index.js",
     "scripts": {
+        "build": "tsc",
+        "start": "node dist/src/index.js",
+        "dev": "tsc && node --watch dist/src/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org osmaoficial0gmailcom --project discord-gemini-bot ./src && sentry-cli sourcemaps upload --org osmaoficial0gmailcom --project discord-gemini-bot ./src",
-        "lint": "eslint .",
+        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org osmaoficial0gmailcom --project discord-gemini-bot ./dist && sentry-cli sourcemaps upload --org osmaoficial0gmailcom --project discord-gemini-bot ./dist",
+        "lint": "eslint . --ext .ts",
         "format": "prettier --write ."
     },
     "keywords": [],
@@ -24,10 +27,16 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.25.1",
+        "@types/node": "^24.0.10",
         "eslint": "^9.25.1",
         "eslint-config-prettier": "^10.1.2",
         "eslint-plugin-prettier": "^5.2.6",
         "globals": "^16.0.0",
-        "prettier": "^3.5.3"
+        "prettier": "^3.5.3",
+        "ts-node": "^10.9.2",
+        "ts-node-dev": "^2.0.0",
+        "tsx": "^4.20.3",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.35.1"
     }
 }
