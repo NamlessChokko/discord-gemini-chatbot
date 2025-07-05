@@ -6,7 +6,6 @@ import {
 
 export const name = 'messageCreate';
 export async function execute(message: Message, client: Client) {
-    console.log('debug: messageCreate event triggered');
     if (
         !message.channel.isDMBased() &&
         !message.mentions.has(client.user as any)
@@ -54,12 +53,11 @@ export async function execute(message: Message, client: Client) {
         : `${message.guild?.name} -> ${message.channel.id}`;
 
     console.log(
-        `
-            New ${isDM ? 'DM' : 'mention'} interaction at: ${currentTime}
-            By ${message.author.globalName}
-            In ${location}
-            Message content: "${content}"
-            `.trim(),
+        `[ Log: interaction ] > At: ${currentTime}\n`,
+        `   Interaction: ${isDM ? 'DM' : 'mention'}\n`,
+        `   Author: ${message.author.globalName}\n`,
+        `   Location: ${location}\n`,
+        `   content: "${content}"\n`,
     );
 
     const history = [];
@@ -113,22 +111,38 @@ export async function execute(message: Message, client: Client) {
         return;
     }
 
+    const responseText = response?.text || '(no text)';
+    const modelVersion = response?.modelVersion || '(unknown model version)';
+    const usageMetadata = response?.usageMetadata
+        ? JSON.stringify(response.usageMetadata, null, 2)
+              .split('\n')
+              .map((line) => `   ${line}`)
+              .join('\n')
+        : '(no usage metadata)';
+    const finishReason =
+        response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
+
+    console.log(
+        `[ Log: response ] > At: ${currentTime}\n` +
+            `   Text: ${responseText}\n` +
+            `   Model Version: ${modelVersion}\n` +
+            `   Usage Metadata:\n` +
+            `${usageMetadata}\n` +
+            `   Finish Reason: ${finishReason}\n`,
+    );
+
     if (
         !response ||
         !response.text ||
         response.text.trim().length === 0 ||
-        response.text.trim().length >= 2000
+        response.text.trim().length >= 2000 ||
+        response.candidates?.[0]?.finishReason === 'MAX_TOKENS'
     ) {
-        console.log('At:', currentTime);
-        console.error(
-            'Response is empty or too long:',
-            JSON.stringify(response, null, 2),
-        );
+        replyMessage.edit(errorMessage);
         console.log(
             'Response length:',
             response.text ? response.text.length : 'undefined',
         );
-        replyMessage.edit(errorMessage);
         return;
     }
 
@@ -137,7 +151,6 @@ export async function execute(message: Message, client: Client) {
         message.mentions.users,
     );
 
-    console.log('Response: ', JSON.stringify(response, null, 2));
     replyMessage.edit(finalResponse);
 
     return;
