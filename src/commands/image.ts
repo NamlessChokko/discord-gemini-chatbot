@@ -25,7 +25,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     }
     await interaction.reply({
         content: 'Generating image...',
-        fetchReply: true,
+        withResponse: true,
     });
 
     const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });

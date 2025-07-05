@@ -14,7 +14,7 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: ChatInputCommandInteraction) {
     await interaction.reply({
         content: 'Generating code...',
-        fetchReply: true,
+        withResponse: true,
     });
 
     const systemInstructions = [

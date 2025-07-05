@@ -3,16 +3,14 @@ import { GoogleGenAI } from '@google/genai';
 export const data = new SlashCommandBuilder()
     .setName('code')
     .setDescription('Generate code based on your prompt')
-    .addStringOption((option) =>
-        option
-            .setName('prompt')
-            .setDescription('Describe what kind of code you need')
-            .setRequired(true),
-    );
+    .addStringOption((option) => option
+    .setName('prompt')
+    .setDescription('Describe what kind of code you need')
+    .setRequired(true));
 export async function execute(interaction) {
     await interaction.reply({
         content: 'Generating code...',
-        fetchReply: true,
+        withResponse: true,
     });
     const systemInstructions = [
         'YOUR ROLE: You are a code generator bot for Discord.',
@@ -54,11 +52,10 @@ export async function execute(interaction) {
                 await interaction.editReply(result);
             }
         }
-    } catch (error) {
+    }
+    catch (error) {
         const currentTime = new Date().toLocaleTimeString();
         console.error(`Error at ${currentTime}:`, error);
-        await interaction.editReply(
-            'Oops! Something went wrong while generating your code.',
-        );
+        await interaction.editReply('Oops! Something went wrong while generating your code.');
     }
 }

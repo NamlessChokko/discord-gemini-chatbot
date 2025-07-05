@@ -6,6 +6,7 @@ import {
 
 export const name = 'messageCreate';
 export async function execute(message: Message, client: Client) {
+    console.log('debug: messageCreate event triggered');
     if (
         !message.channel.isDMBased() &&
         !message.mentions.has(client.user as any)
@@ -20,9 +21,6 @@ export async function execute(message: Message, client: Client) {
         return;
     }
     if (!message.content) {
-        return;
-    }
-    if ((message as any).voiceMessage) {
         return;
     }
 
