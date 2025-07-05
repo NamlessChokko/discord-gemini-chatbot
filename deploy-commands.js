@@ -1,20 +1,27 @@
-const ignoreList = []; // List of commands to ignore
+import 'dotenv/config';
+import { REST, Routes } from 'discord.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-require('dotenv').config();
-const { REST, Routes } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const ignoreList = []; // List of commands to ignore
 
 const commands = [];
 const commandsPath = path.join(__dirname, 'src/commands');
-for (const file of fs
+const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((f) => f.endsWith('.js'))) {
+    .filter((f) => f.endsWith('.js'));
+
+for (const file of commandFiles) {
     if (ignoreList.includes(file)) {
         continue;
     }
 
-    const command = require(`./src/commands/${file}`);
+    const filePath = path.join(commandsPath, file);
+    const command = await import(filePath);
     commands.push(command.data.toJSON());
 }
 

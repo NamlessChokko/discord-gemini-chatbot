@@ -12,6 +12,7 @@
     "author": "NamlessChokko",
     "license": "ISC",
     "description": "A discord bot that use the Gemini api (kinda chatbot)",
+    "type": "module",
     "dependencies": {
         "@google/genai": "^0.9.0",
         "@google/generative-ai": "^0.24.0",
