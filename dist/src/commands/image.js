@@ -3,10 +3,8 @@ import { GoogleGenAI, Modality } from '@google/genai';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 export const data = new SlashCommandBuilder()
     .setName('image')
     .setDescription('Generate an image based on your prompt')
@@ -16,16 +14,17 @@ export const data = new SlashCommandBuilder()
             .setDescription('Describe the image you want to generate')
             .setRequired(true),
     );
-
 export async function execute(interaction) {
     const prompt = interaction.options.getString('prompt');
+    if (!prompt) {
+        await interaction.editReply('Prompt cannot be empty.');
+        return;
+    }
     await interaction.reply({
         content: 'Generating image...',
-        withReply: true,
+        fetchReply: true,
     });
-
     const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
     try {
         const response = await gemini.models.generateContent({
             model: 'gemini-2.5-flash',
@@ -36,11 +35,9 @@ export async function execute(interaction) {
                 maxOutputTokens: 1024,
             },
         });
-
         const parts = response.candidates?.[0]?.content?.parts || [];
         let imageBuffer = null;
         let caption = '';
-
         for (const part of parts) {
             if (part.inlineData?.data) {
                 imageBuffer = Buffer.from(part.inlineData.data, 'base64');
@@ -48,7 +45,6 @@ export async function execute(interaction) {
                 caption += part.text + '\n';
             }
         }
-
         if (imageBuffer) {
             const imgPath = path.join(__dirname, 'out.png');
             fs.writeFileSync(imgPath, imageBuffer);
@@ -69,4 +65,3 @@ export async function execute(interaction) {
         );
     }
 }
-

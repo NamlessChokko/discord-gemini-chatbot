@@ -1,0 +1,75 @@
+import 'dotenv/config';
+import fs from 'fs';
+import path from 'path';
+import { createServer, IncomingMessage, ServerResponse } from 'node:http';
+import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
+import { GoogleGenAI } from '@google/genai';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const server = createServer((req: IncomingMessage, res: ServerResponse) =>
+    res.end('OK'),
+);
+server.listen(3000, '0.0.0.0');
+
+interface CustomClient extends Client {
+    gemini?: GoogleGenAI;
+    commands?: Collection<string, unknown>;
+}
+
+const client: CustomClient = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.DirectMessages,
+    ],
+    partials: [Partials.Channel],
+});
+
+const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+client.gemini = gemini;
+
+client.commands = new Collection();
+
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs
+    .readdirSync(commandsPath)
+    .filter((file) => file.endsWith('.ts'));
+
+for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file);
+    const command = await import(filePath);
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`[WARNING] ${file} expected 'data' & 'execute'`);
+    }
+}
+
+const eventPath = path.join(__dirname, 'events');
+const eventFiles = fs
+    .readdirSync(eventPath)
+    .filter((file) => file.endsWith('.ts'));
+
+for (const file of eventFiles) {
+    const filePath = path.join(eventPath, file);
+    const event = await import(filePath);
+    if (event.once) {
+        client.once(event.name, (...args: unknown[]) =>
+            event.execute(...args, client),
+        );
+    } else {
+        client.on(event.name, (...args: unknown[]) =>
+            event.execute(...args, client),
+        );
+    }
+}
+
+client.login(process.env.DISCORD_TOKEN);
+
+client.on('ready', () => {
+    console.log('Gemini is ready 7u7');
+});
