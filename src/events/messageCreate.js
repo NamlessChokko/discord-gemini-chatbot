@@ -1,15 +1,7 @@
+const utils = require('../utils/utils.js');
 module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
-        if (message.author.tag === client.tag) {
-            return;
-        }
-        if (!message.content || message.content.trim().length === 0) {
-            return;
-        }
-        if (message.voiceMessage) {
-            return;
-        }
         if (
             !message.channel.isDMBased() &&
             !message.mentions.has(client.user)
@@ -17,11 +9,27 @@ module.exports = {
             return;
         }
 
+        if (message.mentions.everyone) {
+            return;
+        }
+        if (message.author.tag === client.tag) {
+            return;
+        }
+        if (!message.content) {
+            return;
+        }
+        if (message.voiceMessage) {
+            return;
+        }
+
+        const errorMessage =
+            'Sorry, there was an error while processing your message. Please try again later.';
         const currentTime = new Date().toLocaleTimeString();
         const authorName = message.author.globalName;
-        const content = message.content
-            .replace(`<@${client.user.id}>`, '')
-            .trim();
+        const content = utils.substitute_mention_usernames(
+            message.content,
+            message.mentions.users,
+        );
 
         const systemInstruction = [
             'YOUR ROLE: You are a discord chatbot',
@@ -70,11 +78,16 @@ module.exports = {
         let chat;
         try {
             chat = await client.gemini.chats.create({
-                model: 'gemini-2.5-flash',
+                model: 'gemini-2.5-flash-lite-preview-06-17',
+                // model: 'gemini-2.5-flash',
+                // model: 'gemini-2.5-pro',
                 config: {
-                    temperature: 1.0,
+                    temperature: 1.5,
                     maxOutputTokens: 499,
                     systemInstruction: systemInstruction,
+                    thinkingConfig: {
+                        thinkingBudget: 0, // Disables thinking
+                    },
                 },
                 history: history,
             });
@@ -82,33 +95,48 @@ module.exports = {
             console.log('At:', currentTime);
             console.error('Creating chat error:', error);
             console.log(history);
-            replyMessage.edit("Sorry, I can't talk right now...");
+            replyMessage.edit(errorMessage);
             return;
         }
 
         let response;
         try {
-            response = await chat.sendMessageStream({
+            response = await chat.sendMessage({
                 message: content,
             });
         } catch (error) {
             console.log('At:', currentTime);
             console.error('Chat.sendMessage error:', error);
-            replyMessage.edit("Sorry, I can't talk right now...");
+            replyMessage.edit(errorMessage);
             return;
         }
 
-        let fullResponse = '';
-        for await (const chunk of response) {
-            if (chunk.text) {
-                fullResponse += chunk.text;
-                if (fullResponse.length > 1995) {
-                    replyMessage.edit('Sorry, the message is too long...');
-                    break;
-                }
-                await replyMessage.edit(fullResponse);
-            }
+        if (
+            !response ||
+            !response.text ||
+            response.text.trim().length === 0 ||
+            response.text.trim().lenght >= 2000
+        ) {
+            console.log('At:', currentTime);
+            console.error(
+                'Response is empty or too long:',
+                JSON.stringify(response, null, 2),
+            );
+            console.log(
+                'Response length:',
+                response.text ? response.text.length : 'undefined',
+            );
+            replyMessage.edit(errorMessage);
+            return;
         }
+
+        const finalResponse = utils.substitute_names_with_mentions(
+            response.text,
+            message.mentions.users,
+        );
+
+        console.log('Response: ', JSON.stringify(response, null, 2));
+        replyMessage.edit(finalResponse);
 
         return;
     },
