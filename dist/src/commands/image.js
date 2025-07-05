@@ -8,12 +8,10 @@ const __dirname = path.dirname(__filename);
 export const data = new SlashCommandBuilder()
     .setName('image')
     .setDescription('Generate an image based on your prompt')
-    .addStringOption((opt) =>
-        opt
-            .setName('prompt')
-            .setDescription('Describe the image you want to generate')
-            .setRequired(true),
-    );
+    .addStringOption((opt) => opt
+    .setName('prompt')
+    .setDescription('Describe the image you want to generate')
+    .setRequired(true));
 export async function execute(interaction) {
     const prompt = interaction.options.getString('prompt');
     if (!prompt) {
@@ -22,7 +20,7 @@ export async function execute(interaction) {
     }
     await interaction.reply({
         content: 'Generating image...',
-        fetchReply: true,
+        withResponse: true,
     });
     const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     try {
@@ -41,7 +39,8 @@ export async function execute(interaction) {
         for (const part of parts) {
             if (part.inlineData?.data) {
                 imageBuffer = Buffer.from(part.inlineData.data, 'base64');
-            } else if (part.text) {
+            }
+            else if (part.text) {
                 caption += part.text + '\n';
             }
         }
@@ -53,15 +52,13 @@ export async function execute(interaction) {
                 files: [imgPath],
             });
             fs.unlinkSync(imgPath);
-        } else {
-            await interaction.editReply(
-                'No image could be generated for that prompt.',
-            );
         }
-    } catch (error) {
+        else {
+            await interaction.editReply('No image could be generated for that prompt.');
+        }
+    }
+    catch (error) {
         console.error('Error during Gemini image generation:', error);
-        await interaction.editReply(
-            'Sorry, I couldn’t generate that image right now.',
-        );
+        await interaction.editReply('Sorry, I couldn’t generate that image right now.');
     }
 }

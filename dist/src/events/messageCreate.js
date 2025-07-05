@@ -1,10 +1,9 @@
-import {
-    substituteMentionUsernames,
-    substituteNamesWithMentions,
-} from '../utils/utils.js';
+import { substituteMentionUsernames, substituteNamesWithMentions, } from '../utils/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, client) {
-    if (!message.channel.isDMBased() && !message.mentions.has(client.user)) {
+    console.log('debug: messageCreate event triggered');
+    if (!message.channel.isDMBased() &&
+        !message.mentions.has(client.user)) {
         return;
     }
     if (message.mentions.everyone) {
@@ -16,17 +15,10 @@ export async function execute(message, client) {
     if (!message.content) {
         return;
     }
-    if (message.voiceMessage) {
-        return;
-    }
-    const errorMessage =
-        'Sorry, there was an error while processing your message. Please try again later.';
+    const errorMessage = 'Sorry, there was an error while processing your message. Please try again later.';
     const currentTime = new Date().toLocaleTimeString();
     const authorName = message.author.globalName;
-    const content = substituteMentionUsernames(
-        message.content,
-        message.mentions.users,
-    );
+    const content = substituteMentionUsernames(message.content, message.mentions.users);
     const systemInstruction = [
         'YOUR ROLE: You are a discord chatbot',
         'You are called Gemini Chatbot',
@@ -45,20 +37,16 @@ export async function execute(message, client) {
     const location = isDM
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.id}`;
-    console.log(
-        `
+    console.log(`
             New ${isDM ? 'DM' : 'mention'} interaction at: ${currentTime}
             By ${message.author.globalName}
             In ${location}
             Message content: "${content}"
-            `.trim(),
-    );
+            `.trim());
     const history = [];
     let cursor = message;
     while (cursor.reference && cursor.reference.messageId) {
-        const parent = await message.channel.messages.fetch(
-            cursor.reference.messageId,
-        );
+        const parent = await message.channel.messages.fetch(cursor.reference.messageId);
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
         history.unshift({
             role,
@@ -82,7 +70,8 @@ export async function execute(message, client) {
             },
             history: history,
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.log('At:', currentTime);
         console.error('Creating chat error:', error);
         console.log(history);
@@ -94,34 +83,24 @@ export async function execute(message, client) {
         response = await chat.sendMessage({
             message: content,
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.log('At:', currentTime);
         console.error('Chat.sendMessage error:', error);
         replyMessage.edit(errorMessage);
         return;
     }
-    if (
-        !response ||
+    if (!response ||
         !response.text ||
         response.text.trim().length === 0 ||
-        response.text.trim().length >= 2000
-    ) {
+        response.text.trim().length >= 2000) {
         console.log('At:', currentTime);
-        console.error(
-            'Response is empty or too long:',
-            JSON.stringify(response, null, 2),
-        );
-        console.log(
-            'Response length:',
-            response.text ? response.text.length : 'undefined',
-        );
+        console.error('Response is empty or too long:', JSON.stringify(response, null, 2));
+        console.log('Response length:', response.text ? response.text.length : 'undefined');
         replyMessage.edit(errorMessage);
         return;
     }
-    const finalResponse = substituteNamesWithMentions(
-        response.text,
-        message.mentions.users,
-    );
+    const finalResponse = substituteNamesWithMentions(response.text, message.mentions.users);
     console.log('Response: ', JSON.stringify(response, null, 2));
     replyMessage.edit(finalResponse);
     return;

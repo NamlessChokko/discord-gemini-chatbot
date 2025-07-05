@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import fs from 'fs';
 import path from 'path';
-import { createServer, IncomingMessage, ServerResponse } from 'node:http';
+import { createServer } from 'node:http';
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 import { fileURLToPath } from 'url';
@@ -9,9 +9,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const server = createServer((req: IncomingMessage, res: ServerResponse) =>
-    res.end('OK'),
-);
+const server = createServer((req, res) => res.end('OK'));
 server.listen(3000, '0.0.0.0');
 
 interface CustomClient extends Client {
@@ -37,7 +35,7 @@ client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith('.ts'));
+    .filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
@@ -52,7 +50,7 @@ for (const file of commandFiles) {
 const eventPath = path.join(__dirname, 'events');
 const eventFiles = fs
     .readdirSync(eventPath)
-    .filter((file) => file.endsWith('.ts'));
+    .filter((file) => file.endsWith('.js'));
 
 for (const file of eventFiles) {
     const filePath = path.join(eventPath, file);
@@ -72,4 +70,8 @@ client.login(process.env.DISCORD_TOKEN);
 
 client.on('ready', () => {
     console.log('Gemini is ready 7u7');
+});
+
+client.on('error', (error) => {
+    console.error('Discord client error:', error);
 });

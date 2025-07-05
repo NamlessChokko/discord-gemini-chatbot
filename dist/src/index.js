@@ -24,30 +24,35 @@ client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith('.ts'));
+    .filter((file) => file.endsWith('.js'));
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = await import(filePath);
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
-    } else {
+    }
+    else {
         console.log(`[WARNING] ${file} expected 'data' & 'execute'`);
     }
 }
 const eventPath = path.join(__dirname, 'events');
 const eventFiles = fs
     .readdirSync(eventPath)
-    .filter((file) => file.endsWith('.ts'));
+    .filter((file) => file.endsWith('.js'));
 for (const file of eventFiles) {
     const filePath = path.join(eventPath, file);
     const event = await import(filePath);
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args, client));
-    } else {
+    }
+    else {
         client.on(event.name, (...args) => event.execute(...args, client));
     }
 }
 client.login(process.env.DISCORD_TOKEN);
 client.on('ready', () => {
     console.log('Gemini is ready 7u7');
+});
+client.on('error', (error) => {
+    console.error('Discord client error:', error);
 });
