@@ -1,6 +1,6 @@
 # Gemini ChatBot 🤖✨
 
-**Gemini ChatBot** is a powerful Discord bot powered by the **Gemini 2.0 Flash API**. It enables natural language interaction through direct messages, mentions, and slash commands. Designed for performance and easy customization, this bot provides intelligent responses, helps with basic queries, and includes utility features like latency checks.
+**Gemini ChatBot** is a powerful Discord bot powered by the **Gemini 2.5 Flash API**. It enables natural language interaction through direct messages, mentions, and slash commands. Designed for performance and easy customization, this bot provides intelligent responses, helps with basic queries, and includes utility features like latency checks.
 
 ## 📌 Features
 

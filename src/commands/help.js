@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const helpMessage = `
 **🤖 Gemini Chat Bot Help**
 
-Gemini is powered by Google's Gemini 2.0 Flash API, enabling natural conversations directly inside Discord.
+Gemini is powered by Google's Gemini 2.5 Flash API, enabling natural conversations directly inside Discord.
 
 **🗨️ How to Use**
 - **Mention the bot**: Just mention \`@Gemini\` in any message and ask anything.
