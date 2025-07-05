@@ -9,7 +9,7 @@
 - 💻 **S"ash Commands**: Offers various commands like `/help` and `/ping` for guidance and performance checks.
 - 🌐 **Multi-language Support**: Accepts prompts in any language, responds in English.
 - ⚙️ **Configurable Behavior**: Uses system instructions to shape replies and stay within Discord's message limits.
-- 📊 **Performance Logging**: Integrated with Sentry for error tracking and monitoring.
+
 - 🚀 **Fly.io Ready**: Deployable to Fly.io or any hosting platform.
 
 ## 📁 Project Structure
@@ -23,7 +23,7 @@ discord-gemini-chatbot/
 │   └── index.js          # Bot entry point
 │
 ├── .env                  # Environment variables (tokens and API keys)
-├── instrument.js         # Optional error monitoring (e.g. Sentry)
+
 └── README.md             # This file
 ```
 
@@ -32,7 +32,7 @@ discord-gemini-chatbot/
 - Node.js v18+
 - Discord bot token
 - Google Gemini API key (from [Google AI Studio](https://aistudio.google.com/app/apikey))
-- Optional: Sentry DSN for monitoring
+
 
 ## 🔧 Environment Variables
 
@@ -41,7 +41,7 @@ Create a `.env` file with the following:
 ```
 DISCORD_TOKEN=your-discord-token
 GEMINI_API_KEY=your-gemini-api-key
-SENTRY_DSN=your-sentry-dsn (optional)
+
 ```
 
 ## 🚀 Running the Bot

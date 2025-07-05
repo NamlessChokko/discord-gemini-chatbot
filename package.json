@@ -7,7 +7,7 @@
         "start": "node dist/src/index.js",
         "dev": "tsc && node --watch dist/src/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org osmaoficial0gmailcom --project discord-gemini-bot ./dist && sentry-cli sourcemaps upload --org osmaoficial0gmailcom --project discord-gemini-bot ./dist",
+        
         "lint": "eslint . --ext .ts",
         "format": "prettier --write ."
     },
@@ -19,8 +19,7 @@
     "dependencies": {
         "@google/genai": "^0.9.0",
         "@google/generative-ai": "^0.24.0",
-        "@sentry/cli": "^2.43.0",
-        "@sentry/node": "^9.13.0",
+        
         "axios": "^1.8.4",
         "discord.js": "^14.18.0",
         "dotenv": "^16.5.0"
