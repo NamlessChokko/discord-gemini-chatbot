@@ -1,20 +1,16 @@
-require('./instrument.js');
-require('dotenv').config();
+import 'dotenv/config';
+import { createServer } from 'node:http';
+import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
+import { GoogleGenAI } from '@google/genai';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// const Sentry = require('@sentry/node');
-// Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1.0 });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const { createServer } = require('node:http');
 const server = createServer((res) => res.end('OK'));
 server.listen(3000, '0.0.0.0');
-
-const {
-    Client,
-    Collection,
-    GatewayIntentBits,
-    Partials,
-} = require('discord.js');
-const { GoogleGenAI } = require('@google/genai');
 
 const client = new Client({
     intents: [
@@ -29,19 +25,16 @@ const client = new Client({
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 client.gemini = gemini;
 
-const fs = require('fs');
-
-// Getting commands:
 client.commands = new Collection();
 
-const path = require('path');
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
     .filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+    const filePath = path.join(commandsPath, file);
+    const command = await import(filePath);
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
     } else {
@@ -49,14 +42,14 @@ for (const file of commandFiles) {
     }
 }
 
-// Getting Event:
 const eventPath = path.join(__dirname, 'events');
 const eventFiles = fs
     .readdirSync(eventPath)
     .filter((file) => file.endsWith('.js'));
 
 for (const file of eventFiles) {
-    const event = require(`./events/${file}`);
+    const filePath = path.join(eventPath, file);
+    const event = await import(filePath);
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args, client));
     } else {
@@ -69,3 +62,4 @@ client.login(process.env.DISCORD_TOKEN);
 client.on('ready', () => {
     console.log('Gemini is ready 7u7');
 });
+
