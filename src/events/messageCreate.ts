@@ -78,9 +78,9 @@ export async function execute(message: Message, client: Client) {
     let chat;
     try {
         chat = await (client as any).gemini.chats.create({
-            model: 'gemini-2.5-flash-lite-preview-06-17',
+            // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
-            // model: 'gemini-2.5-flash',
+            model: 'gemini-2.5-flash',
             config: {
                 temperature: 1.5,
                 maxOutputTokens: 499,

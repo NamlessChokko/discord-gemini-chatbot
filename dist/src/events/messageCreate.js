@@ -1,7 +1,6 @@
 import { substituteMentionUsernames, substituteNamesWithMentions, } from '../utils/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, client) {
-    console.log('debug: messageCreate event triggered');
     if (!message.channel.isDMBased() &&
         !message.mentions.has(client.user)) {
         return;
@@ -52,9 +51,9 @@ export async function execute(message, client) {
     let chat;
     try {
         chat = await client.gemini.chats.create({
-            model: 'gemini-2.5-flash-lite-preview-06-17',
+            // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
-            // model: 'gemini-2.5-flash',
+            model: 'gemini-2.5-flash',
             config: {
                 temperature: 1.5,
                 maxOutputTokens: 499,
@@ -90,7 +89,7 @@ export async function execute(message, client) {
     const usageMetadata = response?.usageMetadata
         ? JSON.stringify(response.usageMetadata, null, 2)
             .split('\n')
-            .map(line => `   ${line}`)
+            .map((line) => `   ${line}`)
             .join('\n')
         : '(no usage metadata)';
     const finishReason = response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
