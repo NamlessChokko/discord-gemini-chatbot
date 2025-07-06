@@ -66,7 +66,6 @@ export async function execute(
     console.log(
         `\n`,
         `\n`,
-        `[===============================================================]\n`,
         `\n`,
         `[ Log: interaction ] > At: ${currentTime}\n`,
         `   Interaction: ${isDM ? 'DM' : 'mention'}\n`,
