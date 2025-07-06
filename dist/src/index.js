@@ -32,7 +32,7 @@ for (const file of commandFiles) {
         client.commands.set(command.data.name, command);
     }
     else {
-        console.log(`[WARNING] ${file} expected 'data' & 'execute'`);
+        console.log(`[ WARNING ] > ${file} expected 'data' & 'execute'`);
     }
 }
 const eventPath = path.join(__dirname, 'events');
@@ -46,7 +46,9 @@ for (const file of eventFiles) {
         client.once(event.name, (...args) => event.execute(...args, client));
     }
     else {
-        client.on(event.name, (...args) => event.execute(...args, client));
+        client.on(event.name, (...args) => {
+            event.execute(...args, client);
+        });
     }
 }
 client.login(process.env.DISCORD_TOKEN);
