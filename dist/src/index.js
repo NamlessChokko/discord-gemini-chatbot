@@ -19,7 +19,6 @@ const client = new Client({
     partials: [Partials.Channel],
 });
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-client.gemini = gemini;
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
@@ -43,11 +42,11 @@ for (const file of eventFiles) {
     const filePath = path.join(eventPath, file);
     const event = await import(filePath);
     if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args, client));
+        client.once(event.name, (...args) => event.execute(...args, client, gemini));
     }
     else {
         client.on(event.name, (...args) => {
-            event.execute(...args, client);
+            event.execute(...args, client, gemini);
         });
     }
 }

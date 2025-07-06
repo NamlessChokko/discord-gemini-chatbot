@@ -9,11 +9,10 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const server = createServer((req, res) => res.end('OK'));
+const server = createServer();
 server.listen(3000, '0.0.0.0');
 
 interface CustomClient extends Client {
-    gemini?: GoogleGenAI;
     commands?: Collection<string, unknown>;
 }
 
@@ -28,7 +27,6 @@ const client: CustomClient = new Client({
 });
 
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-client.gemini = gemini;
 
 client.commands = new Collection();
 
@@ -57,11 +55,11 @@ for (const file of eventFiles) {
     const event = await import(filePath);
     if (event.once) {
         client.once(event.name, (...args: unknown[]) =>
-            event.execute(...args, client),
+            event.execute(...args, client, gemini),
         );
     } else {
         client.on(event.name, (...args: unknown[]) => {
-            event.execute(...args, client);
+            event.execute(...args, client, gemini);
         });
     }
 }
