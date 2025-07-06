@@ -1,14 +1,19 @@
-import { Message, Client } from 'discord.js';
+import { Message, Client, User } from 'discord.js';
+import { GoogleGenAI } from '@google/genai';
 import {
     substituteMentionUsernames,
     substituteNamesWithMentions,
 } from '../utils/utils.js';
 
 export const name = 'messageCreate';
-export async function execute(message: Message, client: Client) {
+export async function execute(
+    message: Message,
+    client: Client,
+    gemini: GoogleGenAI,
+) {
     if (
         !message.channel.isDMBased() &&
-        !message.mentions.has(client.user as any)
+        !message.mentions.has(client.user as User)
     ) {
         return;
     }
@@ -16,7 +21,7 @@ export async function execute(message: Message, client: Client) {
     if (message.mentions.everyone) {
         return;
     }
-    if (message.author.tag === (client as any).tag) {
+    if (message.author.tag === client.user?.tag) {
         return;
     }
     if (!message.content) {
@@ -26,7 +31,11 @@ export async function execute(message: Message, client: Client) {
     const errorMessage =
         'Sorry, there was an error while processing your message. Please try again later.';
     const currentTime = new Date().toString();
-    const authorName = message.author.globalName;
+    const authorName =
+        message.author?.globalName ||
+        message.author?.username ||
+        'Unknown User';
+    // const content = message.content;
     const content = substituteMentionUsernames(
         message.content,
         message.mentions.users,
@@ -83,7 +92,7 @@ export async function execute(message: Message, client: Client) {
 
     let chat;
     try {
-        chat = await (client as any).gemini.chats.create({
+        chat = gemini.chats.create({
             // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
@@ -152,6 +161,7 @@ export async function execute(message: Message, client: Client) {
         return;
     }
 
+    // const finalResponse = response.text;
     const finalResponse = substituteNamesWithMentions(
         response.text,
         message.mentions.users,

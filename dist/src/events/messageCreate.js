@@ -1,6 +1,6 @@
 import { substituteMentionUsernames, substituteNamesWithMentions, } from '../utils/utils.js';
 export const name = 'messageCreate';
-export async function execute(message, client) {
+export async function execute(message, client, gemini) {
     if (!message.channel.isDMBased() &&
         !message.mentions.has(client.user)) {
         return;
@@ -8,7 +8,7 @@ export async function execute(message, client) {
     if (message.mentions.everyone) {
         return;
     }
-    if (message.author.tag === client.tag) {
+    if (message.author.tag === client.user?.tag) {
         return;
     }
     if (!message.content) {
@@ -16,7 +16,10 @@ export async function execute(message, client) {
     }
     const errorMessage = 'Sorry, there was an error while processing your message. Please try again later.';
     const currentTime = new Date().toString();
-    const authorName = message.author.globalName;
+    const authorName = message.author?.globalName ||
+        message.author?.username ||
+        'Unknown User';
+    // const content = message.content;
     const content = substituteMentionUsernames(message.content, message.mentions.users);
     const botName = client.user?.globalName || client.user?.username || 'Gemini Chatbot';
     const systemInstruction = [
@@ -50,7 +53,7 @@ export async function execute(message, client) {
     }
     let chat;
     try {
-        chat = await client.gemini.chats.create({
+        chat = gemini.chats.create({
             // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
@@ -108,6 +111,7 @@ export async function execute(message, client) {
         console.log('Response length:', response.text ? response.text.length : 'undefined');
         return;
     }
+    // const finalResponse = response.text;
     const finalResponse = substituteNamesWithMentions(response.text, message.mentions.users);
     replyMessage.edit(finalResponse);
     return;
