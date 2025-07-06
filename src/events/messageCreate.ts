@@ -93,15 +93,15 @@ export async function execute(
     let chat;
     try {
         chat = gemini.chats.create({
-            // model: 'gemini-2.5-flash-lite-preview-06-17',
+            model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
-            model: 'gemini-2.5-flash',
+            // model: 'gemini-2.5-flash',
             config: {
                 temperature: 1.5,
-                maxOutputTokens: 499,
+                // maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
-                    thinkingBudget: 0, // Disables thinking
+                    thinkingBudget: -1,
                 },
             },
             history: history,
@@ -150,8 +150,7 @@ export async function execute(
         !response ||
         !response.text ||
         response.text.trim().length === 0 ||
-        response.text.trim().length >= 2000 ||
-        response.candidates?.[0]?.finishReason === 'MAX_TOKENS'
+        response.text.trim().length >= 2000
     ) {
         replyMessage.edit(errorMessage);
         console.log(
