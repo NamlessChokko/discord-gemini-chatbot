@@ -18,3 +18,33 @@ export function substituteNamesWithMentions(content, mentions) {
     }
     return content;
 }
+export function botShouldReply(message, client) {
+    if (!message.channel.isDMBased() &&
+        !message.mentions.has(client.user)) {
+        return false;
+    }
+    if (message.mentions.everyone) {
+        return false;
+    }
+    if (message.author.tag === client.user?.tag) {
+        return false;
+    }
+    if (!message.content) {
+        return false;
+    }
+    return true;
+}
+export async function createHistory(message, client) {
+    const history = [];
+    let cursor = message;
+    while (cursor.reference && cursor.reference.messageId) {
+        const parent = await message.channel.messages.fetch(cursor.reference.messageId);
+        const role = parent.author.id === client.user?.id ? 'model' : 'user';
+        history.unshift({
+            role,
+            parts: [{ text: parent.content }],
+        });
+        cursor = parent;
+    }
+    return history;
+}
