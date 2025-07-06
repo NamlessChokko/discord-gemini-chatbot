@@ -13,6 +13,7 @@ export async function execute(message, client, gemini) {
     const content = substituteMentionUsernames(message.content, message.mentions.users);
     const botName = client.user?.globalName || client.user?.username || 'Gemini Chatbot';
     const systemInstruction = [
+        // TODO external config file for this
         'YOUR ROLE: You are a discord chatbot',
         `You are called ${botName}`,
         `User to respond: ${authorName}`,
@@ -37,7 +38,7 @@ export async function execute(message, client, gemini) {
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
             config: {
-                temperature: 1.5,
+                temperature: 1.7,
                 maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
@@ -59,7 +60,7 @@ export async function execute(message, client, gemini) {
         });
     }
     catch (error) {
-        console.log('At:', currentTime);
+        console.log('At:', currentTime); // TODO substitute with logging
         console.error('Chat.sendMessage error:', error);
         replyMessage.edit(errorMessage);
         return;

@@ -68,7 +68,7 @@ export async function execute(
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
             config: {
-                temperature: 1.5,
+                temperature: 0.7,
                 maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
