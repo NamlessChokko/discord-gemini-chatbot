@@ -5,6 +5,7 @@ import {
     newResponseLog,
     newReplyLengthErrorLog,
     newCreateChatErrorLog,
+    newSendMessageErrorLog,
 } from '../lib/logging.js';
 import {
     validReply,
@@ -52,8 +53,9 @@ export async function execute(
         `EXTRA INFORMATION: Current time is: ${currentTime}`,
     ];
 
-    const replyMessage = await message.reply('Thinking...');
+    const botReply = await message.reply('Thinking...');
     const isDM = message.channel.isDMBased();
+
     const location = isDM
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.name}`;
@@ -78,7 +80,7 @@ export async function execute(
             history: history,
         });
     } catch (error) {
-        replyMessage.reply(errorMessage);
+        botReply.edit(errorMessage);
         newCreateChatErrorLog(currentTime, error, history);
         return;
     }
@@ -89,9 +91,8 @@ export async function execute(
             message: content,
         });
     } catch (error) {
-        console.log('At:', currentTime); // TODO substitute with logging
-        console.error('Chat.sendMessage error:', error);
-        replyMessage.edit(errorMessage);
+        newSendMessageErrorLog(currentTime, error, content, history);
+        botReply.edit(errorMessage);
         return;
     }
 
@@ -115,7 +116,7 @@ export async function execute(
     );
 
     if (!validReply(response)) {
-        replyMessage.edit(errorMessage);
+        botReply.edit(errorMessage);
         newReplyLengthErrorLog(currentTime, responseText.length, isDM);
         return;
     }
@@ -125,7 +126,7 @@ export async function execute(
         message.mentions.users,
     );
 
-    replyMessage.edit(finalResponse);
+    botReply.edit(finalResponse);
 
     return;
 }

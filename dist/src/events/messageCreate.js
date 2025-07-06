@@ -1,4 +1,4 @@
-import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, } from '../lib/logging.js';
+import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, newSendMessageErrorLog, } from '../lib/logging.js';
 import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, } from '../lib/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, client, gemini) {
@@ -24,7 +24,7 @@ export async function execute(message, client, gemini) {
         'If the message is empty, you should respond with a frienly greeting.',
         `EXTRA INFORMATION: Current time is: ${currentTime}`,
     ];
-    const replyMessage = await message.reply('Thinking...');
+    const botReply = await message.reply('Thinking...');
     const isDM = message.channel.isDMBased();
     const location = isDM
         ? 'DM'
@@ -33,12 +33,13 @@ export async function execute(message, client, gemini) {
     const history = await createHistory(message, client);
     let chat;
     try {
+        throw new Error('Test error'); // For testing error handling
         chat = gemini.chats.create({
             // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
             config: {
-                temperature: 1.7,
+                temperature: 0.7,
                 maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
@@ -49,7 +50,7 @@ export async function execute(message, client, gemini) {
         });
     }
     catch (error) {
-        replyMessage.reply(errorMessage);
+        botReply.edit(errorMessage);
         newCreateChatErrorLog(currentTime, error, history);
         return;
     }
@@ -60,9 +61,8 @@ export async function execute(message, client, gemini) {
         });
     }
     catch (error) {
-        console.log('At:', currentTime); // TODO substitute with logging
-        console.error('Chat.sendMessage error:', error);
-        replyMessage.edit(errorMessage);
+        newSendMessageErrorLog(currentTime, error, content, history);
+        botReply.edit(errorMessage);
         return;
     }
     const responseText = response?.text || '(no text)';
@@ -76,11 +76,11 @@ export async function execute(message, client, gemini) {
     const finishReason = response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
     newResponseLog(currentTime, responseText, modelVersion, usageMetadata, finishReason);
     if (!validReply(response)) {
-        replyMessage.edit(errorMessage);
+        botReply.edit(errorMessage);
         newReplyLengthErrorLog(currentTime, responseText.length, isDM);
         return;
     }
     const finalResponse = substituteNamesWithMentions(response.text, message.mentions.users);
-    replyMessage.edit(finalResponse);
+    botReply.edit(finalResponse);
     return;
 }
