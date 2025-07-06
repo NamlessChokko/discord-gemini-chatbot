@@ -7,7 +7,7 @@ import { GoogleGenAI } from '@google/genai';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const server = createServer((req, res) => res.end('OK'));
+const server = createServer();
 server.listen(3000, '0.0.0.0');
 const client = new Client({
     intents: [
