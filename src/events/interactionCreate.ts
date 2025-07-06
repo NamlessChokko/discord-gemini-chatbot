@@ -1,4 +1,5 @@
 import { Interaction } from 'discord.js';
+import { ClientWithCommands } from '../lib/types.js';
 
 export const name = 'interactionCreate';
 export async function execute(interaction: Interaction) {
@@ -6,7 +7,7 @@ export async function execute(interaction: Interaction) {
         return;
     }
 
-    const command = (interaction.client as any).commands.get(
+    const command = (interaction.client as ClientWithCommands).commands.get(
         interaction.commandName,
     );
 
