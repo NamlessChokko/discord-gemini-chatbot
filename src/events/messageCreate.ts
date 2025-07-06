@@ -1,6 +1,8 @@
 import { Message, Client } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
+import { newInteractionLog, newResponseLog } from '../utils/logging.js';
 import {
+    validReply,
     botShouldReply,
     substituteMentionUsernames,
     substituteNamesWithMentions,
@@ -24,7 +26,6 @@ export async function execute(
         message.author?.globalName ||
         message.author?.username ||
         'Unknown User';
-    // const content = message.content;
     const content = substituteMentionUsernames(
         message.content,
         message.mentions.users,
@@ -36,14 +37,13 @@ export async function execute(
     const systemInstruction = [
         'YOUR ROLE: You are a discord chatbot',
         `You are called ${botName}`,
+        `User to respond: ${authorName}`,
         'Your responses should be as neutral and informative as possible, but if you detect a joking tone in a message, you can answer with a funny tone',
-        "If a user start its prompt with 'DEV' you have to send exactly what the user is asking you. No jokes, just the petition.",
         'LIMITATION: Your messages have to be less than 2000 chars long because of the discord limits.',
         'You should use markdown to format your messages any time you can, but DO NOT use markdown tables.',
         'You should use emojis to make your messages more friendly, but do not overuse them.',
         'If the message is empty, you should respond with a frienly greeting.',
         `EXTRA INFORMATION: Current time is: ${currentTime}`,
-        `User to respond: ${authorName}`,
     ];
 
     const replyMessage = await message.reply('Thinking...');
@@ -52,30 +52,21 @@ export async function execute(
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.name}`;
 
-    console.log(
-        `\n`,
-        `\n`,
-        `\n`,
-        `[ Log: interaction ] > At: ${currentTime}\n`,
-        `   Interaction: ${isDM ? 'DM' : 'mention'}\n`,
-        `   Author: ${message.author.globalName}\n`,
-        `   Location: ${location}\n`,
-        `   content: "${content}"\n`,
-    );
+    newInteractionLog(currentTime, authorName, content, isDM, location);
 
     const history = await createHistory(message, client);
     let chat;
     try {
         chat = gemini.chats.create({
-            model: 'gemini-2.5-flash-lite-preview-06-17',
+            // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
-            // model: 'gemini-2.5-flash',
+            model: 'gemini-2.5-flash',
             config: {
                 temperature: 1.5,
-                // maxOutputTokens: 500, // Approximately 2000 characters
+                maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
-                    thinkingBudget: -1,
+                    thinkingBudget: 0,
                 },
             },
             history: history,
@@ -111,21 +102,15 @@ export async function execute(
     const finishReason =
         response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
 
-    console.log(
-        `[ Log: response ] > At: ${currentTime}\n` +
-            `   Text: ${responseText}\n` +
-            `   Model Version: ${modelVersion}\n` +
-            `   Usage Metadata:\n` +
-            `${usageMetadata}\n` +
-            `   Finish Reason: ${finishReason}\n`,
+    newResponseLog(
+        currentTime,
+        responseText,
+        modelVersion,
+        usageMetadata,
+        finishReason,
     );
 
-    if (
-        !response ||
-        !response.text ||
-        response.text.trim().length === 0 ||
-        response.text.trim().length >= 2000
-    ) {
+    if (!validReply(response)) {
         replyMessage.edit(errorMessage);
         console.log(
             'Response length:',
@@ -134,7 +119,6 @@ export async function execute(
         return;
     }
 
-    // const finalResponse = response.text;
     const finalResponse = substituteNamesWithMentions(
         response.text,
         message.mentions.users,

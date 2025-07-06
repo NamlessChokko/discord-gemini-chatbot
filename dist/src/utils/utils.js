@@ -1,4 +1,7 @@
 export function substituteMentionUsernames(content, mentions) {
+    if (!content || content.length === 0) {
+        return '';
+    }
     if (!mentions || mentions.size === 0) {
         return content;
     }
@@ -9,6 +12,9 @@ export function substituteMentionUsernames(content, mentions) {
     return content;
 }
 export function substituteNamesWithMentions(content, mentions) {
+    if (!content || content.length === 0) {
+        return '';
+    }
     if (!mentions || mentions.size === 0) {
         return content;
     }
@@ -33,6 +39,24 @@ export function botShouldReply(message, client) {
         return false;
     }
     return true;
+}
+export function validReply(response) {
+    if (!response) {
+        return false;
+    }
+    try {
+        const text = response.text;
+        if (!text || text.trim().length === 0) {
+            return false;
+        }
+        if (text.trim().length > 2000) {
+            return false;
+        }
+        return true;
+    }
+    catch (error) {
+        return false;
+    }
 }
 export async function createHistory(message, client) {
     const history = [];
