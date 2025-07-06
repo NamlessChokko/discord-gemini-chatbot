@@ -1,8 +1,10 @@
-import { Message, Client, User } from 'discord.js';
+import { Message, Client } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 import {
+    botShouldReply,
     substituteMentionUsernames,
     substituteNamesWithMentions,
+    createHistory,
 } from '../utils/utils.js';
 
 export const name = 'messageCreate';
@@ -11,20 +13,7 @@ export async function execute(
     client: Client,
     gemini: GoogleGenAI,
 ) {
-    if (
-        !message.channel.isDMBased() &&
-        !message.mentions.has(client.user as User)
-    ) {
-        return;
-    }
-
-    if (message.mentions.everyone) {
-        return;
-    }
-    if (message.author.tag === client.user?.tag) {
-        return;
-    }
-    if (!message.content) {
+    if (!botShouldReply(message, client)) {
         return;
     }
 
@@ -61,7 +50,7 @@ export async function execute(
     const isDM = message.channel.isDMBased();
     const location = isDM
         ? 'DM'
-        : `${message.guild?.name} -> ${message.channel.id}`;
+        : `${message.guild?.name} -> ${message.channel.name}`;
 
     console.log(
         `\n`,
@@ -74,21 +63,7 @@ export async function execute(
         `   content: "${content}"\n`,
     );
 
-    const history = [];
-    let cursor: Message = message;
-
-    while (cursor.reference && cursor.reference.messageId) {
-        const parent = await message.channel.messages.fetch(
-            cursor.reference.messageId,
-        );
-        const role = parent.author.id === client.user?.id ? 'model' : 'user';
-        history.unshift({
-            role,
-            parts: [{ text: parent.content }],
-        });
-        cursor = parent;
-    }
-
+    const history = await createHistory(message, client);
     let chat;
     try {
         chat = gemini.chats.create({

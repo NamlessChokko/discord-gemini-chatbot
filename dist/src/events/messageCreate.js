@@ -1,17 +1,7 @@
-import { substituteMentionUsernames, substituteNamesWithMentions, } from '../utils/utils.js';
+import { botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, } from '../utils/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, client, gemini) {
-    if (!message.channel.isDMBased() &&
-        !message.mentions.has(client.user)) {
-        return;
-    }
-    if (message.mentions.everyone) {
-        return;
-    }
-    if (message.author.tag === client.user?.tag) {
-        return;
-    }
-    if (!message.content) {
+    if (!botShouldReply(message, client)) {
         return;
     }
     const errorMessage = 'Sorry, there was an error while processing your message. Please try again later.';
@@ -38,19 +28,9 @@ export async function execute(message, client, gemini) {
     const isDM = message.channel.isDMBased();
     const location = isDM
         ? 'DM'
-        : `${message.guild?.name} -> ${message.channel.id}`;
+        : `${message.guild?.name} -> ${message.channel.name}`;
     console.log(`\n`, `\n`, `\n`, `[ Log: interaction ] > At: ${currentTime}\n`, `   Interaction: ${isDM ? 'DM' : 'mention'}\n`, `   Author: ${message.author.globalName}\n`, `   Location: ${location}\n`, `   content: "${content}"\n`);
-    const history = [];
-    let cursor = message;
-    while (cursor.reference && cursor.reference.messageId) {
-        const parent = await message.channel.messages.fetch(cursor.reference.messageId);
-        const role = parent.author.id === client.user?.id ? 'model' : 'user';
-        history.unshift({
-            role,
-            parts: [{ text: parent.content }],
-        });
-        cursor = parent;
-    }
+    const history = await createHistory(message, client);
     let chat;
     try {
         chat = gemini.chats.create({
