@@ -25,17 +25,19 @@ export async function execute(message: Message, client: Client) {
 
     const errorMessage =
         'Sorry, there was an error while processing your message. Please try again later.';
-    const currentTime = new Date().toLocaleTimeString();
+    const currentTime = new Date().toString();
     const authorName = message.author.globalName;
     const content = substituteMentionUsernames(
         message.content,
         message.mentions.users,
     );
 
+    const botName =
+        client.user?.globalName || client.user?.username || 'Gemini Chatbot';
+
     const systemInstruction = [
         'YOUR ROLE: You are a discord chatbot',
-        'You are called Gemini Chatbot',
-        'You use Gemini 2.5 API',
+        `You are called ${botName}`,
         'Your responses should be as neutral and informative as possible, but if you detect a joking tone in a message, you can answer with a funny tone',
         "If a user start its prompt with 'DEV' you have to send exactly what the user is asking you. No jokes, just the petition.",
         'LIMITATION: Your messages have to be less than 2000 chars long because of the discord limits.',
@@ -53,6 +55,10 @@ export async function execute(message: Message, client: Client) {
         : `${message.guild?.name} -> ${message.channel.id}`;
 
     console.log(
+        `\n`,
+        `\n`,
+        `[===============================================================]\n`,
+        `\n`,
         `[ Log: interaction ] > At: ${currentTime}\n`,
         `   Interaction: ${isDM ? 'DM' : 'mention'}\n`,
         `   Author: ${message.author.globalName}\n`,

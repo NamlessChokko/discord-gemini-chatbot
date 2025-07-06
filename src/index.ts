@@ -43,7 +43,7 @@ for (const file of commandFiles) {
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
     } else {
-        console.log(`[WARNING] ${file} expected 'data' & 'execute'`);
+        console.log(`[ WARNING ] > ${file} expected 'data' & 'execute'`);
     }
 }
 
@@ -60,9 +60,9 @@ for (const file of eventFiles) {
             event.execute(...args, client),
         );
     } else {
-        client.on(event.name, (...args: unknown[]) =>
-            event.execute(...args, client),
-        );
+        client.on(event.name, (...args: unknown[]) => {
+            event.execute(...args, client);
+        });
     }
 }
 
