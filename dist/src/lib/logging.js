@@ -14,3 +14,10 @@ export function newReplyLengthErrorLog(currentTime, replyLength, isDM) {
         `   Reply Length: ${replyLength} characters\n` +
         `   Is DM: ${isDM}\n`, `   Note: Reply length exceeds the maximum allowed length.\n`);
 }
+export function newCreateChatErrorLog(currentTime, error, history) {
+    console.log(`[ Log: create chat error ] > At: ${currentTime}\n` +
+        `   History Length: ${history.length}\n` +
+        `   History: ${JSON.stringify(history, null, 2)}\n` +
+        `   Error: ${error}\n`);
+    console.error(error);
+}

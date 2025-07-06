@@ -1,13 +1,18 @@
 import { Message, Client } from 'discord.js';
-import { GoogleGenAI } from '@google/genai';
-import { newInteractionLog, newResponseLog } from '../utils/logging.js';
+import { GoogleGenAI, Content } from '@google/genai';
+import {
+    newMentionLog,
+    newResponseLog,
+    newReplyLengthErrorLog,
+    newCreateChatErrorLog,
+} from '../lib/logging.js';
 import {
     validReply,
     botShouldReply,
     substituteMentionUsernames,
     substituteNamesWithMentions,
     createHistory,
-} from '../utils/utils.js';
+} from '../lib/utils.js';
 
 export const name = 'messageCreate';
 export async function execute(
@@ -35,6 +40,7 @@ export async function execute(
         client.user?.globalName || client.user?.username || 'Gemini Chatbot';
 
     const systemInstruction = [
+        // TODO external config file for this
         'YOUR ROLE: You are a discord chatbot',
         `You are called ${botName}`,
         `User to respond: ${authorName}`,
@@ -52,9 +58,9 @@ export async function execute(
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.name}`;
 
-    newInteractionLog(currentTime, authorName, content, isDM, location);
+    newMentionLog(currentTime, authorName, content, isDM, location);
 
-    const history = await createHistory(message, client);
+    const history: Content[] = await createHistory(message, client);
     let chat;
     try {
         chat = gemini.chats.create({
@@ -72,10 +78,8 @@ export async function execute(
             history: history,
         });
     } catch (error) {
-        console.log('At:', currentTime);
-        console.error('Creating chat error:', error);
-        console.log(history);
-        replyMessage.edit(errorMessage);
+        replyMessage.reply(errorMessage);
+        newCreateChatErrorLog(currentTime, error, history);
         return;
     }
 
@@ -85,7 +89,7 @@ export async function execute(
             message: content,
         });
     } catch (error) {
-        console.log('At:', currentTime);
+        console.log('At:', currentTime); // TODO substitute with logging
         console.error('Chat.sendMessage error:', error);
         replyMessage.edit(errorMessage);
         return;
@@ -112,10 +116,7 @@ export async function execute(
 
     if (!validReply(response)) {
         replyMessage.edit(errorMessage);
-        console.log(
-            'Response length:',
-            response.text ? response.text.length : 'undefined',
-        );
+        newReplyLengthErrorLog(currentTime, responseText.length, isDM);
         return;
     }
 

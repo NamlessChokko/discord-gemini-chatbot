@@ -1,5 +1,5 @@
-import { newInteractionLog, newResponseLog } from '../utils/logging.js';
-import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, } from '../utils/utils.js';
+import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, } from '../lib/logging.js';
+import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, } from '../lib/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, client, gemini) {
     if (!botShouldReply(message, client)) {
@@ -28,7 +28,7 @@ export async function execute(message, client, gemini) {
     const location = isDM
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.name}`;
-    newInteractionLog(currentTime, authorName, content, isDM, location);
+    newMentionLog(currentTime, authorName, content, isDM, location);
     const history = await createHistory(message, client);
     let chat;
     try {
@@ -48,10 +48,8 @@ export async function execute(message, client, gemini) {
         });
     }
     catch (error) {
-        console.log('At:', currentTime);
-        console.error('Creating chat error:', error);
-        console.log(history);
-        replyMessage.edit(errorMessage);
+        replyMessage.reply(errorMessage);
+        newCreateChatErrorLog(currentTime, error, history);
         return;
     }
     let response;
@@ -78,7 +76,7 @@ export async function execute(message, client, gemini) {
     newResponseLog(currentTime, responseText, modelVersion, usageMetadata, finishReason);
     if (!validReply(response)) {
         replyMessage.edit(errorMessage);
-        console.log('Response length:', response.text ? response.text.length : 'undefined');
+        newReplyLengthErrorLog(currentTime, responseText.length, isDM);
         return;
     }
     const finalResponse = substituteNamesWithMentions(response.text, message.mentions.users);

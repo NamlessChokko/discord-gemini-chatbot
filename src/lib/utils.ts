@@ -1,5 +1,5 @@
 import { Collection, Message, User, Client } from 'discord.js';
-import { GenerateContentResponse } from '@google/genai';
+import { GenerateContentResponse, Content } from '@google/genai';
 
 export function substituteMentionUsernames(
     content: string,
@@ -72,13 +72,16 @@ export function validReply(response: GenerateContentResponse | null): boolean {
         }
 
         return true;
-    } catch (error) {
+    } catch {
         return false;
     }
 }
 
-export async function createHistory(message: Message, client: Client) {
-    const history = [];
+export async function createHistory(
+    message: Message,
+    client: Client,
+): Promise<Content[]> {
+    const history: Content[] = [];
     let cursor: Message = message;
 
     while (cursor.reference && cursor.reference.messageId) {

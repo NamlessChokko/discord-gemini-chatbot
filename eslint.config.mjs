@@ -38,6 +38,6 @@ export default defineConfig([
     },
   },
   {
-    ignores: ['node_modules', 'dist'],
+    ignores: ['node_modules', 'dist', 'eslint.config.mjs'],
   },
 ]);
