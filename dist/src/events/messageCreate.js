@@ -39,7 +39,7 @@ export async function execute(message, client, gemini) {
     const location = isDM
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.id}`;
-    console.log(`\n`, `\n`, `[===============================================================]\n`, `\n`, `[ Log: interaction ] > At: ${currentTime}\n`, `   Interaction: ${isDM ? 'DM' : 'mention'}\n`, `   Author: ${message.author.globalName}\n`, `   Location: ${location}\n`, `   content: "${content}"\n`);
+    console.log(`\n`, `\n`, `\n`, `[ Log: interaction ] > At: ${currentTime}\n`, `   Interaction: ${isDM ? 'DM' : 'mention'}\n`, `   Author: ${message.author.globalName}\n`, `   Location: ${location}\n`, `   content: "${content}"\n`);
     const history = [];
     let cursor = message;
     while (cursor.reference && cursor.reference.messageId) {
