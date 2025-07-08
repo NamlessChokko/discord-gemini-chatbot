@@ -42,7 +42,8 @@ export function substituteNamesWithMentions(
 export function botShouldReply(message: Message, client: Client): boolean {
     if (
         !message.channel.isDMBased() &&
-        !message.mentions.has(client.user as User)
+        !message.mentions.has(client.user as User) &&
+        !message.author.bot
     ) {
         return false;
     }

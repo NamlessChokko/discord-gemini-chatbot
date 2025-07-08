@@ -27,7 +27,8 @@ export function substituteNamesWithMentions(content, mentions) {
 }
 export function botShouldReply(message, client) {
     if (!message.channel.isDMBased() &&
-        !message.mentions.has(client.user)) {
+        !message.mentions.has(client.user) &&
+        !message.author.bot) {
         return false;
     }
     if (message.mentions.everyone) {
