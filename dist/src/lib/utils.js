@@ -72,3 +72,13 @@ export async function createHistory(message, client) {
     }
     return history;
 }
+export function formatUsageMetadata(usageMetadata) {
+    if (!usageMetadata) {
+        return '(no usage metadata)';
+    }
+    const responseFormated = JSON.stringify(usageMetadata, null, 2)
+        .split('\n')
+        .map((line) => `   ${line}`)
+        .join('\n');
+    return responseFormated;
+}
