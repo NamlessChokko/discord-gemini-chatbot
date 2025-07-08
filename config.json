@@ -10,7 +10,8 @@
       "model": "gemini-2.5-flash",
       "thinkingBudget": 0,
       "temperature": 0.7,
-      "maxOutputTokens": 500
+      "maxOutputTokens": 500,
+      "maxHistoryLength": 3
     }
   }
 }

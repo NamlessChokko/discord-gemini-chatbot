@@ -1,0 +1,17 @@
+{
+    "messageCreateConfigs": {
+        "responseConfigs": {
+            "botCustomName": "Gemini Chatbot",
+            "forceCustomName": 0,
+            "processingMessage": "Thinking...",
+            "errorMessage": "Sorry, there was an error while processing your message. Please try again later."
+        },
+        "generationParameters": {
+            "model": "gemini-2.5-flash",
+            "thinkingBudget": 0,
+            "temperature": 0.7,
+            "maxOutputTokens": 500,
+            "maxHistoryLength": 3
+        }
+    }
+}

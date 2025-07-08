@@ -56,8 +56,8 @@ export async function execute(message, client, gemini) {
     }
     const responseText = response?.text || '(no text)';
     const modelVersion = response?.modelVersion || '(unknown model version)';
-    const finishReason = response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
     const usageMetadata = formatUsageMetadata(response?.usageMetadata);
+    const finishReason = response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
     newResponseLog(currentTime, responseText, modelVersion, usageMetadata, finishReason);
     if (!validReply(response)) {
         botReply.edit(errorMessage);

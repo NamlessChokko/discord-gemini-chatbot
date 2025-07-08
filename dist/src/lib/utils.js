@@ -1,3 +1,4 @@
+import config from '../../config.json' with { type: 'json' };
 export function substituteMentionUsernames(content, mentions) {
     if (!content || content.length === 0) {
         return '';
@@ -59,6 +60,10 @@ export function validReply(response) {
     }
 }
 export async function createHistory(message, client) {
+    const maxHistoryLengthConfig = config.messageCreateConfigs.generationParameters.maxHistoryLength || 10;
+    const maxHistoryLength = maxHistoryLengthConfig > 0
+        ? maxHistoryLengthConfig
+        : Number.MAX_SAFE_INTEGER;
     const history = [];
     let cursor = message;
     while (cursor.reference && cursor.reference.messageId) {
@@ -68,6 +73,9 @@ export async function createHistory(message, client) {
             role,
             parts: [{ text: parent.content }],
         });
+        if (history.length >= maxHistoryLength && role === 'user') {
+            break;
+        }
         cursor = parent;
     }
     return history;
