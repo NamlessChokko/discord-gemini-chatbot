@@ -1,4 +1,5 @@
 import { Collection, Message, User, Client } from 'discord.js';
+import config from '../../config.json' with { type: 'json' };
 import {
     GenerateContentResponse,
     GenerateContentResponseUsageMetadata,
@@ -85,23 +86,32 @@ export async function createHistory(
     message: Message,
     client: Client,
 ): Promise<Content[]> {
-    const maxHistoryLength = 10;
+    const maxHistoryLengthConfig =
+        config.messageCreateConfigs.generationParameters.maxHistoryLength || 10;
+    const maxHistoryLength =
+        maxHistoryLengthConfig > 0
+            ? maxHistoryLengthConfig
+            : Number.MAX_SAFE_INTEGER;
     const history: Content[] = [];
     let cursor: Message = message;
 
-    while (cursor.reference && cursor.reference.messageId && ) {
+    while (cursor.reference && cursor.reference.messageId) {
         const parent = await message.channel.messages.fetch(
             cursor.reference.messageId,
         );
+
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
+
         history.unshift({
             role,
             parts: [{ text: parent.content }],
         });
-        cursor = parent;
-        if (history.length >= maxHistoryLength) {
+
+        if (history.length >= maxHistoryLength && role === 'user') {
             break;
         }
+
+        cursor = parent;
     }
 
     return history;
