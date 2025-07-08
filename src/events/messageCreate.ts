@@ -14,6 +14,7 @@ import {
     substituteMentionUsernames,
     substituteNamesWithMentions,
     createHistory,
+    formatUsageMetadata,
 } from '../lib/utils.js';
 
 export const name = 'messageCreate';
@@ -92,14 +93,9 @@ export async function execute(
 
     const responseText = response?.text || '(no text)';
     const modelVersion = response?.modelVersion || '(unknown model version)';
+    const usageMetadata = formatUsageMetadata(response?.usageMetadata);
     const finishReason =
         response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
-    const usageMetadata = response?.usageMetadata
-        ? JSON.stringify(response.usageMetadata, null, 2)
-              .split('\n')
-              .map((line) => `   ${line}`)
-              .join('\n')
-        : '(no usage metadata)';
 
     newResponseLog(
         currentTime,

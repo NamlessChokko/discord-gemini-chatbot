@@ -1,5 +1,9 @@
 import { Collection, Message, User, Client } from 'discord.js';
-import { GenerateContentResponse, Content } from '@google/genai';
+import {
+    GenerateContentResponse,
+    GenerateContentResponseUsageMetadata,
+    Content,
+} from '@google/genai';
 
 export function substituteMentionUsernames(
     content: string,
@@ -81,10 +85,11 @@ export async function createHistory(
     message: Message,
     client: Client,
 ): Promise<Content[]> {
+    const maxHistoryLength = 10;
     const history: Content[] = [];
     let cursor: Message = message;
 
-    while (cursor.reference && cursor.reference.messageId) {
+    while (cursor.reference && cursor.reference.messageId && ) {
         const parent = await message.channel.messages.fetch(
             cursor.reference.messageId,
         );
@@ -94,7 +99,24 @@ export async function createHistory(
             parts: [{ text: parent.content }],
         });
         cursor = parent;
+        if (history.length >= maxHistoryLength) {
+            break;
+        }
     }
 
     return history;
+}
+
+export function formatUsageMetadata(
+    usageMetadata: GenerateContentResponseUsageMetadata | null | undefined,
+): string {
+    if (!usageMetadata) {
+        return '(no usage metadata)';
+    }
+
+    const responseFormated = JSON.stringify(usageMetadata, null, 2)
+        .split('\n')
+        .map((line) => `   ${line}`)
+        .join('\n');
+    return responseFormated;
 }

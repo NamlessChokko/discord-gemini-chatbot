@@ -1,6 +1,6 @@
 import systemInstructions from '../lib/systemInstructions.js';
 import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, newSendMessageErrorLog, } from '../lib/logging.js';
-import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, } from '../lib/utils.js';
+import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata, } from '../lib/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, client, gemini) {
     if (!botShouldReply(message, client)) {
@@ -57,12 +57,7 @@ export async function execute(message, client, gemini) {
     const responseText = response?.text || '(no text)';
     const modelVersion = response?.modelVersion || '(unknown model version)';
     const finishReason = response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
-    const usageMetadata = response?.usageMetadata
-        ? JSON.stringify(response.usageMetadata, null, 2)
-            .split('\n')
-            .map((line) => `   ${line}`)
-            .join('\n')
-        : '(no usage metadata)';
+    const usageMetadata = formatUsageMetadata(response?.usageMetadata);
     newResponseLog(currentTime, responseText, modelVersion, usageMetadata, finishReason);
     if (!validReply(response)) {
         botReply.edit(errorMessage);
