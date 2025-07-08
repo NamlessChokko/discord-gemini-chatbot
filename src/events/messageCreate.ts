@@ -27,6 +27,10 @@ export async function execute(
         return;
     }
 
+    (async function () {
+        return new Promise((resolve) => setTimeout(resolve, 5000));
+    })();
+
     const errorMessage =
         'Sorry, there was an error while processing your message. Please try again later.';
     const currentTime = new Date().toString();
