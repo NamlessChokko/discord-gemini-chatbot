@@ -1,4 +1,7 @@
 import systemInstructions from '../lib/systemInstructions.js';
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, newSendMessageErrorLog, } from '../lib/logging.js';
 import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata, } from '../lib/utils.js';
 export const name = 'messageCreate';
@@ -15,7 +18,9 @@ export async function execute(message, client, gemini) {
         message.author?.username ||
         'Unknown User';
     const content = substituteMentionUsernames(message.content, message.mentions.users);
-    const botName = client.user?.globalName || client.user?.username || 'Gemini Chatbot';
+    const botName = client.user?.globalName ||
+        client.user?.username ||
+        config.messageCreateConfigs.responseConfigs.botCustomName;
     const systemInstruction = systemInstructions.messageCreate(botName, authorName, currentTime);
     const botReply = await message.reply('Thinking...');
     const isDM = message.channel.isDMBased();

@@ -1,38 +1,41 @@
 {
-    "name": "discord-gemini-chatbot",
-    "version": "1.0.0",
-    "main": "dist/index.js",
-    "scripts": {
-        "build": "tsc",
-        "start": "node dist/src/index.js",
-        "dev": "tsc && node dist/src/index.js",
-        "lint": "eslint . --ext .ts",
-        "format": "prettier --write ."
-    },
-    "keywords": [],
-    "author": "NamlessChokko",
-    "license": "ISC",
-    "description": "A discord bot that use the Gemini api (kinda chatbot)",
-    "type": "module",
-    "dependencies": {
-        "@google/genai": "^0.9.0",
-        "@google/generative-ai": "^0.24.0",
-        "axios": "^1.8.4",
-        "discord.js": "^14.18.0",
-        "dotenv": "^16.5.0"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.25.1",
-        "@types/node": "^24.0.10",
-        "eslint": "^9.25.1",
-        "eslint-config-prettier": "^10.1.2",
-        "eslint-plugin-prettier": "^5.2.6",
-        "globals": "^16.0.0",
-        "prettier": "^3.5.3",
-        "ts-node": "^10.9.2",
-        "ts-node-dev": "^2.0.0",
-        "tsx": "^4.20.3",
-        "typescript": "^5.8.3",
-        "typescript-eslint": "^8.35.1"
-    }
+  "name": "discord-gemini-chatbot",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'npx swc src -d dist --strip-leading-paths && node dist'",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "NamlessChokko",
+  "license": "ISC",
+  "description": "A discord bot that use the Gemini api (kinda chatbot)",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^0.9.0",
+    "@google/generative-ai": "^0.24.0",
+    "axios": "^1.8.4",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@swc/cli": "^0.7.8",
+    "@swc/core": "^1.12.11",
+    "@types/node": "^24.0.10",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.0.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.1"
+  }
 }
