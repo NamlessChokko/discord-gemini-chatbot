@@ -35,13 +35,20 @@ const commandFiles = fs
     .readdirSync(commandsPath)
     .filter((file) => file.endsWith('.js'));
 
-for (const file of commandFiles) {
+const commandPromises = commandFiles.map((file) => {
     const filePath = path.join(commandsPath, file);
-    const command = await import(filePath);
+    return import(filePath);
+});
+
+const commands = await Promise.all(commandPromises);
+
+for (const command of commands) {
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
     } else {
-        console.log(`[ WARNING ] > ${file} expected 'data' & 'execute'`);
+        console.log(
+            `[ WARNING ] > A command file is missing 'data' or 'execute'`,
+        );
     }
 }
 
@@ -50,9 +57,14 @@ const eventFiles = fs
     .readdirSync(eventPath)
     .filter((file) => file.endsWith('.js'));
 
-for (const file of eventFiles) {
+const eventPromises = eventFiles.map((file) => {
     const filePath = path.join(eventPath, file);
-    const event = await import(filePath);
+    return import(filePath);
+});
+
+const events = await Promise.all(eventPromises);
+
+for (const event of events) {
     if (event.once) {
         client.once(event.name, (...args: unknown[]) =>
             event.execute(...args, client, gemini),

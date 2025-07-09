@@ -1,4 +1,7 @@
 import systemInstructions from '../lib/systemInstructions.js';
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 import { Message, Client } from 'discord.js';
 import { GoogleGenAI, Content } from '@google/genai';
 import {
@@ -44,7 +47,9 @@ export async function execute(
     );
 
     const botName =
-        client.user?.globalName || client.user?.username || 'Gemini Chatbot';
+        client.user?.globalName ||
+        client.user?.username ||
+        config.messageCreateConfigs.responseConfigs.botCustomName;
 
     const systemInstruction = systemInstructions.messageCreate(
         botName,

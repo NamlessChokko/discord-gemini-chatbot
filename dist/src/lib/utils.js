@@ -1,4 +1,6 @@
-import config from '../../config.json' with { type: 'json' };
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 export function substituteMentionUsernames(content, mentions) {
     if (!content || content.length === 0) {
         return '';

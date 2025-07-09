@@ -118,85 +118,55 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import 'dotenv/config';
-import { REST, Routes } from 'discord.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-var __filename = fileURLToPath(import.meta.url);
-var __dirname = path.dirname(__filename);
-var ignoreList = []; // List of commands to ignore
-var commands = [];
-var commandsPath = path.join(__dirname, 'src/commands');
-var commandFiles = fs.readdirSync(commandsPath).filter(function(f) {
-    return f.endsWith('.ts');
-});
-var _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
-try {
-    for(var _iterator = commandFiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
-        var file = _step.value;
-        if (ignoreList.includes(file)) {
-            continue;
-        }
-        var filePath = path.join(commandsPath, file);
-        var command = await import(filePath);
-        commands.push(command.data.toJSON());
-    }
-} catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-} finally{
-    try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-        }
-    } finally{
-        if (_didIteratorError) {
-            throw _iteratorError;
-        }
-    }
-}
-var rest = new REST({
-    version: '10'
-}).setToken(process.env.DISCORD_TOKEN);
-(function() {
+export var name = 'interactionCreate';
+export function execute(interaction) {
     return _async_to_generator(function() {
-        var data, error;
+        var command, error;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
+                    if (!interaction.isChatInputCommand()) {
+                        return [
+                            2
+                        ];
+                    }
+                    command = interaction.client.commands.get(interaction.commandName);
+                    if (!command) {
+                        console.error("No command matching ".concat(interaction.commandName, " was found."));
+                        return [
+                            2
+                        ];
+                    }
+                    _state.label = 1;
+                case 1:
                     _state.trys.push([
-                        0,
-                        2,
+                        1,
+                        3,
                         ,
-                        3
+                        4
                     ]);
-                    console.log("Started refreshing ".concat(commands.length, " application (/) commands."));
                     return [
                         4,
-                        rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-                            body: commands
-                        })
-                    ];
-                case 1:
-                    data = _state.sent();
-                    console.log("Successfully reloaded ".concat(data.length, " application (/) commands."));
-                    return [
-                        3,
-                        3
+                        command.execute(interaction)
                     ];
                 case 2:
-                    error = _state.sent();
-                    console.error(error);
+                    _state.sent();
                     return [
                         3,
-                        3
+                        4
                     ];
                 case 3:
+                    error = _state.sent();
+                    console.error('interactionCreate error: ', error);
+                    return [
+                        3,
+                        4
+                    ];
+                case 4:
                     return [
                         2
                     ];
             }
         });
     })();
-})();
+}

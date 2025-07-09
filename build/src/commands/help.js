@@ -118,85 +118,24 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import 'dotenv/config';
-import { REST, Routes } from 'discord.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-var __filename = fileURLToPath(import.meta.url);
-var __dirname = path.dirname(__filename);
-var ignoreList = []; // List of commands to ignore
-var commands = [];
-var commandsPath = path.join(__dirname, 'src/commands');
-var commandFiles = fs.readdirSync(commandsPath).filter(function(f) {
-    return f.endsWith('.ts');
-});
-var _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
-try {
-    for(var _iterator = commandFiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
-        var file = _step.value;
-        if (ignoreList.includes(file)) {
-            continue;
-        }
-        var filePath = path.join(commandsPath, file);
-        var command = await import(filePath);
-        commands.push(command.data.toJSON());
-    }
-} catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-} finally{
-    try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-        }
-    } finally{
-        if (_didIteratorError) {
-            throw _iteratorError;
-        }
-    }
-}
-var rest = new REST({
-    version: '10'
-}).setToken(process.env.DISCORD_TOKEN);
-(function() {
+import { SlashCommandBuilder } from 'discord.js';
+var helpMessage = '\n**\uD83E\uDD16 Gemini Chat Bot Help**\n\nGemini is powered by Google\'s Gemini 2.5 Flash API, enabling natural conversations directly inside Discord.\n\n**\uD83D\uDDE8️ How to Use**\n- **Mention the bot**: Just mention "@Gemini" in any message and ask anything.\n- **Direct Messages**: You can chat with Gemini privately via DMs.\n- **Slash Commands**: Use slash commands like "/code", "/image", and more (coming soon).\n\n**\uD83D\uDCCF Limits**\n- Max response size: ~2000 characters.\n- Gemini API max tokens per response: **499 tokens**.\n\n**⚙️ Notes**\n- Answers are always in **English** regardless of the input.\n- If you joke, Gemini might joke back \uD83D\uDE09\n\nUse "@Gemini" or try a command to begin!\n';
+export var data = new SlashCommandBuilder().setName('help').setDescription('Displays usage instructions and bot capabilities.');
+export function execute(interaction) {
     return _async_to_generator(function() {
-        var data, error;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
-                    _state.trys.push([
-                        0,
-                        2,
-                        ,
-                        3
-                    ]);
-                    console.log("Started refreshing ".concat(commands.length, " application (/) commands."));
                     return [
                         4,
-                        rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-                            body: commands
-                        })
+                        interaction.reply(helpMessage)
                     ];
                 case 1:
-                    data = _state.sent();
-                    console.log("Successfully reloaded ".concat(data.length, " application (/) commands."));
-                    return [
-                        3,
-                        3
-                    ];
-                case 2:
-                    error = _state.sent();
-                    console.error(error);
-                    return [
-                        3,
-                        3
-                    ];
-                case 3:
+                    _state.sent();
                     return [
                         2
                     ];
             }
         });
     })();
-})();
+}

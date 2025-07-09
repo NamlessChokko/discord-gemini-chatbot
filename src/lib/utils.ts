@@ -1,5 +1,7 @@
 import { Collection, Message, User, Client } from 'discord.js';
-import config from '../../config.json' with { type: 'json' };
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 import {
     GenerateContentResponse,
     GenerateContentResponseUsageMetadata,
