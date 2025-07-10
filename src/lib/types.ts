@@ -10,6 +10,6 @@ export interface Command {
     execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 }
 
-export interface ClientWithCommands extends Client {
-    commands: Collection<string, Command>;
+export interface CustomClient extends Client {
+    commands?: Collection<string, Command>;
 }

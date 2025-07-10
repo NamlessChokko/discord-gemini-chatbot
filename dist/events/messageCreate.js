@@ -138,18 +138,6 @@ export function execute(message, client, gemini) {
                             2
                         ];
                     }
-                    (function() {
-                        return _async_to_generator(function() {
-                            return _ts_generator(this, function(_state) {
-                                return [
-                                    2,
-                                    new Promise(function(resolve) {
-                                        return setTimeout(resolve, 5000);
-                                    })
-                                ];
-                            });
-                        })();
-                    })();
                     errorMessage = 'Sorry, there was an error while processing your message. Please try again later.';
                     currentTime = new Date().toString();
                     authorName = ((_message_author = message.author) === null || _message_author === void 0 ? void 0 : _message_author.globalName) || ((_message_author1 = message.author) === null || _message_author1 === void 0 ? void 0 : _message_author1.username) || 'Unknown User';

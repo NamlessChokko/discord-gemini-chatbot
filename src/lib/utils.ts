@@ -1,4 +1,6 @@
 import { Collection, Message, User, Client } from 'discord.js';
+import { GoogleGenAI } from '@google/genai';
+import { CustomClient } from './types.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -131,4 +133,63 @@ export function formatUsageMetadata(
         .map((line) => `   ${line}`)
         .join('\n');
     return responseFormated;
+}
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export async function loadCommands(client: CustomClient) {
+    client.commands = new Collection();
+
+    const commandsPath = path.join(__dirname, '..', 'commands');
+    const commandFiles = fs
+        .readdirSync(commandsPath)
+        .filter((file) => file.endsWith('.js'));
+
+    const commandPromises = commandFiles.map((file) => {
+        const filePath = path.join(commandsPath, file);
+        return import(filePath);
+    });
+
+    const commands = await Promise.all(commandPromises);
+
+    for (const command of commands) {
+        if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command);
+        } else {
+            console.log(
+                `[ WARNING ] > A command file is missing 'data' or 'execute'`,
+            );
+        }
+    }
+}
+
+export async function loadEvents(client: CustomClient, gemini: GoogleGenAI) {
+    const eventPath = path.join(__dirname, '..', 'events');
+    const eventFiles = fs
+        .readdirSync(eventPath)
+        .filter((file) => file.endsWith('.js'));
+
+    const eventPromises = eventFiles.map((file) => {
+        const filePath = path.join(eventPath, file);
+        return import(filePath);
+    });
+
+    const events = await Promise.all(eventPromises);
+
+    for (const event of events) {
+        if (event.once) {
+            client.once(event.name, (...args: unknown[]) =>
+                event.execute(...args, client, gemini),
+            );
+        } else {
+            client.on(event.name, (...args: unknown[]) => {
+                event.execute(...args, client, gemini);
+            });
+        }
+    }
 }

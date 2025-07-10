@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "start": "node dist/src/index.js",
-    "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'npx swc src -d dist --strip-leading-paths && node dist'",
+    "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'npx swc src -d dist --strip-leading-paths && node dist/deploy-commands.js && clear && node dist'",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
   },

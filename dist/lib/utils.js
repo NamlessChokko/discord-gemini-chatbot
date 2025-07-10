@@ -1,3 +1,11 @@
+function _array_like_to_array(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _array_without_holes(arr) {
+    if (Array.isArray(arr)) return _array_like_to_array(arr);
+}
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
         var info = gen[key](arg);
@@ -26,6 +34,23 @@ function _async_to_generator(fn) {
             _next(undefined);
         });
     };
+}
+function _iterable_to_array(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _non_iterable_spread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _to_consumable_array(arr) {
+    return _array_without_holes(arr) || _iterable_to_array(arr) || _unsupported_iterable_to_array(arr) || _non_iterable_spread();
+}
+function _unsupported_iterable_to_array(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _array_like_to_array(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _array_like_to_array(o, minLen);
 }
 function _ts_generator(thisArg, body) {
     var f, y, t, _ = {
@@ -118,6 +143,7 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
+import { Collection } from 'discord.js';
 var _ref = await import('../../config.json', {
     with: {
         type: 'json'
@@ -185,7 +211,7 @@ export function substituteNamesWithMentions(content, mentions) {
 }
 export function botShouldReply(message, client) {
     var _client_user;
-    if (!message.channel.isDMBased() && !message.mentions.has(client.user) && !message.author.bot) {
+    if (!message.channel.isDMBased() && !message.mentions.has(client.user)) {
         return false;
     }
     if (message.mentions.everyone) {
@@ -275,4 +301,131 @@ export function formatUsageMetadata(usageMetadata) {
         return "   ".concat(line);
     }).join('\n');
     return responseFormated;
+}
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+var __filename = fileURLToPath(import.meta.url);
+var __dirname = path.dirname(__filename);
+export function loadCommands(client) {
+    return _async_to_generator(function() {
+        var commandsPath, commandFiles, commandPromises, commands, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, command;
+        return _ts_generator(this, function(_state) {
+            switch(_state.label){
+                case 0:
+                    client.commands = new Collection();
+                    commandsPath = path.join(__dirname, '..', 'commands');
+                    commandFiles = fs.readdirSync(commandsPath).filter(function(file) {
+                        return file.endsWith('.js');
+                    });
+                    commandPromises = commandFiles.map(function(file) {
+                        var filePath = path.join(commandsPath, file);
+                        return import(filePath);
+                    });
+                    return [
+                        4,
+                        Promise.all(commandPromises)
+                    ];
+                case 1:
+                    commands = _state.sent();
+                    _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
+                    try {
+                        for(_iterator = commands[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
+                            command = _step.value;
+                            if ('data' in command && 'execute' in command) {
+                                client.commands.set(command.data.name, command);
+                            } else {
+                                console.log("[ WARNING ] > A command file is missing 'data' or 'execute'");
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                    } finally{
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return != null) {
+                                _iterator.return();
+                            }
+                        } finally{
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
+                        }
+                    }
+                    return [
+                        2
+                    ];
+            }
+        });
+    })();
+}
+export function loadEvents(client, gemini) {
+    return _async_to_generator(function() {
+        var eventPath, eventFiles, eventPromises, events, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _loop, _iterator, _step;
+        return _ts_generator(this, function(_state) {
+            switch(_state.label){
+                case 0:
+                    eventPath = path.join(__dirname, '..', 'events');
+                    eventFiles = fs.readdirSync(eventPath).filter(function(file) {
+                        return file.endsWith('.js');
+                    });
+                    eventPromises = eventFiles.map(function(file) {
+                        var filePath = path.join(eventPath, file);
+                        return import(filePath);
+                    });
+                    return [
+                        4,
+                        Promise.all(eventPromises)
+                    ];
+                case 1:
+                    events = _state.sent();
+                    _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
+                    try {
+                        _loop = function() {
+                            var event = _step.value;
+                            if (event.once) {
+                                var _event;
+                                client.once(event.name, function() {
+                                    for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+                                        args[_key] = arguments[_key];
+                                    }
+                                    return (_event = event).execute.apply(_event, _to_consumable_array(args).concat([
+                                        client,
+                                        gemini
+                                    ]));
+                                });
+                            } else {
+                                client.on(event.name, function() {
+                                    for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+                                        args[_key] = arguments[_key];
+                                    }
+                                    var _event;
+                                    (_event = event).execute.apply(_event, _to_consumable_array(args).concat([
+                                        client,
+                                        gemini
+                                    ]));
+                                });
+                            }
+                        };
+                        for(_iterator = events[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true)_loop();
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                    } finally{
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return != null) {
+                                _iterator.return();
+                            }
+                        } finally{
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
+                        }
+                    }
+                    return [
+                        2
+                    ];
+            }
+        });
+    })();
 }
