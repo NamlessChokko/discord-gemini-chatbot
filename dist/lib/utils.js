@@ -390,8 +390,8 @@ export function loadEvents(client, gemini) {
                                         args[_key] = arguments[_key];
                                     }
                                     return (_event = event).execute.apply(_event, _to_consumable_array(args).concat([
-                                        client,
-                                        gemini
+                                        gemini,
+                                        client
                                     ]));
                                 });
                             } else {
@@ -401,8 +401,8 @@ export function loadEvents(client, gemini) {
                                     }
                                     var _event;
                                     (_event = event).execute.apply(_event, _to_consumable_array(args).concat([
-                                        client,
-                                        gemini
+                                        gemini,
+                                        client
                                     ]));
                                 });
                             }

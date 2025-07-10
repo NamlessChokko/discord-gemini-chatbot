@@ -184,11 +184,11 @@ export async function loadEvents(client: CustomClient, gemini: GoogleGenAI) {
     for (const event of events) {
         if (event.once) {
             client.once(event.name, (...args: unknown[]) =>
-                event.execute(...args, client, gemini),
+                event.execute(...args, gemini, client),
             );
         } else {
             client.on(event.name, (...args: unknown[]) => {
-                event.execute(...args, client, gemini);
+                event.execute(...args, gemini, client);
             });
         }
     }

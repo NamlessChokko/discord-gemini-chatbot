@@ -127,7 +127,7 @@ var _ref = await import('../../config.json', {
 import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, newSendMessageErrorLog } from '../lib/logging.js';
 import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata } from '../lib/utils.js';
 export var name = 'messageCreate';
-export function execute(message, client, gemini) {
+export function execute(message, gemini, client) {
     return _async_to_generator(function() {
         var _message_author, _message_author1, _client_user, _client_user1, _message_guild, _response_candidates_, _response_candidates, errorMessage, currentTime, authorName, content, botName, systemInstruction, botReply, isDM, location, history, chat, response, error, responseText, modelVersion, usageMetadata, finishReason, finalResponse;
         return _ts_generator(this, function(_state) {

@@ -23,8 +23,8 @@ import {
 export const name = 'messageCreate';
 export async function execute(
     message: Message,
-    client: Client,
     gemini: GoogleGenAI,
+    client: Client,
 ) {
     if (!botShouldReply(message, client)) {
         return;
