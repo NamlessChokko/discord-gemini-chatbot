@@ -149,13 +149,25 @@ export async function createParts(message, media) {
     }
     if (media && media.size > 0) {
         for (const attachment of media.values()) {
-            console.log(`Processing attachment: ${attachment.name} - (${attachment.contentType}):\n ${Buffer.from(attachment.url).toString('base64')}`);
-            parts.push({
-                inlineData: {
-                    mimeType: attachment.contentType || 'application/octet-stream',
-                    data: Buffer.from(attachment.url).toString('base64'),
-                },
-            });
+            try {
+                const response = await fetch(attachment.url);
+                if (!response.ok) {
+                    console.error(`Failed to fetch attachment: ${attachment.url} - ${response.statusText}`);
+                    continue;
+                }
+                const buffer = await response.arrayBuffer();
+                const base64Data = Buffer.from(buffer).toString('base64');
+                console.log(`Processing attachment: ${attachment.name} - (${attachment.contentType})`);
+                parts.push({
+                    inlineData: {
+                        mimeType: attachment.contentType || 'application/octet-stream',
+                        data: base64Data,
+                    },
+                });
+            }
+            catch (error) {
+                console.error(`Error processing attachment: ${attachment.name}`, error);
+            }
         }
     }
     return parts;

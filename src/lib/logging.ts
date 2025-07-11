@@ -55,6 +55,7 @@ export function newCreateChatErrorLog(
         `[ Log: create chat error ] > At: ${currentTime}\n` +
             `   History Length: ${history.length}\n` +
             `   History: ${JSON.stringify(history, null, 2)}\n`,
+        `   > Error: `,
     );
     console.error(error);
 }
@@ -70,6 +71,7 @@ export function newSendMessageErrorLog(
             `   Content: "${content}"\n` +
             `   History Length: ${history.length}\n` +
             `   History: ${JSON.stringify(history, null, 2)}\n`,
+        `   > Error: `,
     );
     console.error(error);
 }

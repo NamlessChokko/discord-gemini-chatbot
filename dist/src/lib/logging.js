@@ -17,13 +17,13 @@ export function newReplyLengthErrorLog(currentTime, replyLength, isDM) {
 export function newCreateChatErrorLog(currentTime, error, history) {
     console.log(`[ Log: create chat error ] > At: ${currentTime}\n` +
         `   History Length: ${history.length}\n` +
-        `   History: ${JSON.stringify(history, null, 2)}\n`);
+        `   History: ${JSON.stringify(history, null, 2)}\n`, `   > Error: `);
     console.error(error);
 }
 export function newSendMessageErrorLog(time, error, content, history) {
     console.log(`[ Log: send message error ] > At: ${time}\n` +
         `   Content: "${content}"\n` +
         `   History Length: ${history.length}\n` +
-        `   History: ${JSON.stringify(history, null, 2)}\n`);
+        `   History: ${JSON.stringify(history, null, 2)}\n`, `   > Error: `);
     console.error(error);
 }
