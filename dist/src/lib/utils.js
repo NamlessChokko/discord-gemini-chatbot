@@ -72,7 +72,7 @@ export async function createHistory(message, client) {
     while (cursor.reference && cursor.reference.messageId) {
         const parent = await message.channel.messages.fetch(cursor.reference.messageId);
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
-        const parts = createParts(message.content, message.attachments);
+        const parts = createParts(parent.content, parent.attachments);
         history.unshift({
             role,
             parts: await parts,
@@ -150,17 +150,18 @@ export async function createParts(message, media) {
     if (media && media.size > 0) {
         for (const attachment of media.values()) {
             try {
-                const response = await fetch(attachment.url);
-                if (!response.ok) {
-                    console.error(`Failed to fetch attachment: ${attachment.url} - ${response.statusText}`);
+                const file = await fetch(attachment.url);
+                if (!file.ok) {
+                    console.error(`Failed to fetch attachment: ${attachment.url} - ${file.statusText}`);
                     continue;
                 }
-                const buffer = await response.arrayBuffer();
+                const buffer = await file.arrayBuffer();
                 const base64Data = Buffer.from(buffer).toString('base64');
                 console.log(`Processing attachment: ${attachment.name} - (${attachment.contentType})`);
                 parts.push({
                     inlineData: {
-                        mimeType: attachment.contentType || 'application/octet-stream',
+                        mimeType: attachment.contentType ||
+                            'application/octet-stream',
                         data: base64Data,
                     },
                 });

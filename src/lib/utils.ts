@@ -106,7 +106,7 @@ export async function createHistory(
 
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
 
-        const parts = createParts(message.content, message.attachments);
+        const parts = createParts(parent.content, parent.attachments);
 
         history.unshift({
             role,
@@ -211,12 +211,14 @@ export async function createParts(
     if (media && media.size > 0) {
         for (const attachment of media.values()) {
             try {
-                const response = await fetch(attachment.url);
-                if (!response.ok) {
-                    console.error(`Failed to fetch attachment: ${attachment.url} - ${response.statusText}`);
+                const file = await fetch(attachment.url);
+                if (!file.ok) {
+                    console.error(
+                        `Failed to fetch attachment: ${attachment.url} - ${file.statusText}`,
+                    );
                     continue;
                 }
-                const buffer = await response.arrayBuffer();
+                const buffer = await file.arrayBuffer();
                 const base64Data = Buffer.from(buffer).toString('base64');
 
                 console.log(
@@ -225,12 +227,16 @@ export async function createParts(
                 parts.push({
                     inlineData: {
                         mimeType:
-                            attachment.contentType || 'application/octet-stream',
+                            attachment.contentType ||
+                            'application/octet-stream',
                         data: base64Data,
                     },
                 });
             } catch (error) {
-                console.error(`Error processing attachment: ${attachment.name}`, error);
+                console.error(
+                    `Error processing attachment: ${attachment.name}`,
+                    error,
+                );
             }
         }
     }
