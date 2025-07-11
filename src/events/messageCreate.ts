@@ -19,6 +19,7 @@ import {
     createHistory,
     formatUsageMetadata,
     createParts,
+    devideLongMessages,
 } from '../lib/utils.js';
 
 export const name = 'messageCreate';
@@ -73,7 +74,6 @@ export async function execute(
             model: 'gemini-2.5-flash',
             config: {
                 temperature: 0.7,
-                maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
                     thinkingBudget: 0,
@@ -115,6 +115,21 @@ export async function execute(
     if (!validReply(response)) {
         botReply.edit(errorMessage);
         newReplyLengthErrorLog(currentTime, responseText.length, isDM);
+        return;
+    }
+
+    if ((response as { text: string }).text.length > 2000) {
+        const longMessages = devideLongMessages(
+            (response as { text: string }).text,
+            2000,
+        );
+        const firstMessage = longMessages.shift();
+        if (firstMessage) {
+            botReply.edit(firstMessage);
+        }
+        for (const message of longMessages) {
+            await botReply.reply(message);
+        }
         return;
     }
 

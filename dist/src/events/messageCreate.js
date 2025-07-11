@@ -3,7 +3,7 @@ const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
 import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, newSendMessageErrorLog, } from '../lib/logging.js';
-import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata, createParts, } from '../lib/utils.js';
+import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata, createParts, devideLongMessages, } from '../lib/utils.js';
 export const name = 'messageCreate';
 export async function execute(message, gemini, client) {
     if (!botShouldReply(message, client)) {
@@ -35,7 +35,6 @@ export async function execute(message, gemini, client) {
             model: 'gemini-2.5-flash',
             config: {
                 temperature: 0.7,
-                maxOutputTokens: 500, // Approximately 2000 characters
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
                     thinkingBudget: 0,
@@ -68,6 +67,17 @@ export async function execute(message, gemini, client) {
     if (!validReply(response)) {
         botReply.edit(errorMessage);
         newReplyLengthErrorLog(currentTime, responseText.length, isDM);
+        return;
+    }
+    if (response.text.length > 2000) {
+        const longMessages = devideLongMessages(response.text, 2000);
+        const firstMessage = longMessages.shift();
+        if (firstMessage) {
+            botReply.edit(firstMessage);
+        }
+        for (const message of longMessages) {
+            await botReply.reply(message);
+        }
         return;
     }
     const finalResponse = substituteNamesWithMentions(response.text, message.mentions.users);

@@ -53,9 +53,6 @@ export function validReply(response) {
         if (!text || text.trim().length === 0) {
             return false;
         }
-        if (text.trim().length > 2000) {
-            return false;
-        }
         return true;
     }
     catch {
@@ -170,6 +167,24 @@ export async function createParts(message, media) {
                 console.error(`Error processing attachment: ${attachment.name}`, error);
             }
         }
+    }
+    return parts;
+}
+export function devideLongMessages(message, maxLength = 2000) {
+    if (message.length <= maxLength) {
+        return [message];
+    }
+    const parts = [];
+    let currentPart = '';
+    for (const word of message.split(' ')) {
+        if (currentPart.length + word.length + 1 > maxLength) {
+            parts.push(currentPart.trim());
+            currentPart = '';
+        }
+        currentPart += `${word} `;
+    }
+    if (currentPart.length > 0) {
+        parts.push(currentPart.trim());
     }
     return parts;
 }

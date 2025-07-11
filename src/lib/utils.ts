@@ -75,11 +75,6 @@ export function validReply(response: GenerateContentResponse | null): boolean {
         if (!text || text.trim().length === 0) {
             return false;
         }
-
-        if (text.trim().length > 2000) {
-            return false;
-        }
-
         return true;
     } catch {
         return false;
@@ -239,6 +234,32 @@ export async function createParts(
                 );
             }
         }
+    }
+
+    return parts;
+}
+
+export function devideLongMessages(
+    message: string,
+    maxLength: number = 2000,
+): string[] {
+    if (message.length <= maxLength) {
+        return [message];
+    }
+
+    const parts: string[] = [];
+    let currentPart = '';
+
+    for (const word of message.split(' ')) {
+        if (currentPart.length + word.length + 1 > maxLength) {
+            parts.push(currentPart.trim());
+            currentPart = '';
+        }
+        currentPart += `${word} `;
+    }
+
+    if (currentPart.length > 0) {
+        parts.push(currentPart.trim());
     }
 
     return parts;
