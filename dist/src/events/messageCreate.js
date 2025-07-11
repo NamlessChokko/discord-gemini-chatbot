@@ -3,9 +3,9 @@ const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
 import { newMentionLog, newResponseLog, newReplyLengthErrorLog, newCreateChatErrorLog, newSendMessageErrorLog, } from '../lib/logging.js';
-import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata, } from '../lib/utils.js';
+import { validReply, botShouldReply, substituteMentionUsernames, substituteNamesWithMentions, createHistory, formatUsageMetadata, createParts, } from '../lib/utils.js';
 export const name = 'messageCreate';
-export async function execute(message, client, gemini) {
+export async function execute(message, gemini, client) {
     if (!botShouldReply(message, client)) {
         return;
     }
@@ -14,7 +14,8 @@ export async function execute(message, client, gemini) {
     const authorName = message.author?.globalName ||
         message.author?.username ||
         'Unknown User';
-    const content = substituteMentionUsernames(message.content, message.mentions.users);
+    const prompt = substituteMentionUsernames(message.content, message.mentions.users);
+    const content = createParts(prompt, message.attachments);
     const botName = client.user?.globalName ||
         client.user?.username ||
         config.messageCreateConfigs.responseConfigs.botCustomName;
@@ -24,7 +25,7 @@ export async function execute(message, client, gemini) {
     const location = isDM
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.name}`;
-    newMentionLog(currentTime, authorName, content, isDM, location);
+    newMentionLog(currentTime, authorName, prompt, isDM, location);
     const history = await createHistory(message, client);
     let chat;
     try {
@@ -51,11 +52,11 @@ export async function execute(message, client, gemini) {
     let response;
     try {
         response = await chat.sendMessage({
-            message: content,
+            message: await content,
         });
     }
     catch (error) {
-        newSendMessageErrorLog(currentTime, error, content, history);
+        newSendMessageErrorLog(currentTime, error, prompt, history);
         botReply.edit(errorMessage);
         return;
     }

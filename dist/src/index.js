@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { createServer } from 'node:http';
-import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
+import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 import { loadCommands, loadEvents } from './lib/utils.js';
 const server = createServer();
@@ -15,7 +15,6 @@ const client = new Client({
     partials: [Partials.Channel],
 });
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-client.commands = new Collection();
 loadCommands(client);
 loadEvents(client, gemini);
 client.login(process.env.DISCORD_TOKEN);

@@ -1,5 +1,5 @@
-import { Collection, Message, User, Client } from 'discord.js';
-import { GoogleGenAI } from '@google/genai';
+import { Collection, Message, User, Client, Attachment } from 'discord.js';
+import { GoogleGenAI, Part } from '@google/genai';
 import { CustomClient } from './types.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
@@ -106,9 +106,11 @@ export async function createHistory(
 
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
 
+        const parts = createParts(message.content, message.attachments);
+
         history.unshift({
             role,
-            parts: [{ text: parent.content }],
+            parts: await parts,
         });
 
         if (history.length >= maxHistoryLength && role === 'user') {
@@ -192,4 +194,34 @@ export async function loadEvents(client: CustomClient, gemini: GoogleGenAI) {
             });
         }
     }
+}
+
+export async function createParts(
+    message: string,
+    media: Collection<string, Attachment>,
+): Promise<Part[]> {
+    const parts: Part[] = [];
+
+    if (message && message.length > 0) {
+        parts.push({
+            text: message,
+        });
+    }
+
+    if (media && media.size > 0) {
+        for (const attachment of media.values()) {
+            console.log(
+                `Processing attachment: ${attachment.name} - (${attachment.contentType}):\n ${Buffer.from(attachment.url).toString('base64')}`,
+            );
+            parts.push({
+                inlineData: {
+                    mimeType:
+                        attachment.contentType || 'application/octet-stream',
+                    data: Buffer.from(attachment.url).toString('base64'),
+                },
+            });
+        }
+    }
+
+    return parts;
 }

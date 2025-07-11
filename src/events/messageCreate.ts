@@ -18,6 +18,7 @@ import {
     substituteNamesWithMentions,
     createHistory,
     formatUsageMetadata,
+    createParts,
 } from '../lib/utils.js';
 
 export const name = 'messageCreate';
@@ -37,10 +38,11 @@ export async function execute(
         message.author?.globalName ||
         message.author?.username ||
         'Unknown User';
-    const content = substituteMentionUsernames(
+    const prompt = substituteMentionUsernames(
         message.content,
         message.mentions.users,
     );
+    const content = createParts(prompt, message.attachments);
 
     const botName =
         client.user?.globalName ||
@@ -60,7 +62,7 @@ export async function execute(
         ? 'DM'
         : `${message.guild?.name} -> ${message.channel.name}`;
 
-    newMentionLog(currentTime, authorName, content, isDM, location);
+    newMentionLog(currentTime, authorName, prompt, isDM, location);
 
     const history: Content[] = await createHistory(message, client);
     let chat;
@@ -88,10 +90,10 @@ export async function execute(
     let response;
     try {
         response = await chat.sendMessage({
-            message: content,
+            message: await content,
         });
     } catch (error) {
-        newSendMessageErrorLog(currentTime, error, content, history);
+        newSendMessageErrorLog(currentTime, error, prompt, history);
         botReply.edit(errorMessage);
         return;
     }

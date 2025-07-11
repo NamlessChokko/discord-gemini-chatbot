@@ -72,9 +72,10 @@ export async function createHistory(message, client) {
     while (cursor.reference && cursor.reference.messageId) {
         const parent = await message.channel.messages.fetch(cursor.reference.messageId);
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
+        const parts = createParts(message.content, message.attachments);
         history.unshift({
             role,
-            parts: [{ text: parent.content }],
+            parts: await parts,
         });
         if (history.length >= maxHistoryLength && role === 'user') {
             break;
@@ -99,9 +100,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 export async function loadCommands(client) {
-    if (!client.commands) {
-        client.commands = new Collection();
-    }
+    client.commands = new Collection();
     const commandsPath = path.join(__dirname, '..', 'commands');
     const commandFiles = fs
         .readdirSync(commandsPath)
@@ -132,12 +131,32 @@ export async function loadEvents(client, gemini) {
     const events = await Promise.all(eventPromises);
     for (const event of events) {
         if (event.once) {
-            client.once(event.name, (...args) => event.execute(...args, client, gemini));
+            client.once(event.name, (...args) => event.execute(...args, gemini, client));
         }
         else {
             client.on(event.name, (...args) => {
-                event.execute(...args, client, gemini);
+                event.execute(...args, gemini, client);
             });
         }
     }
+}
+export async function createParts(message, media) {
+    const parts = [];
+    if (message && message.length > 0) {
+        parts.push({
+            text: message,
+        });
+    }
+    if (media && media.size > 0) {
+        for (const attachment of media.values()) {
+            console.log(`Processing attachment: ${attachment.name} - (${attachment.contentType}):\n ${Buffer.from(attachment.url).toString('base64')}`);
+            parts.push({
+                inlineData: {
+                    mimeType: attachment.contentType || 'application/octet-stream',
+                    data: Buffer.from(attachment.url).toString('base64'),
+                },
+            });
+        }
+    }
+    return parts;
 }
