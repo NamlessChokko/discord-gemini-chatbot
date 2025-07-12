@@ -7,9 +7,11 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+export const helpMessage = `**/imagine** - Generate an image based on your prompt. Use this command to create images from text descriptions.`;
+
 export const data = new SlashCommandBuilder()
-    .setName('image')
-    .setDescription('Generate an image based on your prompt')
+    .setName('imagine')
+    .setDescription('Generate an imagine based on your prompt')
     .addStringOption((opt) =>
         opt
             .setName('prompt')
@@ -32,7 +34,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
     try {
         const response = await gemini.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-2.0-flash-preview-image-generation',
             contents: prompt,
             config: {
                 responseModalities: [Modality.IMAGE, Modality.TEXT],

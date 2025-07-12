@@ -123,13 +123,18 @@ import { REST, Routes } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+var _ref = await import('../config.json', {
+    with: {
+        type: 'json'
+    }
+}), config = _ref.default;
 var __filename = fileURLToPath(import.meta.url);
 var __dirname = path.dirname(__filename);
-var ignoreList = []; // List of commands to ignore
+var ignoreList = config.loadCommands.ignoreList; // List of commands to ignore
 var commands = [];
-var commandsPath = path.join(__dirname, 'src/commands');
+var commandsPath = path.join(__dirname, 'commands');
 var commandFiles = fs.readdirSync(commandsPath).filter(function(f) {
-    return f.endsWith('.ts');
+    return f.endsWith('.js');
 });
 var _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
 try {

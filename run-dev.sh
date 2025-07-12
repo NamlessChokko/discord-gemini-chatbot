@@ -27,8 +27,8 @@ npx swc src -d dist --strip-leading-paths
 # Check if compilation was successful
 if [ $? -eq 0 ]; then
   echo -e "${GREEN}Build successful, starting the bot...${NC}"
-  node $EXTRAS
   clear
+  node $EXTRAS
   node $TARGET
 else
   echo -e "${RED}Build failed. Please check the errors above.${NC}" >&2

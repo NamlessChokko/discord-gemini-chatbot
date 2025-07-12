@@ -12,4 +12,5 @@ export interface Command {
 
 export interface CustomClient extends Client {
     commands?: Collection<string, Command>;
+    helpMessage?: string;
 }

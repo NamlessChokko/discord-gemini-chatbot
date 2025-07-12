@@ -3,7 +3,12 @@ const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
 import { Message, Client } from 'discord.js';
-import { GoogleGenAI, Content } from '@google/genai';
+import {
+    GoogleGenAI,
+    Content,
+    Chat,
+    GenerateContentResponse,
+} from '@google/genai';
 import {
     newMentionLog,
     newResponseLog,
@@ -66,17 +71,21 @@ export async function execute(
     newMentionLog(currentTime, authorName, prompt, isDM, location);
 
     const history: Content[] = await createHistory(message, client);
-    let chat;
+    let chat: Chat | null = null;
     try {
         chat = gemini.chats.create({
             // model: 'gemini-2.5-flash-lite-preview-06-17',
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
             config: {
-                temperature: 0.7,
+                temperature:
+                    config.messageCreateConfigs.generationParameters
+                        .temperature,
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
-                    thinkingBudget: 0,
+                    thinkingBudget:
+                        config.messageCreateConfigs.generationParameters
+                            .thinkingBudget,
                 },
             },
             history: history,
@@ -87,7 +96,7 @@ export async function execute(
         return;
     }
 
-    let response;
+    let response: GenerateContentResponse | null = null;
     try {
         response = await chat.sendMessage({
             message: await content,

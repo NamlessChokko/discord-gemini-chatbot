@@ -160,16 +160,17 @@ export function execute(message, gemini, client) {
                     ];
                 case 2:
                     history = _state.sent();
+                    chat = null;
                     try {
                         chat = gemini.chats.create({
                             // model: 'gemini-2.5-flash-lite-preview-06-17',
                             // model: 'gemini-2.5-pro',
                             model: 'gemini-2.5-flash',
                             config: {
-                                temperature: 0.7,
+                                temperature: config.messageCreateConfigs.generationParameters.temperature,
                                 systemInstruction: systemInstruction,
                                 thinkingConfig: {
-                                    thinkingBudget: 0
+                                    thinkingBudget: config.messageCreateConfigs.generationParameters.thinkingBudget
                                 }
                             },
                             history: history
@@ -181,6 +182,7 @@ export function execute(message, gemini, client) {
                             2
                         ];
                     }
+                    response = null;
                     _state.label = 3;
                 case 3:
                     _state.trys.push([

@@ -161,6 +161,7 @@ function _ts_generator(thisArg, body) {
 }
 import { SlashCommandBuilder } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
+export var helpMessage = "**/code** - Generate code based on your prompt. Use this command to get code snippets or examples for programming tasks.";
 export var data = new SlashCommandBuilder().setName('code').setDescription('Generate code based on your prompt').addStringOption(function(option) {
     return option.setName('prompt').setDescription('Describe what kind of code you need').setRequired(true);
 });

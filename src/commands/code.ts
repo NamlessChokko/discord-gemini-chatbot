@@ -1,6 +1,8 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 
+export const helpMessage = `**/code** - Generate code based on your prompt. Use this command to get code snippets or examples for programming tasks.`;
+
 export const data = new SlashCommandBuilder()
     .setName('code')
     .setDescription('Generate code based on your prompt')

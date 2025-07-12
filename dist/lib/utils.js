@@ -334,10 +334,10 @@ export function loadCommands(client) {
                     try {
                         for(_iterator = commands[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
                             command = _step.value;
-                            if ('data' in command && 'execute' in command) {
+                            if ('data' in command && 'execute' in command && 'helpMessage' in command) {
                                 client.commands.set(command.data.name, command);
                             } else {
-                                console.log("[ WARNING ] > A command file is missing 'data' or 'execute'");
+                                console.log("[ WARNING ] > A command file is missing required properties: data, execute, or helpMessage");
                             }
                         }
                     } catch (err) {

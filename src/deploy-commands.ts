@@ -3,17 +3,20 @@ import { REST, Routes } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+const { default: config } = await import('../config.json', {
+    with: { type: 'json' },
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ignoreList: string[] = []; // List of commands to ignore
+const ignoreList: string[] = config.loadCommands.ignoreList; // List of commands to ignore
 
 const commands: unknown[] = [];
-const commandsPath = path.join(__dirname, 'src/commands');
+const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((f) => f.endsWith('.ts'));
+    .filter((f) => f.endsWith('.js'));
 
 for (const file of commandFiles) {
     if (ignoreList.includes(file)) {

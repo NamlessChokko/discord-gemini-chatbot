@@ -125,7 +125,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 var __filename = fileURLToPath(import.meta.url);
 var __dirname = path.dirname(__filename);
-export var data = new SlashCommandBuilder().setName('image').setDescription('Generate an image based on your prompt').addStringOption(function(opt) {
+export var helpMessage = "**/imagine** - Generate an image based on your prompt. Use this command to create images from text descriptions.";
+export var data = new SlashCommandBuilder().setName('imagine').setDescription('Generate an imagine based on your prompt').addStringOption(function(opt) {
     return opt.setName('prompt').setDescription('Describe the image you want to generate').setRequired(true);
 });
 export function execute(interaction) {
@@ -172,7 +173,7 @@ export function execute(interaction) {
                     return [
                         4,
                         gemini.models.generateContent({
-                            model: 'gemini-2.5-flash',
+                            model: 'gemini-2.0-flash-preview-image-generation',
                             contents: prompt,
                             config: {
                                 responseModalities: [

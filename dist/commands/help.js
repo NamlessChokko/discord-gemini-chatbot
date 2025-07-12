@@ -119,7 +119,7 @@ function _ts_generator(thisArg, body) {
     }
 }
 import { SlashCommandBuilder } from 'discord.js';
-var helpMessage = '\n**\uD83E\uDD16 Gemini Chat Bot Help**\n\nGemini is powered by Google\'s Gemini 2.5 Flash API, enabling natural conversations directly inside Discord.\n\n**\uD83D\uDDE8️ How to Use**\n- **Mention the bot**: Just mention "@Gemini" in any message and ask anything.\n- **Direct Messages**: You can chat with Gemini privately via DMs.\n- **Slash Commands**: Use slash commands like "/code", "/image", and more (coming soon).\n\n**\uD83D\uDCCF Limits**\n- Max response size: ~2000 characters.\n- Gemini API max tokens per response: **499 tokens**.\n\n**⚙️ Notes**\n- Answers are always in **English** regardless of the input.\n- If you joke, Gemini might joke back \uD83D\uDE09\n\nUse "@Gemini" or try a command to begin!\n';
+export var helpMessage = '\n**\uD83E\uDD16 Gemini Chat Bot Help**\n\nGemini is powered by Google\'s Gemini 2.5 Flash API, enabling natural conversations directly inside Discord.\n\n**\uD83D\uDDE8️ How to Use**\n- **Mention the bot**: Just mention "@Gemini - Chatbot" in any message and ask anything.\n- **Direct Messages**: You can chat with Gemini privately via DMs.\n- **Slash Commands**: Use slash commands like "/code", "/imagine", and more (coming soon).\n\n\nUse "@Gemini - Chatbot" or try a command to begin!\n';
 export var data = new SlashCommandBuilder().setName('help').setDescription('Displays usage instructions and bot capabilities.');
 export function execute(interaction) {
     return _async_to_generator(function() {

@@ -155,11 +155,15 @@ export async function loadCommands(client: CustomClient) {
     const commands = await Promise.all(commandPromises);
 
     for (const command of commands) {
-        if ('data' in command && 'execute' in command) {
+        if (
+            'data' in command &&
+            'execute' in command &&
+            'helpMessage' in command
+        ) {
             client.commands.set(command.data.name, command);
         } else {
             console.log(
-                `[ WARNING ] > A command file is missing 'data' or 'execute'`,
+                `[ WARNING ] > A command file is missing required properties: data, execute, or helpMessage`,
             );
         }
     }
