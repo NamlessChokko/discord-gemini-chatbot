@@ -143,7 +143,7 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import { Collection } from 'discord.js';
+import { Collection, InteractionType } from 'discord.js';
 import util from 'node:util';
 var _ref = await import('../../config.json', {
     with: {
@@ -267,12 +267,6 @@ export function createHistory(message, client) {
                     ];
                 case 2:
                     parent = _state.sent();
-                    if (parent.interactionMetadata) {
-                        return [
-                            3,
-                            4
-                        ]; // Skipps messages that were created by interactions
-                    }
                     role = parent.author.id === ((_client_user = client.user) === null || _client_user === void 0 ? void 0 : _client_user.id) ? 'model' : 'user';
                     _ = history.unshift;
                     _tmp = {
@@ -286,6 +280,27 @@ export function createHistory(message, client) {
                     _.apply(history, [
                         (_tmp.parts = _state.sent(), _tmp)
                     ]);
+                    if (parent.interactionMetadata && parent.interactionMetadata.type === InteractionType.ApplicationCommand && role === 'model') {
+                        history.unshift({
+                            role: 'user',
+                            parts: [
+                                {
+                                    text: "[Slash Command by: ".concat(parent.interactionMetadata.user.username, "]")
+                                }
+                            ]
+                        }, {
+                            role: 'model',
+                            parts: [
+                                {
+                                    text: "This message was generated in response to a slash command interaction."
+                                }
+                            ]
+                        });
+                        return [
+                            3,
+                            4
+                        ];
+                    }
                     if (history.length >= maxHistoryLength && role === 'user') {
                         return [
                             3,

@@ -1,4 +1,11 @@
-import { Collection, Message, User, Client, Attachment } from 'discord.js';
+import {
+    Collection,
+    Message,
+    User,
+    Client,
+    Attachment,
+    InteractionType,
+} from 'discord.js';
 import { GoogleGenAI, Part } from '@google/genai';
 import { CustomClient } from './types.js';
 import util from 'node:util';
@@ -106,16 +113,39 @@ export async function createHistory(
             cursor.reference.messageId,
         );
 
-        if (parent.interactionMetadata) {
-            break; // Skipps messages that were created by interactions
-        }
-
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
 
         history.unshift({
             role: role,
             parts: await createParts(parent.content, parent.attachments),
         });
+
+        if (
+            parent.interactionMetadata &&
+            parent.interactionMetadata.type ===
+                InteractionType.ApplicationCommand &&
+            role === 'model'
+        ) {
+            history.unshift(
+                {
+                    role: 'user',
+                    parts: [
+                        {
+                            text: `[Slash Command by: ${parent.interactionMetadata.user.username}]`,
+                        },
+                    ],
+                },
+                {
+                    role: 'model',
+                    parts: [
+                        {
+                            text: `This message was generated in response to a slash command interaction.`,
+                        },
+                    ],
+                },
+            );
+            break;
+        }
 
         if (history.length >= maxHistoryLength && role === 'user') {
             break;
