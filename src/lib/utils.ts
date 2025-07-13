@@ -106,6 +106,10 @@ export async function createHistory(
             cursor.reference.messageId,
         );
 
+        if (parent.interactionMetadata) {
+            break;
+        }
+
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
 
         history.unshift({

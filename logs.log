@@ -455,3 +455,111 @@ It seems like you asked "What is it about ?" but didn't provide any context for 
 [ Log: client ready ] > At: 7/13/2025, 11:15:14 AM
 
 --------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:36:23 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:47:04 AM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 11:47:22 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot what does it means ?"
+
+[ Log: create chat error ] > At: Sun Jul 13 2025 11:47:22 GMT-0400 (Eastern Daylight Time)
+   History Length: 1
+   History: [
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "🏓 Pong!\n- Response Time: **0ms**\n- API Latency: **63ms**"
+      }
+    ]
+  }
+]
+   > Error: Error: History must start with a user turn.
+    at validateHistory (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2613:15)
+    at new Chat (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2711:9)
+    at Chats.create (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2691:16)
+    at file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:163:45
+    at step (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:104:23)
+    at Object.next (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:45:20)
+    at asyncGeneratorStep (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:3:28)
+    at _next (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:21:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[ Log: client ready ] > At: 7/13/2025, 11:49:21 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:50:10 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:54:22 AM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 11:54:41 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot what does it means ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 11:54:41 GMT-0400 (Eastern Daylight Time)
+   Text: It means you said "tester-bot what does it means ?"
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 176,
+     "candidatesTokenCount": 13,
+     "totalTokenCount": 189,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 176
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 11:55:08 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot"
+
+[ Log: response ] > At: Sun Jul 13 2025 11:55:08 GMT-0400 (Eastern Daylight Time)
+   Text: Hello there! How can I help you today? 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 171,
+     "candidatesTokenCount": 11,
+     "totalTokenCount": 182,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 171
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 11:55:30 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "Sorry what ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 11:55:30 GMT-0400 (Eastern Daylight Time)
+   Text: You just sent a message that said "Sorry what ?". 😅
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 231,
+     "candidatesTokenCount": 14,
+     "totalTokenCount": 245,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 231
+       }
+     ]
+   }
+   Finish Reason: STOP
+

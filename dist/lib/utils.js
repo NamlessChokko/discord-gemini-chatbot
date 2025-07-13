@@ -267,6 +267,12 @@ export function createHistory(message, client) {
                     ];
                 case 2:
                     parent = _state.sent();
+                    if (parent.interactionMetadata) {
+                        return [
+                            3,
+                            4
+                        ];
+                    }
                     role = parent.author.id === ((_client_user = client.user) === null || _client_user === void 0 ? void 0 : _client_user.id) ? 'model' : 'user';
                     _ = history.unshift;
                     _tmp = {
