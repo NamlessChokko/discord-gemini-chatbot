@@ -271,7 +271,7 @@ export function createHistory(message, client) {
                         return [
                             3,
                             4
-                        ];
+                        ]; // Skipps messages that were created by interactions
                     }
                     role = parent.author.id === ((_client_user = client.user) === null || _client_user === void 0 ? void 0 : _client_user.id) ? 'model' : 'user';
                     _ = history.unshift;

@@ -132,14 +132,14 @@ export function execute(interaction) {
                         4,
                         interaction.reply({
                             content: 'Pinging...',
-                            withResponse: true
+                            fetchReply: true
                         })
                     ];
                 case 1:
                     sent = _state.sent();
-                    latency = sent.interaction.createdTimestamp - interaction.createdTimestamp;
+                    latency = sent.createdTimestamp - interaction.createdTimestamp;
                     apiPing = interaction.client.ws.ping;
-                    newPingCommandLog(new Date().toLocaleString(), interaction.user.username, latency, apiPing, ((_interaction_guild = interaction.guild) === null || _interaction_guild === void 0 ? void 0 : _interaction_guild.name) || 'DM');
+                    newPingCommandLog(new Date().toLocaleString(), interaction.user.username, latency, apiPing, ((_interaction_guild = interaction.guild) === null || _interaction_guild === void 0 ? void 0 : _interaction_guild.name) || 'Direct Message');
                     return [
                         4,
                         interaction.editReply("\uD83C\uDFD3 Pong!\n- Response Time: **".concat(latency, "ms**\n- API Latency: **").concat(apiPing, "ms**"))

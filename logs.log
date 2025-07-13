@@ -563,3 +563,55 @@ It seems like you asked "What is it about ?" but didn't provide any context for 
    }
    Finish Reason: STOP
 
+[ Log: client ready ] > At: 7/13/2025, 11:56:05 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:57:58 AM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 11:58:44 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot What does it means ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 11:58:44 GMT-0400 (Eastern Daylight Time)
+   Text: Hello! It seems you sent an empty message. Is there anything I can help you with? 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 176,
+     "candidatesTokenCount": 20,
+     "totalTokenCount": 196,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 176
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: client ready ] > At: 7/13/2025, 12:02:00 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 12:02:25 PM
+
+--------------------------------------------------
+[ Log: ping command ] > At: 7/13/2025, 12:02:32 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Latency: 986ms
+   API Ping: 150ms
+
+[ Log: client ready ] > At: 7/13/2025, 12:03:45 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 12:05:44 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 12:06:52 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 1:09:15 PM
+
+--------------------------------------------------

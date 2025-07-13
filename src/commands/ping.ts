@@ -6,14 +6,14 @@ export const helpMessage = `**/ping** - Check the bot's latency and API response
 export const data = new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Check bot latency and API response time.');
+
 export async function execute(interaction: ChatInputCommandInteraction) {
     const sent = await interaction.reply({
         content: 'Pinging...',
-        withResponse: true,
+        fetchReply: true,
     });
 
-    const latency =
-        sent.interaction.createdTimestamp - interaction.createdTimestamp;
+    const latency = sent.createdTimestamp - interaction.createdTimestamp;
     const apiPing = interaction.client.ws.ping;
 
     newPingCommandLog(
@@ -21,7 +21,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         interaction.user.username,
         latency,
         apiPing,
-        interaction.guild?.name || 'DM',
+        interaction.guild?.name || 'Direct Message',
     );
 
     await interaction.editReply(

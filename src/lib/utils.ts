@@ -107,7 +107,7 @@ export async function createHistory(
         );
 
         if (parent.interactionMetadata) {
-            break;
+            break; // Skipps messages that were created by interactions
         }
 
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
