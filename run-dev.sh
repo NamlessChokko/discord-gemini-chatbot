@@ -12,6 +12,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 
+clear
 echo -e "${YELLOW}Running type check...${NC}"
 tsc --noEmit
 
@@ -29,7 +30,7 @@ if [ $? -eq 0 ]; then
   echo -e "${GREEN}Build successful, starting the bot...${NC}"
   clear
   node $EXTRAS
-  node $TARGET
+  node $TARGET 
 else
   echo -e "${RED}Build failed. Please check the errors above.${NC}" >&2
   exit 1

@@ -33,7 +33,6 @@ discord-gemini-chatbot/
 - Discord bot token
 - Google Gemini API key (from [Google AI Studio](https://aistudio.google.com/app/apikey))
 
-
 ## 🔧 Environment Variables
 
 Create a `.env` file with the following:

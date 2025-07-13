@@ -1,6 +1,7 @@
 import { Collection, Message, User, Client, Attachment } from 'discord.js';
 import { GoogleGenAI, Part } from '@google/genai';
 import { CustomClient } from './types.js';
+import util from 'node:util';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -9,6 +10,14 @@ import {
     GenerateContentResponseUsageMetadata,
     Content,
 } from '@google/genai';
+
+const logFile = fs.createWriteStream(config.application.logFile, {
+    flags: 'a',
+});
+
+export function logToFile(message: string) {
+    logFile.write(util.format(message) + '\n');
+}
 
 export function substituteMentionUsernames(
     content: string,
@@ -86,7 +95,7 @@ export async function createHistory(
     client: Client,
 ): Promise<Content[]> {
     const maxHistoryLengthConfig =
-        config.messageCreateConfigs.generationParameters.maxHistoryLength || 10;
+        config.messageCreate.generation.maxHistoryLength || 10;
     const maxHistoryLength =
         maxHistoryLengthConfig > 0
             ? maxHistoryLengthConfig
@@ -136,6 +145,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { commandWarningLog } from './logging.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -156,15 +167,14 @@ export async function loadCommands(client: CustomClient) {
 
     for (const command of commands) {
         const cmd = command.default || command;
-        if (
-            'data' in cmd &&
-            'execute' in cmd &&
-            'helpMessage' in cmd
-        ) {
+        if ('data' in cmd && 'execute' in cmd && 'helpMessage' in cmd) {
             client.commands.set(cmd.data.name, cmd);
         } else {
-            console.log(
-                `[ WARNING ] > A command file is missing required properties: ${cmd.data?.name || 'unknown'}\n${'data' in cmd ? '+ data' : '- data'}\n${'execute' in cmd ? '+ execute' : '- execute'}\n${'helpMessage' in cmd ? '+ helpMessage' : '- helpMessage'}`,
+            commandWarningLog(
+                cmd.data?.name,
+                'data' in cmd,
+                'execute' in cmd,
+                'helpMessage' in cmd,
             );
         }
     }

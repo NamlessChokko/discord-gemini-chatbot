@@ -2,6 +2,7 @@ import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, Modality } from '@google/genai';
 import fs from 'fs';
 import path from 'path';
+import { newImagineCommandLog } from '../lib/logging.js';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,6 +26,14 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         await interaction.editReply('Prompt cannot be empty.');
         return;
     }
+
+    newImagineCommandLog(
+        new Date().toLocaleString(),
+        interaction.user.username,
+        prompt,
+        interaction.guild?.name || 'DM',
+    );
+
     await interaction.reply({
         content: 'Generating image...',
         withResponse: true,

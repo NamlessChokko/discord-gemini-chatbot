@@ -1,17 +1,19 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
+import { newHelpCommandLog } from '../lib/logging.js';
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 
 export const helpMessage = `
 **🤖 Gemini Chat Bot Help**
 
-Gemini is powered by Google's Gemini 2.5 Flash API, enabling natural conversations directly inside Discord.
-
-**🗨️ How to Use**
+*🗨️ How to Use**
 - **Mention the bot**: Just mention "@Gemini - Chatbot" in any message and ask anything.
-- **Direct Messages**: You can chat with Gemini privately via DMs.
+- **Direct Messages**: You can chat with the bot privately via DMs.
 - **Slash Commands**: Use slash commands like "/code", "/imagine", and more (coming soon).
 
 
-Use "@Gemini - Chatbot" or try a command to begin!
+Use "${config.botInfo.customName}" or try a command to begin!
 `;
 
 export const data = new SlashCommandBuilder()
@@ -19,5 +21,10 @@ export const data = new SlashCommandBuilder()
     .setDescription('Displays usage instructions and bot capabilities.');
 
 export async function execute(interaction: ChatInputCommandInteraction) {
+    newHelpCommandLog(
+        new Date().toLocaleString(),
+        interaction.user.username,
+        interaction.guild?.name || 'DM',
+    );
     await interaction.reply(helpMessage);
 }

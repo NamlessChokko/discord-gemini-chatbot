@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
+import { newCodeCommandLog } from '../lib/logging.js';
 
 export const helpMessage = `**/code** - Generate code based on your prompt. Use this command to get code snippets or examples for programming tasks.`;
 
@@ -14,6 +15,19 @@ export const data = new SlashCommandBuilder()
     );
 
 export async function execute(interaction: ChatInputCommandInteraction) {
+    const prompt = interaction.options.getString('prompt');
+    if (!prompt) {
+        await interaction.reply('Prompt cannot be empty.');
+        return;
+    }
+
+    newCodeCommandLog(
+        new Date().toLocaleString(),
+        interaction.user.username,
+        prompt,
+        interaction.guild?.name || 'DM',
+    );
+
     await interaction.reply({
         content: 'Generating code...',
         withResponse: true,

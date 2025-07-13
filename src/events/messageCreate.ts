@@ -12,7 +12,6 @@ import {
 import {
     newMentionLog,
     newResponseLog,
-    newReplyLengthErrorLog,
     newCreateChatErrorLog,
     newSendMessageErrorLog,
 } from '../lib/logging.js';
@@ -53,7 +52,7 @@ export async function execute(
     const botName =
         client.user?.globalName ||
         client.user?.username ||
-        config.messageCreateConfigs.responseConfigs.botCustomName;
+        config.botInfo.customName;
 
     const systemInstruction = systemInstructions.messageCreate(
         botName,
@@ -78,14 +77,11 @@ export async function execute(
             // model: 'gemini-2.5-pro',
             model: 'gemini-2.5-flash',
             config: {
-                temperature:
-                    config.messageCreateConfigs.generationParameters
-                        .temperature,
+                temperature: config.messageCreate.generation.temperature,
                 systemInstruction: systemInstruction,
                 thinkingConfig: {
                     thinkingBudget:
-                        config.messageCreateConfigs.generationParameters
-                            .thinkingBudget,
+                        config.messageCreate.generation.thinkingBudget,
                 },
             },
             history: history,
@@ -123,7 +119,6 @@ export async function execute(
 
     if (!validReply(response)) {
         botReply.edit(errorMessage);
-        newReplyLengthErrorLog(currentTime, responseText.length, isDM);
         return;
     }
 

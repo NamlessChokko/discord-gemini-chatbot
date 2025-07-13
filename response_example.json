@@ -1,28 +1,28 @@
 {
-  "candidates": [
-    {
-      "content": {
-        "parts": [
-          {
-            "text": "¡Por supuesto! Ampliemos un poco más sobre el fascinante mundo de la ALU. 🤓\n\nDentro de la ALU, la **Unidad de Control** juega un papel crucial al \"dirigir el tráfico\". Cuando la Unidad de Control decide que una operación aritmética o lógica debe realizarse, selecciona el camino correcto dentro de la ALU para que los datos fluyan hacia los circuitos adecuados.\n\nImagina que la ALU tiene varios \"caminos\" o \"módulos\" internos. La Unidad de Control activa las compuertas correctas para que:\n\n*   Si se necesita sumar, los números entren en el **sumador**.\n*   Si se necesita hacer un AND, los números vayan a la **puerta lógica AND**.\n*   Si se necesita comparar, se use la lógica de comparación.\n\nAdemás de los resultados de la operación en sí, la ALU también genera **\"flags\"** (o indicadores/banderas). Estos son pequeños bits de información que proporcionan detalles sobre el resultado de la operación, y son súper importantes para la lógica de control del programa. Algunos flags comunes son:\n\n*   **Zero Flag (Z):** Se activa (se pone a 1) si el resultado de la operación es cero.\n*   **Carry Flag (C):** Se activa si hubo un \"acarreo\" en la suma (es decir, el resultado fue demasiado grande para caber en el número de bits asignados) o un \"préstamo\" en la resta. Es vital para sumar o restar números muy grandes que requieren múltiples pasos.\n*   **Negative Flag (N) / Sign Flag (S):** Se activa si el resultado es negativo (comúnmente basado en el bit más significativo de un número con signo).\n*   **Overflow Flag (V):** Se activa si el resultado de una operación aritmética con signo es demasiado grande (positivo o negativo) para ser representado en el número de bits disponible.\n\nEstos flags son utilizados por la Unidad de Control y por las instrucciones de salto condicional del programa para tomar decisiones. Por ejemplo, un programa podría decir: \"Si el resultado de la resta fue cero (Z=1), salta a esta otra sección del código\". ¡Esto permite crear la lógica de \"si esto, entonces aquello\" en los programas! 🧐\n\nEn resumen, la ALU no solo calcula, sino que también \"informa\" a la CPU sobre"
-          }
-        ],
-        "role": "model"
-      },
-      "finishReason": "MAX_TOKENS",
-      "index": 0
+    "candidates": [
+        {
+            "content": {
+                "parts": [
+                    {
+                        "text": "¡Por supuesto! Ampliemos un poco más sobre el fascinante mundo de la ALU. 🤓\n\nDentro de la ALU, la **Unidad de Control** juega un papel crucial al \"dirigir el tráfico\". Cuando la Unidad de Control decide que una operación aritmética o lógica debe realizarse, selecciona el camino correcto dentro de la ALU para que los datos fluyan hacia los circuitos adecuados.\n\nImagina que la ALU tiene varios \"caminos\" o \"módulos\" internos. La Unidad de Control activa las compuertas correctas para que:\n\n*   Si se necesita sumar, los números entren en el **sumador**.\n*   Si se necesita hacer un AND, los números vayan a la **puerta lógica AND**.\n*   Si se necesita comparar, se use la lógica de comparación.\n\nAdemás de los resultados de la operación en sí, la ALU también genera **\"flags\"** (o indicadores/banderas). Estos son pequeños bits de información que proporcionan detalles sobre el resultado de la operación, y son súper importantes para la lógica de control del programa. Algunos flags comunes son:\n\n*   **Zero Flag (Z):** Se activa (se pone a 1) si el resultado de la operación es cero.\n*   **Carry Flag (C):** Se activa si hubo un \"acarreo\" en la suma (es decir, el resultado fue demasiado grande para caber en el número de bits asignados) o un \"préstamo\" en la resta. Es vital para sumar o restar números muy grandes que requieren múltiples pasos.\n*   **Negative Flag (N) / Sign Flag (S):** Se activa si el resultado es negativo (comúnmente basado en el bit más significativo de un número con signo).\n*   **Overflow Flag (V):** Se activa si el resultado de una operación aritmética con signo es demasiado grande (positivo o negativo) para ser representado en el número de bits disponible.\n\nEstos flags son utilizados por la Unidad de Control y por las instrucciones de salto condicional del programa para tomar decisiones. Por ejemplo, un programa podría decir: \"Si el resultado de la resta fue cero (Z=1), salta a esta otra sección del código\". ¡Esto permite crear la lógica de \"si esto, entonces aquello\" en los programas! 🧐\n\nEn resumen, la ALU no solo calcula, sino que también \"informa\" a la CPU sobre"
+                    }
+                ],
+                "role": "model"
+            },
+            "finishReason": "MAX_TOKENS",
+            "index": 0
+        }
+    ],
+    "modelVersion": "gemini-2.5-flash-lite-preview-06-17",
+    "usageMetadata": {
+        "promptTokenCount": 1683,
+        "candidatesTokenCount": 499,
+        "totalTokenCount": 2182,
+        "promptTokensDetails": [
+            {
+                "modality": "TEXT",
+                "tokenCount": 1683
+            }
+        ]
     }
-  ],
-  "modelVersion": "gemini-2.5-flash-lite-preview-06-17",
-  "usageMetadata": {
-    "promptTokenCount": 1683,
-    "candidatesTokenCount": 499,
-    "totalTokenCount": 2182,
-    "promptTokensDetails": [
-      {
-        "modality": "TEXT",
-        "tokenCount": 1683
-      }
-    ]
-  }
 }
