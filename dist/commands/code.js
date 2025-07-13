@@ -187,7 +187,7 @@ export function execute(interaction) {
                         2
                     ];
                 case 2:
-                    newCodeCommandLog(new Date().toLocaleString(), interaction.user.username, prompt, ((_interaction_guild = interaction.guild) === null || _interaction_guild === void 0 ? void 0 : _interaction_guild.name) || 'DM');
+                    newCodeCommandLog(new Date().toLocaleString(), interaction.user.username, prompt, ((_interaction_guild = interaction.guild) === null || _interaction_guild === void 0 ? void 0 : _interaction_guild.name) || 'Direct Message');
                     return [
                         4,
                         interaction.reply({

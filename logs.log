@@ -365,3 +365,93 @@ You are currently in the **bot-playground** channel on the **Coders Hub** server
 [ Log: client ready ] > At: 7/13/2025, 1:34:23 AM
 
 --------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 1:43:05 AM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 01:43:45 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "What is it about ? tester-bot"
+
+[ Log: response ] > At: Sun Jul 13 2025 01:43:45 GMT-0400 (Eastern Daylight Time)
+   Text: Hello θᴢγ𝒎α𝔫𝚍ⲓα𝘴! 👋
+
+It seems like you asked "What is it about ?" but didn't provide any context for what "it" refers to. Could you please clarify what you're asking about? I'm here to help! 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 176,
+     "candidatesTokenCount": 64,
+     "totalTokenCount": 240,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 176
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: client ready ] > At: 7/13/2025, 1:45:06 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 10:35:13 AM
+
+--------------------------------------------------
+[ Log: ping command ] > At: 7/13/2025, 10:36:59 AM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Latency: 0ms
+   API Ping: 198ms
+
+[ Log: mention ] > At: Sun Jul 13 2025 10:37:31 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot What does this info means ?"
+
+[ Log: create chat error ] > At: Sun Jul 13 2025 10:37:31 GMT-0400 (Eastern Daylight Time)
+   History Length: 1
+   History: [
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "🏓 Pong!\n- Response Time: **0ms**\n- API Latency: **198ms**"
+      }
+    ]
+  }
+]
+   > Error: Error: History must start with a user turn.
+    at validateHistory (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2613:15)
+    at new Chat (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2711:9)
+    at Chats.create (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2691:16)
+    at file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:163:45
+    at step (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:104:23)
+    at Object.next (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:45:20)
+    at asyncGeneratorStep (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:3:28)
+    at _next (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:21:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[ Log: client ready ] > At: 7/13/2025, 10:43:46 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 10:46:19 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:05:46 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:10:03 AM
+
+--------------------------------------------------
+[ Log: ping command ] > At: 7/13/2025, 11:13:28 AM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Latency: 0ms
+   API Ping: 63ms
+
+[ Log: client ready ] > At: 7/13/2025, 11:14:27 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 11:15:14 AM
+
+--------------------------------------------------

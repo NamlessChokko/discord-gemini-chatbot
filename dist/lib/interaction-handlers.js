@@ -118,17 +118,51 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import handleInteractions from '../lib/interaction-handlers.js';
-export var name = 'interactionCreate';
-export function execute(interaction) {
-    return _async_to_generator(function() {
-        return _ts_generator(this, function(_state) {
-            if (interaction.isChatInputCommand()) {
-                handleInteractions.chatInputCommand(interaction);
-            }
-            return [
-                2
-            ];
-        });
-    })();
-}
+export default {
+    chatInputCommand: function(interaction) {
+        return _async_to_generator(function() {
+            var command, error;
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        command = interaction.client.commands.get(interaction.commandName);
+                        if (!command) {
+                            console.error("No command matching ".concat(interaction.commandName, " was found."));
+                            return [
+                                2
+                            ];
+                        }
+                        _state.label = 1;
+                    case 1:
+                        _state.trys.push([
+                            1,
+                            3,
+                            ,
+                            4
+                        ]);
+                        return [
+                            4,
+                            command.execute(interaction)
+                        ];
+                    case 2:
+                        _state.sent();
+                        return [
+                            3,
+                            4
+                        ];
+                    case 3:
+                        error = _state.sent();
+                        console.error('interactionCreate error: ', error);
+                        return [
+                            3,
+                            4
+                        ];
+                    case 4:
+                        return [
+                            2
+                        ];
+                }
+            });
+        })();
+    }
+};

@@ -25,7 +25,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         new Date().toLocaleString(),
         interaction.user.username,
         prompt,
-        interaction.guild?.name || 'DM',
+        interaction.guild?.name || 'Direct Message',
     );
 
     await interaction.reply({
