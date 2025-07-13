@@ -129,7 +129,7 @@ import { validReply, botShouldReply, substituteMentionUsernames, substituteNames
 export var name = 'messageCreate';
 export function execute(message, gemini, client) {
     return _async_to_generator(function() {
-        var _message_author, _message_author1, _client_user, _client_user1, _message_guild, _response_candidates_, _response_candidates, errorMessage, currentTime, authorName, prompt, content, botName, botReply, isDM, location, systemInstruction, history, chat, response, _, _tmp, error, responseText, modelVersion, usageMetadata, finishReason, longMessages, firstMessage, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _$message, err, finalResponse;
+        var _message_guild, _message_author, _message_author1, _client_user, _client_user1, _response_candidates_, _response_candidates, botReply, currentTime, location, authorName, botName, prompt, content, systemInstruction, history, chat, response, _, _tmp, error, responseText, modelVersion, usageMetadata, finishReason, longMessages, firstMessage, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _$message, err, finalResponse;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
@@ -138,22 +138,20 @@ export function execute(message, gemini, client) {
                             2
                         ];
                     }
-                    errorMessage = 'Sorry, there was an error while processing your message. Please try again later.';
-                    currentTime = new Date().toString();
-                    authorName = ((_message_author = message.author) === null || _message_author === void 0 ? void 0 : _message_author.globalName) || ((_message_author1 = message.author) === null || _message_author1 === void 0 ? void 0 : _message_author1.username) || 'Unknown User';
-                    prompt = substituteMentionUsernames(message.content, message.mentions.users);
-                    content = createParts(prompt, message.attachments);
-                    botName = ((_client_user = client.user) === null || _client_user === void 0 ? void 0 : _client_user.globalName) || ((_client_user1 = client.user) === null || _client_user1 === void 0 ? void 0 : _client_user1.username) || config.botInfo.customName;
                     return [
                         4,
                         message.reply('Thinking...')
                     ];
                 case 1:
                     botReply = _state.sent();
-                    isDM = message.channel.isDMBased();
-                    location = isDM ? 'DM' : "Server: ".concat((_message_guild = message.guild) === null || _message_guild === void 0 ? void 0 : _message_guild.name, " -> ").concat(message.channel.name, " ");
+                    currentTime = new Date().toString();
+                    location = message.channel.isDMBased() ? 'Direct Message' : "Server: ".concat((_message_guild = message.guild) === null || _message_guild === void 0 ? void 0 : _message_guild.name, " -> ").concat(message.channel.name, " ");
+                    authorName = ((_message_author = message.author) === null || _message_author === void 0 ? void 0 : _message_author.globalName) || ((_message_author1 = message.author) === null || _message_author1 === void 0 ? void 0 : _message_author1.username) || 'Unknown User';
+                    botName = config.messageCreate.forceCustomName ? config.botInfo.customName : ((_client_user = client.user) === null || _client_user === void 0 ? void 0 : _client_user.globalName) || ((_client_user1 = client.user) === null || _client_user1 === void 0 ? void 0 : _client_user1.username) || config.botInfo.customName;
+                    prompt = substituteMentionUsernames(message.content, message.mentions.users);
+                    content = createParts(prompt, message.attachments);
                     systemInstruction = systemInstructions.messageCreate(botName, authorName, location, currentTime);
-                    newMentionLog(currentTime, authorName, prompt, isDM, location);
+                    newMentionLog(currentTime, authorName, prompt, location);
                     return [
                         4,
                         createHistory(message, client)
@@ -163,9 +161,7 @@ export function execute(message, gemini, client) {
                     chat = null;
                     try {
                         chat = gemini.chats.create({
-                            // model: 'gemini-2.5-flash-lite-preview-06-17',
-                            // model: 'gemini-2.5-pro',
-                            model: 'gemini-2.5-flash',
+                            model: config.messageCreate.generation.model,
                             config: {
                                 temperature: config.messageCreate.generation.temperature,
                                 systemInstruction: systemInstruction,
@@ -176,7 +172,7 @@ export function execute(message, gemini, client) {
                             history: history
                         });
                     } catch (error) {
-                        botReply.edit(errorMessage);
+                        botReply.edit(config.messageCreate.errorMessage);
                         newCreateChatErrorLog(currentTime, error, history);
                         return [
                             2
@@ -213,7 +209,7 @@ export function execute(message, gemini, client) {
                 case 6:
                     error = _state.sent();
                     newSendMessageErrorLog(currentTime, error, prompt, history);
-                    botReply.edit(errorMessage);
+                    botReply.edit(config.messageCreate.errorMessage);
                     return [
                         2
                     ];
@@ -224,7 +220,7 @@ export function execute(message, gemini, client) {
                     finishReason = (response === null || response === void 0 ? void 0 : (_response_candidates = response.candidates) === null || _response_candidates === void 0 ? void 0 : (_response_candidates_ = _response_candidates[0]) === null || _response_candidates_ === void 0 ? void 0 : _response_candidates_.finishReason) || '(unknown finish reason)';
                     newResponseLog(currentTime, responseText, modelVersion, usageMetadata, finishReason);
                     if (!validReply(response)) {
-                        botReply.edit(errorMessage);
+                        botReply.edit(config.messageCreate.errorMessage);
                         return [
                             2
                         ];

@@ -11,6 +11,12 @@ var systemInstructions = {
             'You should use emojis to make your messages more friendly, but do not overuse them.',
             'If the message is empty, you should respond with a frienly greeting.'
         ];
+    },
+    imagine: function() {
+        return [];
+    },
+    code: function() {
+        return [];
     }
 };
 export default systemInstructions;

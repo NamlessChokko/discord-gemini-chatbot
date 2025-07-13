@@ -94,14 +94,12 @@ export async function createHistory(
     message: Message,
     client: Client,
 ): Promise<Content[]> {
-    const maxHistoryLengthConfig =
-        config.messageCreate.generation.maxHistoryLength || 10;
-    const maxHistoryLength =
-        maxHistoryLengthConfig > 0
-            ? maxHistoryLengthConfig
-            : Number.MAX_SAFE_INTEGER;
     const history: Content[] = [];
     let cursor: Message = message;
+    const maxHistoryLength =
+        config.messageCreate.generation.maxHistoryLength > 0
+            ? config.messageCreate.generation.maxHistoryLength
+            : Number.MAX_SAFE_INTEGER;
 
     while (cursor.reference && cursor.reference.messageId) {
         const parent = await message.channel.messages.fetch(
@@ -110,11 +108,9 @@ export async function createHistory(
 
         const role = parent.author.id === client.user?.id ? 'model' : 'user';
 
-        const parts = createParts(parent.content, parent.attachments);
-
         history.unshift({
-            role,
-            parts: await parts,
+            role: role,
+            parts: await createParts(parent.content, parent.attachments),
         });
 
         if (history.length >= maxHistoryLength && role === 'user') {

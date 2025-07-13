@@ -1,7 +1,7 @@
 import { logToFile } from './utils.js';
 import util from 'node:util';
-export function newMentionLog(currentTime, authorName, content, isDM, location) {
-    var logMessage = "[ Log: mention ] > At: ".concat(currentTime, "\n") + "   Interaction: ".concat(isDM ? 'DM' : 'mention', "\n") + "   Author: ".concat(authorName, "\n") + "   Location: ".concat(location, "\n") + '   content: "'.concat(content, '"\n');
+export function newMentionLog(currentTime, authorName, content, location) {
+    var logMessage = "[ Log: mention ] > At: ".concat(currentTime, "\n") + "   Author: ".concat(authorName, "\n") + "   Location: ".concat(location, "\n") + '   content: "'.concat(content, '"\n');
     console.log(logMessage);
     logToFile(logMessage);
 }

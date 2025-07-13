@@ -3,12 +3,7 @@ const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
 import { Message, Client } from 'discord.js';
-import {
-    GoogleGenAI,
-    Content,
-    Chat,
-    GenerateContentResponse,
-} from '@google/genai';
+import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';
 import {
     newMentionLog,
     newResponseLog,
@@ -36,46 +31,42 @@ export async function execute(
         return;
     }
 
-    const errorMessage =
-        'Sorry, there was an error while processing your message. Please try again later.';
+    const botReply = await message.reply('Thinking...');
+
     const currentTime = new Date().toString();
+    const location = message.channel.isDMBased()
+        ? 'Direct Message'
+        : `Server: ${message.guild?.name} -> ${message.channel.name} `;
     const authorName =
         message.author?.globalName ||
         message.author?.username ||
         'Unknown User';
+    const botName = config.messageCreate.forceCustomName
+        ? config.botInfo.customName
+        : client.user?.globalName ||
+          client.user?.username ||
+          config.botInfo.customName;
+
     const prompt = substituteMentionUsernames(
         message.content,
         message.mentions.users,
     );
+
     const content = createParts(prompt, message.attachments);
-
-    const botName =
-        client.user?.globalName ||
-        client.user?.username ||
-        config.botInfo.customName;
-
-    const botReply = await message.reply('Thinking...');
-    const isDM = message.channel.isDMBased();
-
-    const location = isDM
-        ? 'DM'
-        : `Server: ${message.guild?.name} -> ${message.channel.name} `;
-
     const systemInstruction = systemInstructions.messageCreate(
         botName,
         authorName,
         location,
         currentTime,
     );
-    newMentionLog(currentTime, authorName, prompt, isDM, location);
 
-    const history: Content[] = await createHistory(message, client);
+    newMentionLog(currentTime, authorName, prompt, location);
+
+    const history = await createHistory(message, client);
     let chat: Chat | null = null;
     try {
         chat = gemini.chats.create({
-            // model: 'gemini-2.5-flash-lite-preview-06-17',
-            // model: 'gemini-2.5-pro',
-            model: 'gemini-2.5-flash',
+            model: config.messageCreate.generation.model,
             config: {
                 temperature: config.messageCreate.generation.temperature,
                 systemInstruction: systemInstruction,
@@ -87,7 +78,7 @@ export async function execute(
             history: history,
         });
     } catch (error) {
-        botReply.edit(errorMessage);
+        botReply.edit(config.messageCreate.errorMessage);
         newCreateChatErrorLog(currentTime, error, history);
         return;
     }
@@ -99,7 +90,7 @@ export async function execute(
         });
     } catch (error) {
         newSendMessageErrorLog(currentTime, error, prompt, history);
-        botReply.edit(errorMessage);
+        botReply.edit(config.messageCreate.errorMessage);
         return;
     }
 
@@ -118,7 +109,7 @@ export async function execute(
     );
 
     if (!validReply(response)) {
-        botReply.edit(errorMessage);
+        botReply.edit(config.messageCreate.errorMessage);
         return;
     }
 

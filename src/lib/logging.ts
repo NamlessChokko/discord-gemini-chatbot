@@ -6,12 +6,10 @@ export function newMentionLog(
     currentTime: string,
     authorName: string,
     content: string,
-    isDM: boolean,
     location: string,
 ) {
     const logMessage =
         `[ Log: mention ] > At: ${currentTime}\n` +
-        `   Interaction: ${isDM ? 'DM' : 'mention'}\n` +
         `   Author: ${authorName}\n` +
         `   Location: ${location}\n` +
         `   content: "${content}"\n`;

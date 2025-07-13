@@ -248,14 +248,13 @@ export function validReply(response) {
 }
 export function createHistory(message, client) {
     return _async_to_generator(function() {
-        var maxHistoryLengthConfig, maxHistoryLength, history, cursor, _client_user, parent, role, parts, _, _tmp;
+        var history, cursor, maxHistoryLength, _client_user, parent, role, _, _tmp;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
-                    maxHistoryLengthConfig = config.messageCreate.generation.maxHistoryLength || 10;
-                    maxHistoryLength = maxHistoryLengthConfig > 0 ? maxHistoryLengthConfig : Number.MAX_SAFE_INTEGER;
                     history = [];
                     cursor = message;
+                    maxHistoryLength = config.messageCreate.generation.maxHistoryLength > 0 ? config.messageCreate.generation.maxHistoryLength : Number.MAX_SAFE_INTEGER;
                     _state.label = 1;
                 case 1:
                     if (!(cursor.reference && cursor.reference.messageId)) return [
@@ -269,14 +268,13 @@ export function createHistory(message, client) {
                 case 2:
                     parent = _state.sent();
                     role = parent.author.id === ((_client_user = client.user) === null || _client_user === void 0 ? void 0 : _client_user.id) ? 'model' : 'user';
-                    parts = createParts(parent.content, parent.attachments);
                     _ = history.unshift;
                     _tmp = {
                         role: role
                     };
                     return [
                         4,
-                        parts
+                        createParts(parent.content, parent.attachments)
                     ];
                 case 3:
                     _.apply(history, [

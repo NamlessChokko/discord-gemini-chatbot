@@ -17,6 +17,12 @@ const systemInstructions = {
             'If the message is empty, you should respond with a frienly greeting.',
         ];
     },
+    imagine: () => {
+        return [];
+    },
+    code: () => {
+        return [];
+    },
 };
 
 export default systemInstructions;
