@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "start": "node dist/src/index.js",
+    "start": "node dist/deploy-commands.js && node dist/index.js",
     "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec './run-dev.sh'",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."

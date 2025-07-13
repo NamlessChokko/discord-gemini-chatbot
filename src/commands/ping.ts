@@ -1,5 +1,7 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 
+export const helpMessage = `**/ping** - Check the bot's latency and API response time. Use this command to ensure the bot is responsive and functioning correctly.`;
+
 export const data = new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Check bot latency and API response time.');

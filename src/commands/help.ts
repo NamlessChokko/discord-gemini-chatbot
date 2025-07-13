@@ -17,6 +17,7 @@ Use "@Gemini - Chatbot" or try a command to begin!
 export const data = new SlashCommandBuilder()
     .setName('help')
     .setDescription('Displays usage instructions and bot capabilities.');
+
 export async function execute(interaction: ChatInputCommandInteraction) {
     await interaction.reply(helpMessage);
 }

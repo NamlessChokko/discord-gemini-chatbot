@@ -311,7 +311,7 @@ var __filename = fileURLToPath(import.meta.url);
 var __dirname = path.dirname(__filename);
 export function loadCommands(client) {
     return _async_to_generator(function() {
-        var commandsPath, commandFiles, commandPromises, commands, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, command;
+        var commandsPath, commandFiles, commandPromises, commands, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, command, cmd, _cmd_data;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
@@ -334,10 +334,12 @@ export function loadCommands(client) {
                     try {
                         for(_iterator = commands[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
                             command = _step.value;
-                            if ('data' in command && 'execute' in command && 'helpMessage' in command) {
-                                client.commands.set(command.data.name, command);
+                            cmd = command.default || command;
+                            if ('data' in cmd && 'execute' in cmd && 'helpMessage' in cmd) {
+                                client.commands.set(cmd.data.name, cmd);
                             } else {
-                                console.log("[ WARNING ] > A command file is missing required properties: data, execute, or helpMessage");
+                                ;
+                                console.log("[ WARNING ] > A command file is missing required properties: ".concat(((_cmd_data = cmd.data) === null || _cmd_data === void 0 ? void 0 : _cmd_data.name) || 'unknown', "\n").concat('data' in cmd ? '+ data' : '- data', "\n").concat('execute' in cmd ? '+ execute' : '- execute', "\n").concat('helpMessage' in cmd ? '+ helpMessage' : '- helpMessage'));
                             }
                         }
                     } catch (err) {
