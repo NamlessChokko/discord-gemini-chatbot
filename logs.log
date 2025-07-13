@@ -53,3 +53,129 @@
    Location: El servidor de NamlessChokko
    Prompt: "Boy playing with a blue dog"
 
+[ Log: mention ] > At: Sun Jul 13 2025 00:32:19 GMT-0400 (Eastern Daylight Time)
+   Interaction: mention
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Coders Hub -> bot-playground
+   content: "tester-bot"
+
+[ Log: response ] > At: Sun Jul 13 2025 00:32:19 GMT-0400 (Eastern Daylight Time)
+   Text: Hello! How can I help you today? 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 157,
+     "candidatesTokenCount": 10,
+     "totalTokenCount": 167,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 157
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: client ready ] > At: 7/13/2025, 12:38:38 AM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 00:38:53 GMT-0400 (Eastern Daylight Time)
+   Interaction: mention
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: Coders Hub -> bot-playground 
+   content: "tester-bot where are we ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 00:38:53 GMT-0400 (Eastern Daylight Time)
+   Text: Hey there! 👋 
+
+You are currently in the **bot-playground** channel on the **Coders Hub** server. 🤖
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 170,
+     "candidatesTokenCount": 28,
+     "totalTokenCount": 198,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 170
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 00:39:06 GMT-0400 (Eastern Daylight Time)
+   Interaction: DM
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: DM
+   content: "Where are we ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 00:39:06 GMT-0400 (Eastern Daylight Time)
+   Text: We are currently in a DM,  θᴢγ𝒎α𝔫𝚍ⲓα𝘴! 🤖
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 158,
+     "candidatesTokenCount": 26,
+     "totalTokenCount": 184,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 158
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 00:39:25 GMT-0400 (Eastern Daylight Time)
+   Interaction: mention
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot what is this place yo ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 00:39:25 GMT-0400 (Eastern Daylight Time)
+   Text: This is the **El servidor de Namless** Discord server! 🎮 We're currently in the **bot-playground** channel. Feel free to explore and have fun! 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 177,
+     "candidatesTokenCount": 37,
+     "totalTokenCount": 214,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 177
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 00:39:54 GMT-0400 (Eastern Daylight Time)
+   Interaction: mention
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "What does the name means ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 00:39:54 GMT-0400 (Eastern Daylight Time)
+   Text: The name "El servidor de Namless" translates from Spanish to "The Namless Server." It seems to be a playful way of saying it's a server without a specific, formal name. 🤔
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 241,
+     "candidatesTokenCount": 41,
+     "totalTokenCount": 282,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 241
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: client ready ] > At: 7/13/2025, 12:41:25 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/13/2025, 12:41:34 AM
+
+--------------------------------------------------

@@ -54,19 +54,19 @@ export async function execute(
         client.user?.username ||
         config.botInfo.customName;
 
-    const systemInstruction = systemInstructions.messageCreate(
-        botName,
-        authorName,
-        currentTime,
-    );
-
     const botReply = await message.reply('Thinking...');
     const isDM = message.channel.isDMBased();
 
     const location = isDM
         ? 'DM'
-        : `${message.guild?.name} -> ${message.channel.name}`;
+        : `Server: ${message.guild?.name} -> ${message.channel.name} `;
 
+    const systemInstruction = systemInstructions.messageCreate(
+        botName,
+        authorName,
+        location,
+        currentTime,
+    );
     newMentionLog(currentTime, authorName, prompt, isDM, location);
 
     const history: Content[] = await createHistory(message, client);
