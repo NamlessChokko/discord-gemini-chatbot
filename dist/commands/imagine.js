@@ -124,6 +124,11 @@ import fs from 'fs';
 import path from 'path';
 import { newImagineCommandLog } from '../lib/logging.js';
 import { fileURLToPath } from 'url';
+var _ref = await import('../../config.json', {
+    with: {
+        type: 'json'
+    }
+}), config = _ref.default;
 var __filename = fileURLToPath(import.meta.url);
 var __dirname = path.dirname(__filename);
 export var helpMessage = "**/imagine** - Generate an image based on your prompt. Use this command to create images from text descriptions.";
@@ -132,7 +137,7 @@ export var data = new SlashCommandBuilder().setName('imagine').setDescription('G
 });
 export function execute(interaction) {
     return _async_to_generator(function() {
-        var _interaction_guild, prompt, gemini, _response_candidates__content, _response_candidates_, _response_candidates, response, parts, imageBuffer, caption, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, part, _part_inlineData, imgPath, error;
+        var _interaction_guild, prompt, gemini, _response_candidates__content, _response_candidates_, _response_candidates, response, parts, imageBuffer, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, part, _part_inlineData, imgPath, error;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
@@ -175,15 +180,14 @@ export function execute(interaction) {
                     return [
                         4,
                         gemini.models.generateContent({
-                            model: 'gemini-2.0-flash-preview-image-generation',
+                            model: config.imagine.generation.model,
                             contents: prompt,
                             config: {
                                 responseModalities: [
                                     Modality.IMAGE,
                                     Modality.TEXT
                                 ],
-                                temperature: 2,
-                                maxOutputTokens: 1024
+                                temperature: config.imagine.generation.temperature
                             }
                         })
                     ];
@@ -191,7 +195,6 @@ export function execute(interaction) {
                     response = _state.sent();
                     parts = ((_response_candidates = response.candidates) === null || _response_candidates === void 0 ? void 0 : (_response_candidates_ = _response_candidates[0]) === null || _response_candidates_ === void 0 ? void 0 : (_response_candidates__content = _response_candidates_.content) === null || _response_candidates__content === void 0 ? void 0 : _response_candidates__content.parts) || [];
                     imageBuffer = null;
-                    caption = '';
                     _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
                     try {
                         for(_iterator = parts[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
@@ -199,8 +202,6 @@ export function execute(interaction) {
                             ;
                             if ((_part_inlineData = part.inlineData) === null || _part_inlineData === void 0 ? void 0 : _part_inlineData.data) {
                                 imageBuffer = Buffer.from(part.inlineData.data, 'base64');
-                            } else if (part.text) {
-                                caption += part.text + '\n';
                             }
                         }
                     } catch (err) {
@@ -226,7 +227,7 @@ export function execute(interaction) {
                     return [
                         4,
                         interaction.editReply({
-                            content: caption.trim() || 'Here’s your image:',
+                            content: 'Here’s your image:',
                             files: [
                                 imgPath
                             ]
@@ -242,7 +243,7 @@ export function execute(interaction) {
                 case 7:
                     return [
                         4,
-                        interaction.editReply('No image could be generated for that prompt.')
+                        interaction.editReply(config.imagine.errorMessage)
                     ];
                 case 8:
                     _state.sent();
@@ -257,7 +258,7 @@ export function execute(interaction) {
                     console.error('Error during Gemini image generation:', error);
                     return [
                         4,
-                        interaction.editReply('Sorry, I couldn’t generate that image right now.')
+                        interaction.editReply(config.imagine.errorMessage)
                     ];
                 case 11:
                     _state.sent();

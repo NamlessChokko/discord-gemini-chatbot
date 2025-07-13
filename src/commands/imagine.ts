@@ -4,6 +4,9 @@ import fs from 'fs';
 import path from 'path';
 import { newImagineCommandLog } from '../lib/logging.js';
 import { fileURLToPath } from 'url';
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,24 +46,20 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
     try {
         const response = await gemini.models.generateContent({
-            model: 'gemini-2.0-flash-preview-image-generation',
+            model: config.imagine.generation.model,
             contents: prompt,
             config: {
                 responseModalities: [Modality.IMAGE, Modality.TEXT],
-                temperature: 2,
-                maxOutputTokens: 1024,
+                temperature: config.imagine.generation.temperature,
             },
         });
 
         const parts = response.candidates?.[0]?.content?.parts || [];
         let imageBuffer: Buffer | null = null;
-        let caption = '';
 
         for (const part of parts) {
             if (part.inlineData?.data) {
                 imageBuffer = Buffer.from(part.inlineData.data, 'base64');
-            } else if (part.text) {
-                caption += part.text + '\n';
             }
         }
 
@@ -68,19 +67,15 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             const imgPath = path.join(__dirname, 'out.png');
             fs.writeFileSync(imgPath, imageBuffer);
             await interaction.editReply({
-                content: caption.trim() || 'Here’s your image:',
+                content: 'Here’s your image:',
                 files: [imgPath],
             });
             fs.unlinkSync(imgPath);
         } else {
-            await interaction.editReply(
-                'No image could be generated for that prompt.',
-            );
+            await interaction.editReply(config.imagine.errorMessage);
         }
     } catch (error) {
         console.error('Error during Gemini image generation:', error);
-        await interaction.editReply(
-            'Sorry, I couldn’t generate that image right now.',
-        );
+        await interaction.editReply(config.imagine.errorMessage);
     }
 }
