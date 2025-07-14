@@ -15,8 +15,15 @@ var systemInstructions = {
     imagine: function() {
         return [];
     },
-    code: function() {
-        return [];
+    code: function(authorName) {
+        return [
+            'YOUR ROLE: You are a code generator bot for Discord.',
+            "User to respond: ".concat(authorName),
+            'Respond only with code.',
+            'Use comments inside code if you need to explain something.',
+            'Do not use Markdown formatting.',
+            'Maintain a formal and neutral tone unless otherwise requested.'
+        ];
     }
 };
 export default systemInstructions;

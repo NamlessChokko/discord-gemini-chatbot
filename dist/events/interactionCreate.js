@@ -120,11 +120,11 @@ function _ts_generator(thisArg, body) {
 }
 import handleInteractions from '../lib/interaction-handlers.js';
 export var name = 'interactionCreate';
-export function execute(interaction) {
+export function execute(interaction, gemini) {
     return _async_to_generator(function() {
         return _ts_generator(this, function(_state) {
             if (interaction.isChatInputCommand()) {
-                handleInteractions.chatInputCommand(interaction);
+                handleInteractions.chatInputCommand(interaction, gemini);
             }
             return [
                 2

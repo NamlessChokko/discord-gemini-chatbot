@@ -119,7 +119,7 @@ function _ts_generator(thisArg, body) {
     }
 }
 export default {
-    chatInputCommand: function(interaction) {
+    chatInputCommand: function(interaction, gemini) {
         return _async_to_generator(function() {
             var command, error;
             return _ts_generator(this, function(_state) {
@@ -142,7 +142,7 @@ export default {
                         ]);
                         return [
                             4,
-                            command.execute(interaction)
+                            command.execute(interaction, gemini)
                         ];
                     case 2:
                         _state.sent();

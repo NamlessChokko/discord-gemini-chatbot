@@ -197,15 +197,10 @@ export async function loadCommands(client: CustomClient) {
 
     for (const command of commands) {
         const cmd = command.default || command;
-        if ('data' in cmd && 'execute' in cmd && 'helpMessage' in cmd) {
+        if ('data' in cmd && 'execute' in cmd) {
             client.commands.set(cmd.data.name, cmd);
         } else {
-            commandWarningLog(
-                cmd.data?.name,
-                'data' in cmd,
-                'execute' in cmd,
-                'helpMessage' in cmd,
-            );
+            commandWarningLog(cmd.data?.name, 'data' in cmd, 'execute' in cmd);
         }
     }
 }

@@ -1,8 +1,9 @@
 import { CustomClient } from './types.js';
 import { ChatInputCommandInteraction } from 'discord.js';
+import { GoogleGenAI } from '@google/genai';
 
 export default {
-    chatInputCommand: async (interaction: ChatInputCommandInteraction) => {
+    chatInputCommand: async (interaction: ChatInputCommandInteraction, gemini: GoogleGenAI) => {
         const command = (interaction.client as CustomClient).commands!.get(
             interaction.commandName,
         );
@@ -15,7 +16,7 @@ export default {
         }
 
         try {
-            await command.execute(interaction);
+            await command.execute(interaction, gemini);
         } catch (error) {
             console.error('interactionCreate error: ', error);
         }

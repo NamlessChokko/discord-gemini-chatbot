@@ -1,8 +1,7 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-
-export const helpMessage = `**/code** - Generate code based on your prompt. Use this command to get code snippets or examples for programming tasks.`;
+import systemInstructions from '../lib/systemInstructions.js';
 
 export const data = new SlashCommandBuilder()
     .setName('code')
@@ -14,10 +13,12 @@ export const data = new SlashCommandBuilder()
             .setRequired(true),
     );
 
-export async function execute(interaction: ChatInputCommandInteraction) {
+export async function execute(
+    interaction: ChatInputCommandInteraction,
+    gemini: GoogleGenAI,
+) {
     const prompt = interaction.options.getString('prompt');
     if (!prompt) {
-        await interaction.reply('Prompt cannot be empty.');
         return;
     }
 
@@ -33,49 +34,22 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         withResponse: true,
     });
 
-    const systemInstructions = [
-        'YOUR ROLE: You are a code generator bot for Discord.',
-        'Your name is Gemini.',
-        'You use the Gemini 2.5 API.',
-        'Respond only with code unless context requires clarification.',
-        'Use comments inside code if you need to explain something.',
-        "Always respond in English, regardless of the prompt's language.",
-        `User to respond: ${interaction.user.username}`,
-        'Do not use Markdown formatting.',
-        'Maintain a formal and neutral tone unless otherwise requested.',
-    ];
+    const systemInstruction = systemInstructions.code(
+        interaction.user.globalName ||
+            interaction.user.username ||
+            'Uknown User',
+    );
 
+    let response: GenerateContentResponse | null = null;
     try {
-        const prompt = interaction.options.getString('prompt');
-        if (!prompt) {
-            await interaction.editReply('Prompt cannot be empty.');
-            return;
-        }
-        const gemini = new GoogleGenAI({
-            apiKey: process.env.GEMINI_API_KEY,
-        });
-
-        const responseStream = await gemini.models.generateContentStream({
+        response = await gemini.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: prompt,
             config: {
                 temperature: 1.5,
-                maxOutputTokens: 499,
-                systemInstruction: systemInstructions,
+                systemInstruction: systemInstruction,
             },
         });
-
-        let result = '';
-        for await (const chunk of responseStream) {
-            if (chunk.text) {
-                result += chunk.text;
-                if (result.length > 1995) {
-                    result = result.slice(0, 1995) + '...';
-                    break;
-                }
-                await interaction.editReply(result);
-            }
-        }
     } catch (error) {
         const currentTime = new Date().toLocaleTimeString();
         console.error(`Error at ${currentTime}:`, error);
@@ -83,4 +57,19 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             'Oops! Something went wrong while generating your code.',
         );
     }
+
+    const parts = response?.candidates?.[0]?.content?.parts || [];
+
+    interaction.editReply({
+        content: 'Here’s your generated code:',
+        files: [
+            {
+                attachment: Buffer.from(
+                    parts.map((part) => part.text).join(''),
+                    'utf-8',
+                ),
+                name: 'generated_code.js',
+            },
+        ],
+    });
 }

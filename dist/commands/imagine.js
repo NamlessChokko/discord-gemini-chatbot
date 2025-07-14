@@ -119,7 +119,7 @@ function _ts_generator(thisArg, body) {
     }
 }
 import { SlashCommandBuilder } from 'discord.js';
-import { GoogleGenAI, Modality } from '@google/genai';
+import { Modality } from '@google/genai';
 import fs from 'fs';
 import path from 'path';
 import { newImagineCommandLog } from '../lib/logging.js';
@@ -131,31 +131,21 @@ var _ref = await import('../../config.json', {
 }), config = _ref.default;
 var __filename = fileURLToPath(import.meta.url);
 var __dirname = path.dirname(__filename);
-export var helpMessage = "**/imagine** - Generate an image based on your prompt. Use this command to create images from text descriptions.";
 export var data = new SlashCommandBuilder().setName('imagine').setDescription('Generate an imagine based on your prompt').addStringOption(function(opt) {
     return opt.setName('prompt').setDescription('Describe the image you want to generate').setRequired(true);
 });
-export function execute(interaction) {
+export function execute(interaction, gemini) {
     return _async_to_generator(function() {
-        var _interaction_guild, prompt, gemini, _response_candidates__content, _response_candidates_, _response_candidates, response, parts, imageBuffer, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, part, _part_inlineData, imgPath, error;
+        var _interaction_guild, prompt, _response_candidates__content, _response_candidates_, _response_candidates, response, parts, imageBuffer, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, part, _part_inlineData, imgPath, error;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
                     prompt = interaction.options.getString('prompt');
-                    if (!!prompt) return [
-                        3,
-                        2
-                    ];
-                    return [
-                        4,
-                        interaction.editReply('Prompt cannot be empty.')
-                    ];
-                case 1:
-                    _state.sent();
-                    return [
-                        2
-                    ];
-                case 2:
+                    if (!prompt) {
+                        return [
+                            2
+                        ];
+                    }
                     newImagineCommandLog(new Date().toLocaleString(), interaction.user.username, prompt, ((_interaction_guild = interaction.guild) === null || _interaction_guild === void 0 ? void 0 : _interaction_guild.name) || 'Direct Message');
                     return [
                         4,
@@ -164,18 +154,15 @@ export function execute(interaction) {
                             withResponse: true
                         })
                     ];
-                case 3:
+                case 1:
                     _state.sent();
-                    gemini = new GoogleGenAI({
-                        apiKey: process.env.GEMINI_API_KEY
-                    });
-                    _state.label = 4;
-                case 4:
+                    _state.label = 2;
+                case 2:
                     _state.trys.push([
-                        4,
-                        10,
+                        2,
+                        8,
                         ,
-                        12
+                        10
                     ]);
                     return [
                         4,
@@ -191,7 +178,7 @@ export function execute(interaction) {
                             }
                         })
                     ];
-                case 5:
+                case 3:
                     response = _state.sent();
                     parts = ((_response_candidates = response.candidates) === null || _response_candidates === void 0 ? void 0 : (_response_candidates_ = _response_candidates[0]) === null || _response_candidates_ === void 0 ? void 0 : (_response_candidates__content = _response_candidates_.content) === null || _response_candidates__content === void 0 ? void 0 : _response_candidates__content.parts) || [];
                     imageBuffer = null;
@@ -220,7 +207,7 @@ export function execute(interaction) {
                     }
                     if (!imageBuffer) return [
                         3,
-                        7
+                        5
                     ];
                     imgPath = path.join(__dirname, 'out.png');
                     fs.writeFileSync(imgPath, imageBuffer);
@@ -233,40 +220,40 @@ export function execute(interaction) {
                             ]
                         })
                     ];
-                case 6:
+                case 4:
                     _state.sent();
                     fs.unlinkSync(imgPath);
                     return [
                         3,
-                        9
+                        7
                     ];
-                case 7:
+                case 5:
                     return [
                         4,
                         interaction.editReply(config.imagine.errorMessage)
                     ];
-                case 8:
+                case 6:
                     _state.sent();
-                    _state.label = 9;
-                case 9:
+                    _state.label = 7;
+                case 7:
                     return [
                         3,
-                        12
+                        10
                     ];
-                case 10:
+                case 8:
                     error = _state.sent();
                     console.error('Error during Gemini image generation:', error);
                     return [
                         4,
                         interaction.editReply(config.imagine.errorMessage)
                     ];
-                case 11:
+                case 9:
                     _state.sent();
                     return [
                         3,
-                        12
+                        10
                     ];
-                case 12:
+                case 10:
                     return [
                         2
                     ];

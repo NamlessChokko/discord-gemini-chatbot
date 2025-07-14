@@ -82,15 +82,13 @@ export function commandWarningLog(
     commandName: string,
     hasData: boolean,
     hasExecute: boolean,
-    hasHelpMessage: boolean,
 ) {
     const logMessage =
         `[ WARNING ] > A command file is missing required properties: ${
             commandName || 'unknown'
         }\n` +
         `${hasData ? '+ data' : '- data'}\n` +
-        `${hasExecute ? '+ execute' : '- execute'}\n` +
-        `${hasHelpMessage ? '+ helpMessage' : '- helpMessage'}`;
+        `${hasExecute ? '+ execute' : '- execute'}\n`;
     console.log(logMessage);
     logToFile(logMessage);
 }

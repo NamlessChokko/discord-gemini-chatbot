@@ -362,11 +362,11 @@ export function loadCommands(client) {
                         for(_iterator = commands[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true){
                             command = _step.value;
                             cmd = command.default || command;
-                            if ('data' in cmd && 'execute' in cmd && 'helpMessage' in cmd) {
+                            if ('data' in cmd && 'execute' in cmd) {
                                 client.commands.set(cmd.data.name, cmd);
                             } else {
                                 ;
-                                commandWarningLog((_cmd_data = cmd.data) === null || _cmd_data === void 0 ? void 0 : _cmd_data.name, 'data' in cmd, 'execute' in cmd, 'helpMessage' in cmd);
+                                commandWarningLog((_cmd_data = cmd.data) === null || _cmd_data === void 0 ? void 0 : _cmd_data.name, 'data' in cmd, 'execute' in cmd);
                             }
                         }
                     } catch (err) {

@@ -1,44 +1,3 @@
-function _async_iterator(iterable) {
-    var method, async, sync, retry = 2;
-    for("undefined" != typeof Symbol && (async = Symbol.asyncIterator, sync = Symbol.iterator); retry--;){
-        if (async && null != (method = iterable[async])) return method.call(iterable);
-        if (sync && null != (method = iterable[sync])) return new AsyncFromSyncIterator(method.call(iterable));
-        async = "@@asyncIterator", sync = "@@iterator";
-    }
-    throw new TypeError("Object is not async iterable");
-}
-function AsyncFromSyncIterator(s) {
-    function AsyncFromSyncIteratorContinuation(r) {
-        if (Object(r) !== r) return Promise.reject(new TypeError(r + " is not an object."));
-        var done = r.done;
-        return Promise.resolve(r.value).then(function(value) {
-            return {
-                value: value,
-                done: done
-            };
-        });
-    }
-    return AsyncFromSyncIterator = function(s) {
-        this.s = s, this.n = s.next;
-    }, AsyncFromSyncIterator.prototype = {
-        s: null,
-        n: null,
-        next: function() {
-            return AsyncFromSyncIteratorContinuation(this.n.apply(this.s, arguments));
-        },
-        return: function(value) {
-            var ret = this.s.return;
-            return void 0 === ret ? Promise.resolve({
-                value: value,
-                done: !0
-            }) : AsyncFromSyncIteratorContinuation(ret.apply(this.s, arguments));
-        },
-        throw: function(value) {
-            var thr = this.s.return;
-            return void 0 === thr ? Promise.reject(value) : AsyncFromSyncIteratorContinuation(thr.apply(this.s, arguments));
-        }
-    }, new AsyncFromSyncIterator(s);
-}
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
         var info = gen[key](arg);
@@ -160,33 +119,23 @@ function _ts_generator(thisArg, body) {
     }
 }
 import { SlashCommandBuilder } from 'discord.js';
-import { GoogleGenAI } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-export var helpMessage = "**/code** - Generate code based on your prompt. Use this command to get code snippets or examples for programming tasks.";
+import systemInstructions from '../lib/systemInstructions.js';
 export var data = new SlashCommandBuilder().setName('code').setDescription('Generate code based on your prompt').addStringOption(function(option) {
     return option.setName('prompt').setDescription('Describe what kind of code you need').setRequired(true);
 });
-export function execute(interaction) {
+export function execute(interaction, gemini) {
     return _async_to_generator(function() {
-        var _interaction_guild, prompt, systemInstructions, prompt1, gemini, responseStream, result, _iteratorAbruptCompletion, _didIteratorError, _iteratorError, _iterator, _step, _value, chunk, err, error, currentTime;
+        var _interaction_guild, _response_candidates__content, _response_candidates_, _response_candidates, prompt, systemInstruction, response, error, currentTime, parts;
         return _ts_generator(this, function(_state) {
             switch(_state.label){
                 case 0:
                     prompt = interaction.options.getString('prompt');
-                    if (!!prompt) return [
-                        3,
-                        2
-                    ];
-                    return [
-                        4,
-                        interaction.reply('Prompt cannot be empty.')
-                    ];
-                case 1:
-                    _state.sent();
-                    return [
-                        2
-                    ];
-                case 2:
+                    if (!prompt) {
+                        return [
+                            2
+                        ];
+                    }
                     newCodeCommandLog(new Date().toLocaleString(), interaction.user.username, prompt, ((_interaction_guild = interaction.guild) === null || _interaction_guild === void 0 ? void 0 : _interaction_guild.name) || 'Direct Message');
                     return [
                         4,
@@ -195,161 +144,36 @@ export function execute(interaction) {
                             withResponse: true
                         })
                     ];
-                case 3:
+                case 1:
                     _state.sent();
-                    systemInstructions = [
-                        'YOUR ROLE: You are a code generator bot for Discord.',
-                        'Your name is Gemini.',
-                        'You use the Gemini 2.5 API.',
-                        'Respond only with code unless context requires clarification.',
-                        'Use comments inside code if you need to explain something.',
-                        "Always respond in English, regardless of the prompt's language.",
-                        "User to respond: ".concat(interaction.user.username),
-                        'Do not use Markdown formatting.',
-                        'Maintain a formal and neutral tone unless otherwise requested.'
-                    ];
-                    _state.label = 4;
-                case 4:
+                    systemInstruction = systemInstructions.code(interaction.user.globalName || interaction.user.username || 'Uknown User');
+                    response = null;
+                    _state.label = 2;
+                case 2:
                     _state.trys.push([
+                        2,
                         4,
-                        21,
                         ,
-                        23
-                    ]);
-                    prompt1 = interaction.options.getString('prompt');
-                    if (!!prompt1) return [
-                        3,
                         6
-                    ];
+                    ]);
                     return [
                         4,
-                        interaction.editReply('Prompt cannot be empty.')
-                    ];
-                case 5:
-                    _state.sent();
-                    return [
-                        2
-                    ];
-                case 6:
-                    gemini = new GoogleGenAI({
-                        apiKey: process.env.GEMINI_API_KEY
-                    });
-                    return [
-                        4,
-                        gemini.models.generateContentStream({
+                        gemini.models.generateContent({
                             model: 'gemini-2.5-flash',
-                            contents: prompt1,
+                            contents: prompt,
                             config: {
                                 temperature: 1.5,
-                                maxOutputTokens: 499,
-                                systemInstruction: systemInstructions
+                                systemInstruction: systemInstruction
                             }
                         })
                     ];
-                case 7:
-                    responseStream = _state.sent();
-                    result = '';
-                    _iteratorAbruptCompletion = false, _didIteratorError = false;
-                    _state.label = 8;
-                case 8:
-                    _state.trys.push([
-                        8,
-                        14,
-                        15,
-                        20
-                    ]);
-                    _iterator = _async_iterator(responseStream);
-                    _state.label = 9;
-                case 9:
-                    return [
-                        4,
-                        _iterator.next()
-                    ];
-                case 10:
-                    if (!(_iteratorAbruptCompletion = !(_step = _state.sent()).done)) return [
-                        3,
-                        13
-                    ];
-                    _value = _step.value;
-                    chunk = _value;
-                    if (!chunk.text) return [
-                        3,
-                        12
-                    ];
-                    result += chunk.text;
-                    if (result.length > 1995) {
-                        result = result.slice(0, 1995) + '...';
-                        return [
-                            3,
-                            13
-                        ];
-                    }
-                    return [
-                        4,
-                        interaction.editReply(result)
-                    ];
-                case 11:
-                    _state.sent();
-                    _state.label = 12;
-                case 12:
-                    _iteratorAbruptCompletion = false;
+                case 3:
+                    response = _state.sent();
                     return [
                         3,
-                        9
+                        6
                     ];
-                case 13:
-                    return [
-                        3,
-                        20
-                    ];
-                case 14:
-                    err = _state.sent();
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                    return [
-                        3,
-                        20
-                    ];
-                case 15:
-                    _state.trys.push([
-                        15,
-                        ,
-                        18,
-                        19
-                    ]);
-                    if (!(_iteratorAbruptCompletion && _iterator.return != null)) return [
-                        3,
-                        17
-                    ];
-                    return [
-                        4,
-                        _iterator.return()
-                    ];
-                case 16:
-                    _state.sent();
-                    _state.label = 17;
-                case 17:
-                    return [
-                        3,
-                        19
-                    ];
-                case 18:
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                    return [
-                        7
-                    ];
-                case 19:
-                    return [
-                        7
-                    ];
-                case 20:
-                    return [
-                        3,
-                        23
-                    ];
-                case 21:
+                case 4:
                     error = _state.sent();
                     currentTime = new Date().toLocaleTimeString();
                     console.error("Error at ".concat(currentTime, ":"), error);
@@ -357,13 +181,25 @@ export function execute(interaction) {
                         4,
                         interaction.editReply('Oops! Something went wrong while generating your code.')
                     ];
-                case 22:
+                case 5:
                     _state.sent();
                     return [
                         3,
-                        23
+                        6
                     ];
-                case 23:
+                case 6:
+                    parts = (response === null || response === void 0 ? void 0 : (_response_candidates = response.candidates) === null || _response_candidates === void 0 ? void 0 : (_response_candidates_ = _response_candidates[0]) === null || _response_candidates_ === void 0 ? void 0 : (_response_candidates__content = _response_candidates_.content) === null || _response_candidates__content === void 0 ? void 0 : _response_candidates__content.parts) || [];
+                    interaction.editReply({
+                        content: 'Here’s your generated code:',
+                        files: [
+                            {
+                                attachment: Buffer.from(parts.map(function(part) {
+                                    return part.text;
+                                }).join(''), 'utf-8'),
+                                name: 'generated_code.js'
+                            }
+                        ]
+                    });
                     return [
                         2
                     ];

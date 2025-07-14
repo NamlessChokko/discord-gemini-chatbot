@@ -31,8 +31,8 @@ export function clientShutdown(currentTime) {
     console.log(logMessage);
     logToFile(logMessage);
 }
-export function commandWarningLog(commandName, hasData, hasExecute, hasHelpMessage) {
-    var logMessage = "[ WARNING ] > A command file is missing required properties: ".concat(commandName || 'unknown', "\n") + "".concat(hasData ? '+ data' : '- data', "\n") + "".concat(hasExecute ? '+ execute' : '- execute', "\n") + "".concat(hasHelpMessage ? '+ helpMessage' : '- helpMessage');
+export function commandWarningLog(commandName, hasData, hasExecute) {
+    var logMessage = "[ WARNING ] > A command file is missing required properties: ".concat(commandName || 'unknown', "\n") + "".concat(hasData ? '+ data' : '- data', "\n") + "".concat(hasExecute ? '+ execute' : '- execute', "\n");
     console.log(logMessage);
     logToFile(logMessage);
 }

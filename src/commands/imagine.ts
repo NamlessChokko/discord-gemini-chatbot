@@ -11,8 +11,6 @@ const { default: config } = await import('../../config.json', {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const helpMessage = `**/imagine** - Generate an image based on your prompt. Use this command to create images from text descriptions.`;
-
 export const data = new SlashCommandBuilder()
     .setName('imagine')
     .setDescription('Generate an imagine based on your prompt')
@@ -23,10 +21,12 @@ export const data = new SlashCommandBuilder()
             .setRequired(true),
     );
 
-export async function execute(interaction: ChatInputCommandInteraction) {
+export async function execute(
+    interaction: ChatInputCommandInteraction,
+    gemini: GoogleGenAI,
+) {
     const prompt = interaction.options.getString('prompt');
     if (!prompt) {
-        await interaction.editReply('Prompt cannot be empty.');
         return;
     }
 
@@ -41,8 +41,6 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         content: 'Generating image...',
         withResponse: true,
     });
-
-    const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     try {
         const response = await gemini.models.generateContent({

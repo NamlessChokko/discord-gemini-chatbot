@@ -125,7 +125,7 @@ var _ref = await import('../../config.json', {
         type: 'json'
     }
 }), config = _ref.default;
-export var helpMessage = '\n**\uD83E\uDD16 Gemini Chat Bot Help**\n\n*\uD83D\uDDE8️ How to Use**\n- **Mention the bot**: Just mention "@Gemini - Chatbot" in any message and ask anything.\n- **Direct Messages**: You can chat with the bot privately via DMs.\n- **Slash Commands**: Use slash commands like "/code", "/imagine", and more (coming soon).\n\n\nUse "'.concat(config.botInfo.customName, '" or try a command to begin!\n');
+var helpMessage = '\n**\uD83E\uDD16 Gemini Chat Bot Help**\n\n**\uD83D\uDDE8️ How to Use**\n- **Mention the bot**: Just mention "@Gemini - Chatbot" in any message and ask anything.\n- **Direct Messages**: You can chat with the bot privately via DMs.\n- **Slash Commands**: Use slash commands like "/code", "/imagine", and more (coming soon).\n\n\nUse "'.concat(config.botInfo.customName, '" or try a command to begin!\n');
 export var data = new SlashCommandBuilder().setName('help').setDescription('Displays usage instructions and bot capabilities.');
 export function execute(interaction) {
     return _async_to_generator(function() {

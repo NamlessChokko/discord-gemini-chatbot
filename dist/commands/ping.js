@@ -120,7 +120,6 @@ function _ts_generator(thisArg, body) {
 }
 import { SlashCommandBuilder } from 'discord.js';
 import { newPingCommandLog } from '../lib/logging.js';
-export var helpMessage = "**/ping** - Check the bot's latency and API response time. Use this command to ensure the bot is responsive and functioning correctly.";
 export var data = new SlashCommandBuilder().setName('ping').setDescription('Check bot latency and API response time.');
 export function execute(interaction) {
     return _async_to_generator(function() {

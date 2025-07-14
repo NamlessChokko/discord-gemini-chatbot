@@ -4,10 +4,10 @@ const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
 
-export const helpMessage = `
+const helpMessage = `
 **🤖 Gemini Chat Bot Help**
 
-*🗨️ How to Use**
+**🗨️ How to Use**
 - **Mention the bot**: Just mention "@Gemini - Chatbot" in any message and ask anything.
 - **Direct Messages**: You can chat with the bot privately via DMs.
 - **Slash Commands**: Use slash commands like "/code", "/imagine", and more (coming soon).

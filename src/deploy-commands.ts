@@ -10,7 +10,7 @@ const { default: config } = await import('../config.json', {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ignoreList: string[] = config.loadCommands.ignoreList; // List of commands to ignore
+const ignoreList: string[] = config.loadCommands.ignoreList;
 
 const commands: unknown[] = [];
 const commandsPath = path.join(__dirname, 'commands');

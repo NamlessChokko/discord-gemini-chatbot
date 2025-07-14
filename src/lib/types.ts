@@ -4,13 +4,16 @@ import {
     SlashCommandBuilder,
     ChatInputCommandInteraction,
 } from 'discord.js';
+import { GoogleGenAI } from '@google/genai';
 
 export interface Command {
     data: SlashCommandBuilder;
-    execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+    execute: (
+        interaction: ChatInputCommandInteraction,
+        gemini: GoogleGenAI,
+    ) => Promise<void>;
 }
 
 export interface CustomClient extends Client {
     commands?: Collection<string, Command>;
-    helpMessage?: string;
 }

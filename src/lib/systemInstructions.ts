@@ -20,8 +20,15 @@ const systemInstructions = {
     imagine: () => {
         return [];
     },
-    code: () => {
-        return [];
+    code: (authorName: string) => {
+        return [
+            'YOUR ROLE: You are a code generator bot for Discord.',
+            `User to respond: ${authorName}`,
+            'Respond only with code.',
+            'Use comments inside code if you need to explain something.',
+            'Do not use Markdown formatting.',
+            'Maintain a formal and neutral tone unless otherwise requested.',
+        ];
     },
 };
 
