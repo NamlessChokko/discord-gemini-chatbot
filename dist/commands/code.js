@@ -121,6 +121,11 @@ function _ts_generator(thisArg, body) {
 import { SlashCommandBuilder } from 'discord.js';
 import { newCodeCommandLog } from '../lib/logging.js';
 import systemInstructions from '../lib/systemInstructions.js';
+var _ref = await import('../../config.json', {
+    with: {
+        type: 'json'
+    }
+}), config = _ref.default;
 export var data = new SlashCommandBuilder().setName('code').setDescription('Generate code based on your prompt').addStringOption(function(option) {
     return option.setName('prompt').setDescription('Describe what kind of code you need').setRequired(true);
 });
@@ -140,7 +145,7 @@ export function execute(interaction, gemini) {
                     return [
                         4,
                         interaction.reply({
-                            content: 'Generating code...',
+                            content: config.code.proccessingMessage,
                             withResponse: true
                         })
                     ];
@@ -162,7 +167,7 @@ export function execute(interaction, gemini) {
                             model: 'gemini-2.5-flash',
                             contents: prompt,
                             config: {
-                                temperature: 1.5,
+                                temperature: config.code.generation.temperature,
                                 systemInstruction: systemInstruction
                             }
                         })

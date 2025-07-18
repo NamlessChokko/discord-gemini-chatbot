@@ -2,6 +2,9 @@ import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
 import systemInstructions from '../lib/systemInstructions.js';
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
 
 export const data = new SlashCommandBuilder()
     .setName('code')
@@ -30,7 +33,7 @@ export async function execute(
     );
 
     await interaction.reply({
-        content: 'Generating code...',
+        content: config.code.proccessingMessage,
         withResponse: true,
     });
 
@@ -46,7 +49,7 @@ export async function execute(
             model: 'gemini-2.5-flash',
             contents: prompt,
             config: {
-                temperature: 1.5,
+                temperature: config.code.generation.temperature,
                 systemInstruction: systemInstruction,
             },
         });

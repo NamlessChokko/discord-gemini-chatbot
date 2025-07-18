@@ -1144,3 +1144,363 @@ Por lo tanto, yo no "creé" la imagen de esa pelota. Simplemente la presenté. �
    Location: El servidor de NamlessChokko
    Prompt: "blue dog"
 
+[ Log: client ready ] > At: 7/13/2025, 11:07:29 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 23:08:56 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot what is this video about ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:08:56 GMT-0400 (Eastern Daylight Time)
+   Text: That cat is a true inspiration! 💪 It doesn't matter how you start, it's how you finish! 😂
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 3688,
+     "candidatesTokenCount": 25,
+     "totalTokenCount": 3713,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 177
+       },
+       {
+         "modality": "VIDEO",
+         "tokenCount": 3156
+       },
+       {
+         "modality": "AUDIO",
+         "tokenCount": 355
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:09:56 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot what is this animal ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:09:56 GMT-0400 (Eastern Daylight Time)
+   Text: That's a bold move! 😅 Skunks are known for their unique defense mechanism. It's probably best to give them their space.
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 7545,
+     "candidatesTokenCount": 30,
+     "totalTokenCount": 7575,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 176
+       },
+       {
+         "modality": "VIDEO",
+         "tokenCount": 6575
+       },
+       {
+         "modality": "AUDIO",
+         "tokenCount": 794
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:10:40 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot is this a bomb ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:10:40 GMT-0400 (Eastern Daylight Time)
+   Text: That's quite a powerful firework! It looks like it launched pretty high before exploding. 💥
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 8128,
+     "candidatesTokenCount": 21,
+     "totalTokenCount": 8149,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 176
+       },
+       {
+         "modality": "VIDEO",
+         "tokenCount": 7101
+       },
+       {
+         "modality": "AUDIO",
+         "tokenCount": 851
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: client ready ] > At: 7/13/2025, 11:12:05 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 13 2025 23:12:36 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:12:36 GMT-0400 (Eastern Daylight Time)
+   Text: Hello there! 👋 How can I help you today? 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 171,
+     "candidatesTokenCount": 12,
+     "totalTokenCount": 183,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 171
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:13:01 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "In what lenguage is this song ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:13:01 GMT-0400 (Eastern Daylight Time)
+   Text: You're right! That song definitely brings back memories for many! 🎶 It's amazing how music can transport us back in time. 🕰️
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 7559,
+     "candidatesTokenCount": 32,
+     "totalTokenCount": 7591,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 213
+       },
+       {
+         "modality": "VIDEO",
+         "tokenCount": 6575
+       },
+       {
+         "modality": "AUDIO",
+         "tokenCount": 771
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:17:38 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot quien es Alex el leon ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:17:38 GMT-0400 (Eastern Daylight Time)
+   Text: ¡Hola! 👋
+
+No tengo información específica sobre un "Alex el león". Podrías darme más detalles o contexto para poder ayudarte mejor? 🤔
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 177,
+     "candidatesTokenCount": 32,
+     "totalTokenCount": 209,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 177
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:17:57 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot quien es Obama ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:17:57 GMT-0400 (Eastern Daylight Time)
+   Text: ¡Hola! 😊
+
+Barack Obama fue el **44º presidente de los Estados Unidos**, sirviendo dos mandatos desde 2009 hasta 2017. Es conocido por ser el primer afroamericano en ocupar ese cargo. Antes de ser presidente, fue senador por Illinois.
+
+¿Hay algo más que te gustaría saber sobre él o algún otro tema? 🤔
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 175,
+     "candidatesTokenCount": 78,
+     "totalTokenCount": 253,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 175
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:18:08 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "El fue a cuba ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:18:08 GMT-0400 (Eastern Daylight Time)
+   Text: ¡Buena pregunta! 🤔
+
+Sí, **Barack Obama visitó Cuba en marzo de 2016**. Fue un evento histórico, ya que fue el primer presidente de Estados Unidos en funciones en visitar la isla en 88 años, desde Calvin Coolidge en 1928. Su visita fue parte de los esfuerzos por normalizar las relaciones entre ambos países. 🇨🇺🇺🇸
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 279,
+     "candidatesTokenCount": 82,
+     "totalTokenCount": 361,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 279
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:18:51 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "Es este ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:18:51 GMT-0400 (Eastern Daylight Time)
+   Text: ¡Ah, veo la imagen! 🤔
+
+No, la persona en esa foto **no es Barack Obama**. Esa imagen es de **John F. Kennedy**, quien fue el 35º presidente de los Estados Unidos.
+
+¡Es fácil confundirse con tantos presidentes! 😄
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 624,
+     "candidatesTokenCount": 57,
+     "totalTokenCount": 681,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 366
+       },
+       {
+         "modality": "IMAGE",
+         "tokenCount": 258
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:19:32 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "De seguro es este"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:19:32 GMT-0400 (Eastern Daylight Time)
+   Text: ¡Jajaja! ¡Qué gracioso! 😂
+
+Parece que ese gatito Sphynx está haciendo su mejor esfuerzo en la cinta de correr, ¡pero el almuerzo es una prioridad! 😼 Supongo que la motivación para la comida es más fuerte que la de hacer ejercicio. ¡Un verdadero campeón de la siesta y la comida! 🍖💤
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 4198,
+     "candidatesTokenCount": 75,
+     "totalTokenCount": 4273,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 429
+       },
+       {
+         "modality": "IMAGE",
+         "tokenCount": 258
+       },
+       {
+         "modality": "VIDEO",
+         "tokenCount": 3156
+       },
+       {
+         "modality": "AUDIO",
+         "tokenCount": 355
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 13 2025 23:21:51 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "Que gatos les gustaban a ese presidente ?"
+
+[ Log: response ] > At: Sun Jul 13 2025 23:21:51 GMT-0400 (Eastern Daylight Time)
+   Text: ¡Esa es una pregunta interesante! 🤔
+
+A **Barack Obama** (el presidente del que estábamos hablando antes, no John F. Kennedy) no se le conocían gatos como mascotas en la Casa Blanca. Su familia tuvo un par de perros famosos:
+
+*   **Bo**, un perro de agua portugués, que fue su primera mascota en la Casa Blanca.
+*   **Sunny**, otra perra de agua portuguesa, que se unió a la familia un tiempo después.
+
+Así que, parece que los Obama eran más de perros que de gatos. 🐶
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 4284,
+     "candidatesTokenCount": 118,
+     "totalTokenCount": 4402,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 515
+       },
+       {
+         "modality": "IMAGE",
+         "tokenCount": 258
+       },
+       {
+         "modality": "VIDEO",
+         "tokenCount": 3156
+       },
+       {
+         "modality": "AUDIO",
+         "tokenCount": 355
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: client ready ] > At: 7/14/2025, 10:24:46 AM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/14/2025, 2:10:57 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/14/2025, 2:22:35 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/14/2025, 2:24:18 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/14/2025, 2:29:47 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/14/2025, 2:30:55 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/14/2025, 2:31:32 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/17/2025, 10:16:30 AM
+
+--------------------------------------------------
+[ Log: mention ] > At: Thu Jul 17 2025 10:17:08 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: Coders Hub -> bot-playground 
+   content: "tester-bot what is this video ?"
+
+[ Log: client shutdown ] > At: 7/17/2025, 10:17:08 AM
+
