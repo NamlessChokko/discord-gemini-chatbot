@@ -164,11 +164,12 @@ export function execute(interaction, gemini) {
                     return [
                         4,
                         gemini.models.generateContent({
-                            model: 'gemini-2.5-flash',
+                            model: config.code.generation.model,
                             contents: prompt,
                             config: {
                                 temperature: config.code.generation.temperature,
-                                systemInstruction: systemInstruction
+                                systemInstruction: systemInstruction,
+                                responseMimeType: 'text/plain'
                             }
                         })
                     ];
@@ -180,14 +181,14 @@ export function execute(interaction, gemini) {
                     ];
                 case 4:
                     error = _state.sent();
-                    currentTime = new Date().toLocaleTimeString();
-                    console.error("Error at ".concat(currentTime, ":"), error);
                     return [
                         4,
-                        interaction.editReply('Oops! Something went wrong while generating your code.')
+                        interaction.editReply(config.code.errorMessage)
                     ];
                 case 5:
                     _state.sent();
+                    currentTime = new Date().toLocaleTimeString();
+                    console.error("Error at ".concat(currentTime, ":"), error);
                     return [
                         3,
                         6
@@ -195,13 +196,13 @@ export function execute(interaction, gemini) {
                 case 6:
                     parts = (response === null || response === void 0 ? void 0 : (_response_candidates = response.candidates) === null || _response_candidates === void 0 ? void 0 : (_response_candidates_ = _response_candidates[0]) === null || _response_candidates_ === void 0 ? void 0 : (_response_candidates__content = _response_candidates_.content) === null || _response_candidates__content === void 0 ? void 0 : _response_candidates__content.parts) || [];
                     interaction.editReply({
-                        content: 'Here’s your generated code:',
+                        content: config.code.successMessage,
                         files: [
                             {
                                 attachment: Buffer.from(parts.map(function(part) {
                                     return part.text;
                                 }).join(''), 'utf-8'),
-                                name: 'generated_code.js'
+                                name: 'generated_code.txt'
                             }
                         ]
                     });

@@ -46,32 +46,31 @@ export async function execute(
     let response: GenerateContentResponse | null = null;
     try {
         response = await gemini.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: config.code.generation.model,
             contents: prompt,
             config: {
                 temperature: config.code.generation.temperature,
                 systemInstruction: systemInstruction,
+                responseMimeType: 'text/plain',
             },
         });
     } catch (error) {
+        await interaction.editReply(config.code.errorMessage);
         const currentTime = new Date().toLocaleTimeString();
         console.error(`Error at ${currentTime}:`, error);
-        await interaction.editReply(
-            'Oops! Something went wrong while generating your code.',
-        );
     }
 
     const parts = response?.candidates?.[0]?.content?.parts || [];
 
     interaction.editReply({
-        content: 'Here’s your generated code:',
+        content: config.code.successMessage,
         files: [
             {
                 attachment: Buffer.from(
                     parts.map((part) => part.text).join(''),
                     'utf-8',
                 ),
-                name: 'generated_code.js',
+                name: 'generated_code.txt',
             },
         ],
     });
