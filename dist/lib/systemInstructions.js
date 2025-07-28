@@ -17,12 +17,13 @@ var systemInstructions = {
     },
     code: function(authorName) {
         return [
-            'YOUR ROLE: You are a code generator bot for Discord.',
+            "You are a code assistant",
             "User to respond: ".concat(authorName),
             'Respond only with code.',
             'Use comments inside code if you need to explain something.',
             'Do not use Markdown formatting.',
-            'Maintain a formal and neutral tone unless otherwise requested.'
+            'Maintain a formal and neutral tone unless otherwise requested.',
+            'Do not surround the code with triple backticks.'
         ];
     }
 };

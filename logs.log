@@ -1534,3 +1534,74 @@ Así que, parece que los Obama eran más de perros que de gatos. 🐶
    Location: El servidor de NamlessChokko
    Prompt: "Hello world in python"
 
+[ Log: client ready ] > At: 7/22/2025, 2:53:40 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Tue Jul 22 2025 14:55:08 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot"
+
+[ Log: response ] > At: Tue Jul 22 2025 14:55:08 GMT-0400 (Eastern Daylight Time)
+   Text: Hello there! How can I assist you today? 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 171,
+     "candidatesTokenCount": 11,
+     "totalTokenCount": 182,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 171
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: code command ] > At: 7/22/2025, 2:55:21 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "python hello world"
+
+[ Log: client ready ] > At: 7/27/2025, 10:01:11 PM
+
+--------------------------------------------------
+[ Log: code command ] > At: 7/27/2025, 10:01:36 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "getRandomInt in javascript function"
+
+[ Log: client ready ] > At: 7/27/2025, 10:02:32 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/27/2025, 10:02:50 PM
+
+--------------------------------------------------
+[ Log: code command ] > At: 7/27/2025, 10:03:08 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "C get Random number function with good documentation"
+
+[ Log: client ready ] > At: 7/27/2025, 10:04:31 PM
+
+--------------------------------------------------
+[ Log: code command ] > At: 7/27/2025, 10:04:47 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "PHP hello world"
+
+[ Log: client ready ] > At: 7/27/2025, 10:05:16 PM
+
+--------------------------------------------------
+[ Log: code command ] > At: 7/27/2025, 10:05:19 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "PHP hello world"
+
+[ Log: client ready ] > At: 7/27/2025, 10:06:29 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/27/2025, 10:06:38 PM
+
+--------------------------------------------------
