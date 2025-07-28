@@ -259,11 +259,20 @@ export async function createParts(
                 console.log(
                     `Processing attachment: ${attachment.name} - (${attachment.contentType})`,
                 );
+
+                let mimeType =
+                    attachment.contentType || 'application/octet-stream';
+
+                if (
+                    mimeType.startsWith('text/plain') &&
+                    mimeType.includes('charset=')
+                ) {
+                    mimeType = 'text/plain'; // Force it to just 'text/plain'
+                }
+
                 parts.push({
                     inlineData: {
-                        mimeType:
-                            attachment.contentType ||
-                            'application/octet-stream',
+                        mimeType: mimeType,
                         data: base64Data,
                     },
                 });

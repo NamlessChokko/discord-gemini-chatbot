@@ -1605,3 +1605,375 @@ Así que, parece que los Obama eran más de perros que de gatos. 🐶
 [ Log: client ready ] > At: 7/27/2025, 10:06:38 PM
 
 --------------------------------------------------
+[ Log: ping command ] > At: 7/27/2025, 10:08:29 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Latency: 384ms
+   API Ping: 229ms
+
+[ Log: ping command ] > At: 7/27/2025, 10:08:34 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Latency: 478ms
+   API Ping: 229ms
+
+[ Log: ping command ] > At: 7/27/2025, 10:08:42 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Latency: 747ms
+   API Ping: 229ms
+
+[ Log: imagine command ] > At: 7/27/2025, 10:08:55 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "Blue dog running in the beach"
+
+[ Log: mention ] > At: Sun Jul 27 2025 22:09:14 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "What is that ?"
+
+[ Log: response ] > At: Sun Jul 27 2025 22:09:14 GMT-0400 (Eastern Daylight Time)
+   Text: That is a dog running on a beach. 🐾
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 462,
+     "candidatesTokenCount": 11,
+     "totalTokenCount": 473,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 204
+       },
+       {
+         "modality": "IMAGE",
+         "tokenCount": 258
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: mention ] > At: Sun Jul 27 2025 22:09:32 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "what kind of dog is that ?"
+
+[ Log: response ] > At: Sun Jul 27 2025 22:09:32 GMT-0400 (Eastern Daylight Time)
+   Text: Based on its coat pattern, it appears to be a **Blue Heeler** (also known as an Australian Cattle Dog) or a mix with Blue Heeler. They are known for their distinctive speckled or mottled blue-grey fur! 🐶
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 482,
+     "candidatesTokenCount": 49,
+     "totalTokenCount": 531,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 224
+       },
+       {
+         "modality": "IMAGE",
+         "tokenCount": 258
+       }
+     ]
+   }
+   Finish Reason: STOP
+
+[ Log: code command ] > At: 7/27/2025, 10:10:00 PM
+   Author: namlesschokko
+   Location: El servidor de NamlessChokko
+   Prompt: "html example webpage"
+
+[ Log: mention ] > At: Sun Jul 27 2025 22:10:35 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "What does it do ?"
+
+[ Log: send message error ] > At: Sun Jul 27 2025 22:10:35 GMT-0400 (Eastern Daylight Time)
+   Content: "What does it do ?"
+   History Length: 3
+   History: [
+  {
+    "role": "user",
+    "parts": [
+      {
+        "text": "[Slash Command by: namlesschokko]"
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "This message was generated in response to a slash command interaction."
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "Here is your **generated** code:"
+      },
+      {
+        "inlineData": {
+          "mimeType": "text/plain; charset=utf-8",
+          "data": "PCFET0NUWVBFIGh0bWw+CjwhLS0gVGhlIERPQ1RZUEUgZGVjbGFyYXRpb24gZGVmaW5lcyB0aGUgZG9jdW1lbnQgdHlwZSB0byBiZSBIVE1MNSAtLT4KPGh0bWwgbGFuZz0iZW4iPgo8IS0tIFRoZSA8aHRtbD4gZWxlbWVudCBpcyB0aGUgcm9vdCBlbGVtZW50IG9mIGFuIEhUTUwgcGFnZSAtLT4KPCEtLSBUaGUgImxhbmciIGF0dHJpYnV0ZSBzcGVjaWZpZXMgdGhlIGxhbmd1YWdlIG9mIHRoZSBkb2N1bWVudCdzIGNvbnRlbnQgLS0+Cgo8aGVhZD4KICAgIDwhLS0gVGhlIDxoZWFkPiBlbGVtZW50IGNvbnRhaW5zIG1ldGEtaW5mb3JtYXRpb24gYWJvdXQgdGhlIEhUTUwgZG9jdW1lbnQgLS0+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8IS0tIFRoZSA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+IHRhZyBzcGVjaWZpZXMgdGhlIGNoYXJhY3RlciBlbmNvZGluZyBmb3IgdGhlIGRvY3VtZW50IC0tPgogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgogICAgPCEtLSBUaGUgdmlld3BvcnQgbWV0YSB0YWcgbWFrZXMgdGhlIHdlYnNpdGUgcmVzcG9uc2l2ZSBvbiBkaWZmZXJlbnQgZGV2aWNlcyAtLT4KICAgIDx0aXRsZT5FeGFtcGxlIFdlYnBhZ2U8L3RpdGxlPgogICAgPCEtLSBUaGUgPHRpdGxlPiBlbGVtZW50IHNwZWNpZmllcyBhIHRpdGxlIGZvciB0aGUgYnJvd3NlciB0YWIgLS0+CiAgICA8c3R5bGU+CiAgICAgICAgLyogQmFzaWMgQ1NTIGZvciBzdHlsaW5nIHRoZSBwYWdlLiBUaGlzIGlzIG9mdGVuIHBsYWNlZCBpbiBhIHNlcGFyYXRlIC5jc3MgZmlsZS4gKi8KICAgICAgICBib2R5IHsKICAgICAgICAgICAgZm9udC1mYW1pbHk6IHNhbnMtc2VyaWY7CiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICAgICAgICAgIG1hcmdpbjogMDsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y0ZjRmNDsKICAgICAgICAgICAgY29sb3I6ICMzMzM7CiAgICAgICAgfQogICAgICAgIGhlYWRlciwgZm9vdGVyIHsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzMzMzsKICAgICAgICAgICAgY29sb3I6ICNmZmY7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICAgICAgcGFkZGluZzogMXJlbSAwOwogICAgICAgIH0KICAgICAgICBtYWluIHsKICAgICAgICAgICAgcGFkZGluZzogMjBweDsKICAgICAgICAgICAgbWFyZ2luOiAwIGF1dG87CiAgICAgICAgICAgIG1heC13aWR0aDogODAwcHg7CiAgICAgICAgfQogICAgICAgIHNlY3Rpb24gewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmOwogICAgICAgICAgICBwYWRkaW5nOiAyMHB4OwogICAgICAgICAgICBtYXJnaW4tYm90dG9tOiAyMHB4OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1cHg7CiAgICAgICAgfQogICAgICAgIGgxLCBoMiB7CiAgICAgICAgICAgIGNvbG9yOiAjMzMzOwogICAgICAgIH0KICAgICAgICBoZWFkZXIgaDEgewogICAgICAgICAgICBjb2xvcjogI2ZmZjsKICAgICAgICB9CiAgICA8L3N0eWxlPgo8L2hlYWQ+Cgo8Ym9keT4KICAgIDwhLS0gVGhlIDxib2R5PiBlbGVtZW50IGRlZmluZXMgdGhlIGRvY3VtZW50J3MgYm9keSwgd2hpY2ggY29udGFpbnMgYWxsIHRoZSB2aXNpYmxlIGNvbnRlbnRzIC0tPgoKICAgIDxoZWFkZXI+CiAgICAgICAgPCEtLSBUaGUgPGhlYWRlcj4gZWxlbWVudCByZXByZXNlbnRzIGEgY29udGFpbmVyIGZvciBpbnRyb2R1Y3RvcnkgY29udGVudCAtLT4KICAgICAgICA8aDE+V2VsY29tZSB0byB0aGlzIEV4YW1wbGUgV2VicGFnZTwvaDE+CiAgICA8L2hlYWRlcj4KCiAgICA8bWFpbj4KICAgICAgICA8IS0tIFRoZSA8bWFpbj4gdGFnIHNwZWNpZmllcyB0aGUgbWFpbiBjb250ZW50IG9mIGEgZG9jdW1lbnQgLS0+CiAgICAgICAgPHNlY3Rpb24gaWQ9ImludHJvZHVjdGlvbiI+CiAgICAgICAgICAgIDwhLS0gVGhlIDxzZWN0aW9uPiB0YWcgZGVmaW5lcyBhIHNlY3Rpb24gaW4gYSBkb2N1bWVudCAtLT4KICAgICAgICAgICAgPGgyPkludHJvZHVjdGlvbjwvaDI+CiAgICAgICAgICAgIDxwPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHA+IHRhZyBkZWZpbmVzIGEgcGFyYWdyYXBoIC0tPgogICAgICAgICAgICAgICAgVGhpcyBpcyBhIHBhcmFncmFwaCBkZW1vbnN0cmF0aW5nIGEgYmFzaWMgSFRNTCBzdHJ1Y3R1cmUuIEhUTUwgKEh5cGVyVGV4dCBNYXJrdXAgTGFuZ3VhZ2UpCiAgICAgICAgICAgICAgICBpcyB0aGUgc3RhbmRhcmQgbWFya3VwIGxhbmd1YWdlIGZvciBjcmVhdGluZyB3ZWIgcGFnZXMgYW5kIHdlYiBhcHBsaWNhdGlvbnMuCiAgICAgICAgICAgIDwvcD4KICAgICAgICA8L3NlY3Rpb24+CgogICAgICAgIDxzZWN0aW9uIGlkPSJmZWF0dXJlcyI+CiAgICAgICAgICAgIDxoMj5LZXkgSFRNTCBFbGVtZW50czwvaDI+CiAgICAgICAgICAgIDxwPlRoaXMgZXhhbXBsZSBpbmNsdWRlcyBzZXZlcmFsIGNvbW1vbiBIVE1MIGVsZW1lbnRzOjwvcD4KICAgICAgICAgICAgPHVsPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHVsPiB0YWcgZGVmaW5lcyBhbiB1bm9yZGVyZWQgKGJ1bGxldGVkKSBsaXN0IC0tPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDshRE9DVFlQRSBodG1sJmd0OzwvY29kZT4gLSBUaGUgZG9jdW1lbnQgdHlwZSBkZWNsYXJhdGlvbi48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtodG1sJmd0OzwvY29kZT4gLSBUaGUgcm9vdCBlbGVtZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWQmZ3Q7PC9jb2RlPiAtIENvbnRhaW5zIG1ldGEgaW5mb3JtYXRpb24uPC9saT4KICAgICAgICAgICAgICAgIDxsaT48Y29kZT4mbHQ7Ym9keSZndDs8L2NvZGU+IC0gQ29udGFpbnMgdGhlIHZpc2libGUgcGFnZSBjb250ZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2gxJmd0OzwvY29kZT4sIDxjb2RlPiZsdDtoMiZndDs8L2NvZGU+IC0gSGVhZGluZ3MgZm9yIHN0cnVjdHVyZS48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtwJmd0OzwvY29kZT4gLSBQYXJhZ3JhcGhzIGZvciB0ZXh0LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O3VsJmd0OzwvY29kZT4gYW5kIDxjb2RlPiZsdDtsaSZndDs8L2NvZGU+IC0gRm9yIGNyZWF0aW5nIGxpc3RzLjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWRlciZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7bWFpbiZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7Zm9vdGVyJmd0OzwvY29kZT4gLSBTZW1hbnRpYyBlbGVtZW50cyBmb3IgbGF5b3V0LjwvbGk+CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAgPC9zZWN0aW9uPgogICAgPC9tYWluPgoKICAgIDxmb290ZXI+CiAgICAgICAgPCEtLSBUaGUgPGZvb3Rlcj4gZWxlbWVudCBzcGVjaWZpZXMgYSBmb290ZXIgZm9yIGEgZG9jdW1lbnQgb3Igc2VjdGlvbiAtLT4KICAgICAgICA8cD4mY29weTsgMjAyNCBDb2RlIEFzc2lzdGFudC4gQWxsIHJpZ2h0cyByZXNlcnZlZC48L3A+CiAgICAgICAgPCEtLSBUaGUgJmNvcHk7IGlzIGFuIEhUTUwgZW50aXR5IGZvciB0aGUgY29weXJpZ2h0IHN5bWJvbCAtLT4KICAgIDwvZm9vdGVyPgoKPC9ib2R5PgoKPC9odG1sPg=="
+        }
+      }
+    ]
+  }
+]
+   > Error: ClientError: got status: 400 Bad Request. {"error":{"code":400,"message":"Unsupported MIME type: text/plain; charset=utf-8","status":"INVALID_ARGUMENT"}}
+    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13
+    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30
+    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9) {
+  [cause]: 'Error\n' +
+    '    at new ClientError (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8765:37)\n' +
+    '    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13\n' +
+    '    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30\n' +
+    '    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9)'
+}
+[ Log: mention ] > At: Sun Jul 27 2025 22:13:27 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "tester-bot what is this ?"
+
+[ Log: send message error ] > At: Sun Jul 27 2025 22:13:27 GMT-0400 (Eastern Daylight Time)
+   Content: "tester-bot what is this ?"
+   History Length: 0
+   History: []
+   > Error: ClientError: got status: 400 Bad Request. {"error":{"code":400,"message":"Unsupported MIME type: text/plain; charset=utf-8","status":"INVALID_ARGUMENT"}}
+    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13
+    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30
+    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9) {
+  [cause]: 'Error\n' +
+    '    at new ClientError (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8765:37)\n' +
+    '    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13\n' +
+    '    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30\n' +
+    '    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9)'
+}
+[ Log: client ready ] > At: 7/27/2025, 10:32:13 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 27 2025 22:32:35 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "What does it do ?"
+
+[ Log: send message error ] > At: Sun Jul 27 2025 22:32:35 GMT-0400 (Eastern Daylight Time)
+   Content: "What does it do ?"
+   History Length: 3
+   History: [
+  {
+    "role": "user",
+    "parts": [
+      {
+        "text": "[Slash Command by: namlesschokko]"
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "This message was generated in response to a slash command interaction."
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "Here is your **generated** code:"
+      },
+      {
+        "inlineData": {
+          "mimeType": "text/plain; charset=utf-8",
+          "data": "PCFET0NUWVBFIGh0bWw+CjwhLS0gVGhlIERPQ1RZUEUgZGVjbGFyYXRpb24gZGVmaW5lcyB0aGUgZG9jdW1lbnQgdHlwZSB0byBiZSBIVE1MNSAtLT4KPGh0bWwgbGFuZz0iZW4iPgo8IS0tIFRoZSA8aHRtbD4gZWxlbWVudCBpcyB0aGUgcm9vdCBlbGVtZW50IG9mIGFuIEhUTUwgcGFnZSAtLT4KPCEtLSBUaGUgImxhbmciIGF0dHJpYnV0ZSBzcGVjaWZpZXMgdGhlIGxhbmd1YWdlIG9mIHRoZSBkb2N1bWVudCdzIGNvbnRlbnQgLS0+Cgo8aGVhZD4KICAgIDwhLS0gVGhlIDxoZWFkPiBlbGVtZW50IGNvbnRhaW5zIG1ldGEtaW5mb3JtYXRpb24gYWJvdXQgdGhlIEhUTUwgZG9jdW1lbnQgLS0+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8IS0tIFRoZSA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+IHRhZyBzcGVjaWZpZXMgdGhlIGNoYXJhY3RlciBlbmNvZGluZyBmb3IgdGhlIGRvY3VtZW50IC0tPgogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgogICAgPCEtLSBUaGUgdmlld3BvcnQgbWV0YSB0YWcgbWFrZXMgdGhlIHdlYnNpdGUgcmVzcG9uc2l2ZSBvbiBkaWZmZXJlbnQgZGV2aWNlcyAtLT4KICAgIDx0aXRsZT5FeGFtcGxlIFdlYnBhZ2U8L3RpdGxlPgogICAgPCEtLSBUaGUgPHRpdGxlPiBlbGVtZW50IHNwZWNpZmllcyBhIHRpdGxlIGZvciB0aGUgYnJvd3NlciB0YWIgLS0+CiAgICA8c3R5bGU+CiAgICAgICAgLyogQmFzaWMgQ1NTIGZvciBzdHlsaW5nIHRoZSBwYWdlLiBUaGlzIGlzIG9mdGVuIHBsYWNlZCBpbiBhIHNlcGFyYXRlIC5jc3MgZmlsZS4gKi8KICAgICAgICBib2R5IHsKICAgICAgICAgICAgZm9udC1mYW1pbHk6IHNhbnMtc2VyaWY7CiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICAgICAgICAgIG1hcmdpbjogMDsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y0ZjRmNDsKICAgICAgICAgICAgY29sb3I6ICMzMzM7CiAgICAgICAgfQogICAgICAgIGhlYWRlciwgZm9vdGVyIHsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzMzMzsKICAgICAgICAgICAgY29sb3I6ICNmZmY7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICAgICAgcGFkZGluZzogMXJlbSAwOwogICAgICAgIH0KICAgICAgICBtYWluIHsKICAgICAgICAgICAgcGFkZGluZzogMjBweDsKICAgICAgICAgICAgbWFyZ2luOiAwIGF1dG87CiAgICAgICAgICAgIG1heC13aWR0aDogODAwcHg7CiAgICAgICAgfQogICAgICAgIHNlY3Rpb24gewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmOwogICAgICAgICAgICBwYWRkaW5nOiAyMHB4OwogICAgICAgICAgICBtYXJnaW4tYm90dG9tOiAyMHB4OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1cHg7CiAgICAgICAgfQogICAgICAgIGgxLCBoMiB7CiAgICAgICAgICAgIGNvbG9yOiAjMzMzOwogICAgICAgIH0KICAgICAgICBoZWFkZXIgaDEgewogICAgICAgICAgICBjb2xvcjogI2ZmZjsKICAgICAgICB9CiAgICA8L3N0eWxlPgo8L2hlYWQ+Cgo8Ym9keT4KICAgIDwhLS0gVGhlIDxib2R5PiBlbGVtZW50IGRlZmluZXMgdGhlIGRvY3VtZW50J3MgYm9keSwgd2hpY2ggY29udGFpbnMgYWxsIHRoZSB2aXNpYmxlIGNvbnRlbnRzIC0tPgoKICAgIDxoZWFkZXI+CiAgICAgICAgPCEtLSBUaGUgPGhlYWRlcj4gZWxlbWVudCByZXByZXNlbnRzIGEgY29udGFpbmVyIGZvciBpbnRyb2R1Y3RvcnkgY29udGVudCAtLT4KICAgICAgICA8aDE+V2VsY29tZSB0byB0aGlzIEV4YW1wbGUgV2VicGFnZTwvaDE+CiAgICA8L2hlYWRlcj4KCiAgICA8bWFpbj4KICAgICAgICA8IS0tIFRoZSA8bWFpbj4gdGFnIHNwZWNpZmllcyB0aGUgbWFpbiBjb250ZW50IG9mIGEgZG9jdW1lbnQgLS0+CiAgICAgICAgPHNlY3Rpb24gaWQ9ImludHJvZHVjdGlvbiI+CiAgICAgICAgICAgIDwhLS0gVGhlIDxzZWN0aW9uPiB0YWcgZGVmaW5lcyBhIHNlY3Rpb24gaW4gYSBkb2N1bWVudCAtLT4KICAgICAgICAgICAgPGgyPkludHJvZHVjdGlvbjwvaDI+CiAgICAgICAgICAgIDxwPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHA+IHRhZyBkZWZpbmVzIGEgcGFyYWdyYXBoIC0tPgogICAgICAgICAgICAgICAgVGhpcyBpcyBhIHBhcmFncmFwaCBkZW1vbnN0cmF0aW5nIGEgYmFzaWMgSFRNTCBzdHJ1Y3R1cmUuIEhUTUwgKEh5cGVyVGV4dCBNYXJrdXAgTGFuZ3VhZ2UpCiAgICAgICAgICAgICAgICBpcyB0aGUgc3RhbmRhcmQgbWFya3VwIGxhbmd1YWdlIGZvciBjcmVhdGluZyB3ZWIgcGFnZXMgYW5kIHdlYiBhcHBsaWNhdGlvbnMuCiAgICAgICAgICAgIDwvcD4KICAgICAgICA8L3NlY3Rpb24+CgogICAgICAgIDxzZWN0aW9uIGlkPSJmZWF0dXJlcyI+CiAgICAgICAgICAgIDxoMj5LZXkgSFRNTCBFbGVtZW50czwvaDI+CiAgICAgICAgICAgIDxwPlRoaXMgZXhhbXBsZSBpbmNsdWRlcyBzZXZlcmFsIGNvbW1vbiBIVE1MIGVsZW1lbnRzOjwvcD4KICAgICAgICAgICAgPHVsPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHVsPiB0YWcgZGVmaW5lcyBhbiB1bm9yZGVyZWQgKGJ1bGxldGVkKSBsaXN0IC0tPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDshRE9DVFlQRSBodG1sJmd0OzwvY29kZT4gLSBUaGUgZG9jdW1lbnQgdHlwZSBkZWNsYXJhdGlvbi48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtodG1sJmd0OzwvY29kZT4gLSBUaGUgcm9vdCBlbGVtZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWQmZ3Q7PC9jb2RlPiAtIENvbnRhaW5zIG1ldGEgaW5mb3JtYXRpb24uPC9saT4KICAgICAgICAgICAgICAgIDxsaT48Y29kZT4mbHQ7Ym9keSZndDs8L2NvZGU+IC0gQ29udGFpbnMgdGhlIHZpc2libGUgcGFnZSBjb250ZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2gxJmd0OzwvY29kZT4sIDxjb2RlPiZsdDtoMiZndDs8L2NvZGU+IC0gSGVhZGluZ3MgZm9yIHN0cnVjdHVyZS48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtwJmd0OzwvY29kZT4gLSBQYXJhZ3JhcGhzIGZvciB0ZXh0LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O3VsJmd0OzwvY29kZT4gYW5kIDxjb2RlPiZsdDtsaSZndDs8L2NvZGU+IC0gRm9yIGNyZWF0aW5nIGxpc3RzLjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWRlciZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7bWFpbiZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7Zm9vdGVyJmd0OzwvY29kZT4gLSBTZW1hbnRpYyBlbGVtZW50cyBmb3IgbGF5b3V0LjwvbGk+CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAgPC9zZWN0aW9uPgogICAgPC9tYWluPgoKICAgIDxmb290ZXI+CiAgICAgICAgPCEtLSBUaGUgPGZvb3Rlcj4gZWxlbWVudCBzcGVjaWZpZXMgYSBmb290ZXIgZm9yIGEgZG9jdW1lbnQgb3Igc2VjdGlvbiAtLT4KICAgICAgICA8cD4mY29weTsgMjAyNCBDb2RlIEFzc2lzdGFudC4gQWxsIHJpZ2h0cyByZXNlcnZlZC48L3A+CiAgICAgICAgPCEtLSBUaGUgJmNvcHk7IGlzIGFuIEhUTUwgZW50aXR5IGZvciB0aGUgY29weXJpZ2h0IHN5bWJvbCAtLT4KICAgIDwvZm9vdGVyPgoKPC9ib2R5PgoKPC9odG1sPg=="
+        }
+      }
+    ]
+  }
+]
+   > Error: ClientError: got status: 400 Bad Request. {"error":{"code":400,"message":"Unsupported MIME type: text/plain; charset=utf-8","status":"INVALID_ARGUMENT"}}
+    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13
+    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30
+    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9) {
+  [cause]: 'Error\n' +
+    '    at new ClientError (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8765:37)\n' +
+    '    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13\n' +
+    '    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30\n' +
+    '    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9)'
+}
+[ Log: client ready ] > At: 7/27/2025, 10:33:22 PM
+
+--------------------------------------------------
+[ Log: client ready ] > At: 7/27/2025, 10:34:10 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 27 2025 22:34:24 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "what does it do ?"
+
+[ Log: send message error ] > At: Sun Jul 27 2025 22:34:24 GMT-0400 (Eastern Daylight Time)
+   Content: "what does it do ?"
+   History Length: 3
+   History: [
+  {
+    "role": "user",
+    "parts": [
+      {
+        "text": "[Slash Command by: namlesschokko]"
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "This message was generated in response to a slash command interaction."
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "Here is your **generated** code:"
+      },
+      {
+        "inlineData": {
+          "mimeType": "text/plain; charset=utf-8",
+          "data": "PCFET0NUWVBFIGh0bWw+CjwhLS0gVGhlIERPQ1RZUEUgZGVjbGFyYXRpb24gZGVmaW5lcyB0aGUgZG9jdW1lbnQgdHlwZSB0byBiZSBIVE1MNSAtLT4KPGh0bWwgbGFuZz0iZW4iPgo8IS0tIFRoZSA8aHRtbD4gZWxlbWVudCBpcyB0aGUgcm9vdCBlbGVtZW50IG9mIGFuIEhUTUwgcGFnZSAtLT4KPCEtLSBUaGUgImxhbmciIGF0dHJpYnV0ZSBzcGVjaWZpZXMgdGhlIGxhbmd1YWdlIG9mIHRoZSBkb2N1bWVudCdzIGNvbnRlbnQgLS0+Cgo8aGVhZD4KICAgIDwhLS0gVGhlIDxoZWFkPiBlbGVtZW50IGNvbnRhaW5zIG1ldGEtaW5mb3JtYXRpb24gYWJvdXQgdGhlIEhUTUwgZG9jdW1lbnQgLS0+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8IS0tIFRoZSA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+IHRhZyBzcGVjaWZpZXMgdGhlIGNoYXJhY3RlciBlbmNvZGluZyBmb3IgdGhlIGRvY3VtZW50IC0tPgogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgogICAgPCEtLSBUaGUgdmlld3BvcnQgbWV0YSB0YWcgbWFrZXMgdGhlIHdlYnNpdGUgcmVzcG9uc2l2ZSBvbiBkaWZmZXJlbnQgZGV2aWNlcyAtLT4KICAgIDx0aXRsZT5FeGFtcGxlIFdlYnBhZ2U8L3RpdGxlPgogICAgPCEtLSBUaGUgPHRpdGxlPiBlbGVtZW50IHNwZWNpZmllcyBhIHRpdGxlIGZvciB0aGUgYnJvd3NlciB0YWIgLS0+CiAgICA8c3R5bGU+CiAgICAgICAgLyogQmFzaWMgQ1NTIGZvciBzdHlsaW5nIHRoZSBwYWdlLiBUaGlzIGlzIG9mdGVuIHBsYWNlZCBpbiBhIHNlcGFyYXRlIC5jc3MgZmlsZS4gKi8KICAgICAgICBib2R5IHsKICAgICAgICAgICAgZm9udC1mYW1pbHk6IHNhbnMtc2VyaWY7CiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICAgICAgICAgIG1hcmdpbjogMDsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y0ZjRmNDsKICAgICAgICAgICAgY29sb3I6ICMzMzM7CiAgICAgICAgfQogICAgICAgIGhlYWRlciwgZm9vdGVyIHsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzMzMzsKICAgICAgICAgICAgY29sb3I6ICNmZmY7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICAgICAgcGFkZGluZzogMXJlbSAwOwogICAgICAgIH0KICAgICAgICBtYWluIHsKICAgICAgICAgICAgcGFkZGluZzogMjBweDsKICAgICAgICAgICAgbWFyZ2luOiAwIGF1dG87CiAgICAgICAgICAgIG1heC13aWR0aDogODAwcHg7CiAgICAgICAgfQogICAgICAgIHNlY3Rpb24gewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmOwogICAgICAgICAgICBwYWRkaW5nOiAyMHB4OwogICAgICAgICAgICBtYXJnaW4tYm90dG9tOiAyMHB4OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1cHg7CiAgICAgICAgfQogICAgICAgIGgxLCBoMiB7CiAgICAgICAgICAgIGNvbG9yOiAjMzMzOwogICAgICAgIH0KICAgICAgICBoZWFkZXIgaDEgewogICAgICAgICAgICBjb2xvcjogI2ZmZjsKICAgICAgICB9CiAgICA8L3N0eWxlPgo8L2hlYWQ+Cgo8Ym9keT4KICAgIDwhLS0gVGhlIDxib2R5PiBlbGVtZW50IGRlZmluZXMgdGhlIGRvY3VtZW50J3MgYm9keSwgd2hpY2ggY29udGFpbnMgYWxsIHRoZSB2aXNpYmxlIGNvbnRlbnRzIC0tPgoKICAgIDxoZWFkZXI+CiAgICAgICAgPCEtLSBUaGUgPGhlYWRlcj4gZWxlbWVudCByZXByZXNlbnRzIGEgY29udGFpbmVyIGZvciBpbnRyb2R1Y3RvcnkgY29udGVudCAtLT4KICAgICAgICA8aDE+V2VsY29tZSB0byB0aGlzIEV4YW1wbGUgV2VicGFnZTwvaDE+CiAgICA8L2hlYWRlcj4KCiAgICA8bWFpbj4KICAgICAgICA8IS0tIFRoZSA8bWFpbj4gdGFnIHNwZWNpZmllcyB0aGUgbWFpbiBjb250ZW50IG9mIGEgZG9jdW1lbnQgLS0+CiAgICAgICAgPHNlY3Rpb24gaWQ9ImludHJvZHVjdGlvbiI+CiAgICAgICAgICAgIDwhLS0gVGhlIDxzZWN0aW9uPiB0YWcgZGVmaW5lcyBhIHNlY3Rpb24gaW4gYSBkb2N1bWVudCAtLT4KICAgICAgICAgICAgPGgyPkludHJvZHVjdGlvbjwvaDI+CiAgICAgICAgICAgIDxwPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHA+IHRhZyBkZWZpbmVzIGEgcGFyYWdyYXBoIC0tPgogICAgICAgICAgICAgICAgVGhpcyBpcyBhIHBhcmFncmFwaCBkZW1vbnN0cmF0aW5nIGEgYmFzaWMgSFRNTCBzdHJ1Y3R1cmUuIEhUTUwgKEh5cGVyVGV4dCBNYXJrdXAgTGFuZ3VhZ2UpCiAgICAgICAgICAgICAgICBpcyB0aGUgc3RhbmRhcmQgbWFya3VwIGxhbmd1YWdlIGZvciBjcmVhdGluZyB3ZWIgcGFnZXMgYW5kIHdlYiBhcHBsaWNhdGlvbnMuCiAgICAgICAgICAgIDwvcD4KICAgICAgICA8L3NlY3Rpb24+CgogICAgICAgIDxzZWN0aW9uIGlkPSJmZWF0dXJlcyI+CiAgICAgICAgICAgIDxoMj5LZXkgSFRNTCBFbGVtZW50czwvaDI+CiAgICAgICAgICAgIDxwPlRoaXMgZXhhbXBsZSBpbmNsdWRlcyBzZXZlcmFsIGNvbW1vbiBIVE1MIGVsZW1lbnRzOjwvcD4KICAgICAgICAgICAgPHVsPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHVsPiB0YWcgZGVmaW5lcyBhbiB1bm9yZGVyZWQgKGJ1bGxldGVkKSBsaXN0IC0tPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDshRE9DVFlQRSBodG1sJmd0OzwvY29kZT4gLSBUaGUgZG9jdW1lbnQgdHlwZSBkZWNsYXJhdGlvbi48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtodG1sJmd0OzwvY29kZT4gLSBUaGUgcm9vdCBlbGVtZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWQmZ3Q7PC9jb2RlPiAtIENvbnRhaW5zIG1ldGEgaW5mb3JtYXRpb24uPC9saT4KICAgICAgICAgICAgICAgIDxsaT48Y29kZT4mbHQ7Ym9keSZndDs8L2NvZGU+IC0gQ29udGFpbnMgdGhlIHZpc2libGUgcGFnZSBjb250ZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2gxJmd0OzwvY29kZT4sIDxjb2RlPiZsdDtoMiZndDs8L2NvZGU+IC0gSGVhZGluZ3MgZm9yIHN0cnVjdHVyZS48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtwJmd0OzwvY29kZT4gLSBQYXJhZ3JhcGhzIGZvciB0ZXh0LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O3VsJmd0OzwvY29kZT4gYW5kIDxjb2RlPiZsdDtsaSZndDs8L2NvZGU+IC0gRm9yIGNyZWF0aW5nIGxpc3RzLjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWRlciZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7bWFpbiZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7Zm9vdGVyJmd0OzwvY29kZT4gLSBTZW1hbnRpYyBlbGVtZW50cyBmb3IgbGF5b3V0LjwvbGk+CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAgPC9zZWN0aW9uPgogICAgPC9tYWluPgoKICAgIDxmb290ZXI+CiAgICAgICAgPCEtLSBUaGUgPGZvb3Rlcj4gZWxlbWVudCBzcGVjaWZpZXMgYSBmb290ZXIgZm9yIGEgZG9jdW1lbnQgb3Igc2VjdGlvbiAtLT4KICAgICAgICA8cD4mY29weTsgMjAyNCBDb2RlIEFzc2lzdGFudC4gQWxsIHJpZ2h0cyByZXNlcnZlZC48L3A+CiAgICAgICAgPCEtLSBUaGUgJmNvcHk7IGlzIGFuIEhUTUwgZW50aXR5IGZvciB0aGUgY29weXJpZ2h0IHN5bWJvbCAtLT4KICAgIDwvZm9vdGVyPgoKPC9ib2R5PgoKPC9odG1sPg=="
+        }
+      }
+    ]
+  }
+]
+   > Error: ClientError: got status: 400 Bad Request. {"error":{"code":400,"message":"Unsupported MIME type: text/plain; charset=utf-8","status":"INVALID_ARGUMENT"}}
+    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13
+    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30
+    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9) {
+  [cause]: 'Error\n' +
+    '    at new ClientError (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8765:37)\n' +
+    '    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13\n' +
+    '    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30\n' +
+    '    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9)'
+}
+[ Log: client ready ] > At: 7/27/2025, 10:35:27 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 27 2025 22:35:37 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "what does it do ?"
+
+[ Log: send message error ] > At: Sun Jul 27 2025 22:35:37 GMT-0400 (Eastern Daylight Time)
+   Content: "what does it do ?"
+   History Length: 3
+   History: [
+  {
+    "role": "user",
+    "parts": [
+      {
+        "text": "[Slash Command by: namlesschokko]"
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "This message was generated in response to a slash command interaction."
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "Here is your **generated** code:"
+      },
+      {
+        "inlineData": {
+          "mimeType": "text/plain; charset=utf-8",
+          "data": "PCFET0NUWVBFIGh0bWw+CjwhLS0gVGhlIERPQ1RZUEUgZGVjbGFyYXRpb24gZGVmaW5lcyB0aGUgZG9jdW1lbnQgdHlwZSB0byBiZSBIVE1MNSAtLT4KPGh0bWwgbGFuZz0iZW4iPgo8IS0tIFRoZSA8aHRtbD4gZWxlbWVudCBpcyB0aGUgcm9vdCBlbGVtZW50IG9mIGFuIEhUTUwgcGFnZSAtLT4KPCEtLSBUaGUgImxhbmciIGF0dHJpYnV0ZSBzcGVjaWZpZXMgdGhlIGxhbmd1YWdlIG9mIHRoZSBkb2N1bWVudCdzIGNvbnRlbnQgLS0+Cgo8aGVhZD4KICAgIDwhLS0gVGhlIDxoZWFkPiBlbGVtZW50IGNvbnRhaW5zIG1ldGEtaW5mb3JtYXRpb24gYWJvdXQgdGhlIEhUTUwgZG9jdW1lbnQgLS0+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8IS0tIFRoZSA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+IHRhZyBzcGVjaWZpZXMgdGhlIGNoYXJhY3RlciBlbmNvZGluZyBmb3IgdGhlIGRvY3VtZW50IC0tPgogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgogICAgPCEtLSBUaGUgdmlld3BvcnQgbWV0YSB0YWcgbWFrZXMgdGhlIHdlYnNpdGUgcmVzcG9uc2l2ZSBvbiBkaWZmZXJlbnQgZGV2aWNlcyAtLT4KICAgIDx0aXRsZT5FeGFtcGxlIFdlYnBhZ2U8L3RpdGxlPgogICAgPCEtLSBUaGUgPHRpdGxlPiBlbGVtZW50IHNwZWNpZmllcyBhIHRpdGxlIGZvciB0aGUgYnJvd3NlciB0YWIgLS0+CiAgICA8c3R5bGU+CiAgICAgICAgLyogQmFzaWMgQ1NTIGZvciBzdHlsaW5nIHRoZSBwYWdlLiBUaGlzIGlzIG9mdGVuIHBsYWNlZCBpbiBhIHNlcGFyYXRlIC5jc3MgZmlsZS4gKi8KICAgICAgICBib2R5IHsKICAgICAgICAgICAgZm9udC1mYW1pbHk6IHNhbnMtc2VyaWY7CiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICAgICAgICAgIG1hcmdpbjogMDsKICAgICAgICAgICAgcGFkZGluZzogMDsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y0ZjRmNDsKICAgICAgICAgICAgY29sb3I6ICMzMzM7CiAgICAgICAgfQogICAgICAgIGhlYWRlciwgZm9vdGVyIHsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzMzMzsKICAgICAgICAgICAgY29sb3I6ICNmZmY7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICAgICAgcGFkZGluZzogMXJlbSAwOwogICAgICAgIH0KICAgICAgICBtYWluIHsKICAgICAgICAgICAgcGFkZGluZzogMjBweDsKICAgICAgICAgICAgbWFyZ2luOiAwIGF1dG87CiAgICAgICAgICAgIG1heC13aWR0aDogODAwcHg7CiAgICAgICAgfQogICAgICAgIHNlY3Rpb24gewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmOwogICAgICAgICAgICBwYWRkaW5nOiAyMHB4OwogICAgICAgICAgICBtYXJnaW4tYm90dG9tOiAyMHB4OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1cHg7CiAgICAgICAgfQogICAgICAgIGgxLCBoMiB7CiAgICAgICAgICAgIGNvbG9yOiAjMzMzOwogICAgICAgIH0KICAgICAgICBoZWFkZXIgaDEgewogICAgICAgICAgICBjb2xvcjogI2ZmZjsKICAgICAgICB9CiAgICA8L3N0eWxlPgo8L2hlYWQ+Cgo8Ym9keT4KICAgIDwhLS0gVGhlIDxib2R5PiBlbGVtZW50IGRlZmluZXMgdGhlIGRvY3VtZW50J3MgYm9keSwgd2hpY2ggY29udGFpbnMgYWxsIHRoZSB2aXNpYmxlIGNvbnRlbnRzIC0tPgoKICAgIDxoZWFkZXI+CiAgICAgICAgPCEtLSBUaGUgPGhlYWRlcj4gZWxlbWVudCByZXByZXNlbnRzIGEgY29udGFpbmVyIGZvciBpbnRyb2R1Y3RvcnkgY29udGVudCAtLT4KICAgICAgICA8aDE+V2VsY29tZSB0byB0aGlzIEV4YW1wbGUgV2VicGFnZTwvaDE+CiAgICA8L2hlYWRlcj4KCiAgICA8bWFpbj4KICAgICAgICA8IS0tIFRoZSA8bWFpbj4gdGFnIHNwZWNpZmllcyB0aGUgbWFpbiBjb250ZW50IG9mIGEgZG9jdW1lbnQgLS0+CiAgICAgICAgPHNlY3Rpb24gaWQ9ImludHJvZHVjdGlvbiI+CiAgICAgICAgICAgIDwhLS0gVGhlIDxzZWN0aW9uPiB0YWcgZGVmaW5lcyBhIHNlY3Rpb24gaW4gYSBkb2N1bWVudCAtLT4KICAgICAgICAgICAgPGgyPkludHJvZHVjdGlvbjwvaDI+CiAgICAgICAgICAgIDxwPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHA+IHRhZyBkZWZpbmVzIGEgcGFyYWdyYXBoIC0tPgogICAgICAgICAgICAgICAgVGhpcyBpcyBhIHBhcmFncmFwaCBkZW1vbnN0cmF0aW5nIGEgYmFzaWMgSFRNTCBzdHJ1Y3R1cmUuIEhUTUwgKEh5cGVyVGV4dCBNYXJrdXAgTGFuZ3VhZ2UpCiAgICAgICAgICAgICAgICBpcyB0aGUgc3RhbmRhcmQgbWFya3VwIGxhbmd1YWdlIGZvciBjcmVhdGluZyB3ZWIgcGFnZXMgYW5kIHdlYiBhcHBsaWNhdGlvbnMuCiAgICAgICAgICAgIDwvcD4KICAgICAgICA8L3NlY3Rpb24+CgogICAgICAgIDxzZWN0aW9uIGlkPSJmZWF0dXJlcyI+CiAgICAgICAgICAgIDxoMj5LZXkgSFRNTCBFbGVtZW50czwvaDI+CiAgICAgICAgICAgIDxwPlRoaXMgZXhhbXBsZSBpbmNsdWRlcyBzZXZlcmFsIGNvbW1vbiBIVE1MIGVsZW1lbnRzOjwvcD4KICAgICAgICAgICAgPHVsPgogICAgICAgICAgICAgICAgPCEtLSBUaGUgPHVsPiB0YWcgZGVmaW5lcyBhbiB1bm9yZGVyZWQgKGJ1bGxldGVkKSBsaXN0IC0tPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDshRE9DVFlQRSBodG1sJmd0OzwvY29kZT4gLSBUaGUgZG9jdW1lbnQgdHlwZSBkZWNsYXJhdGlvbi48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtodG1sJmd0OzwvY29kZT4gLSBUaGUgcm9vdCBlbGVtZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWQmZ3Q7PC9jb2RlPiAtIENvbnRhaW5zIG1ldGEgaW5mb3JtYXRpb24uPC9saT4KICAgICAgICAgICAgICAgIDxsaT48Y29kZT4mbHQ7Ym9keSZndDs8L2NvZGU+IC0gQ29udGFpbnMgdGhlIHZpc2libGUgcGFnZSBjb250ZW50LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2gxJmd0OzwvY29kZT4sIDxjb2RlPiZsdDtoMiZndDs8L2NvZGU+IC0gSGVhZGluZ3MgZm9yIHN0cnVjdHVyZS48L2xpPgogICAgICAgICAgICAgICAgPGxpPjxjb2RlPiZsdDtwJmd0OzwvY29kZT4gLSBQYXJhZ3JhcGhzIGZvciB0ZXh0LjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O3VsJmd0OzwvY29kZT4gYW5kIDxjb2RlPiZsdDtsaSZndDs8L2NvZGU+IC0gRm9yIGNyZWF0aW5nIGxpc3RzLjwvbGk+CiAgICAgICAgICAgICAgICA8bGk+PGNvZGU+Jmx0O2hlYWRlciZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7bWFpbiZndDs8L2NvZGU+LCA8Y29kZT4mbHQ7Zm9vdGVyJmd0OzwvY29kZT4gLSBTZW1hbnRpYyBlbGVtZW50cyBmb3IgbGF5b3V0LjwvbGk+CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAgPC9zZWN0aW9uPgogICAgPC9tYWluPgoKICAgIDxmb290ZXI+CiAgICAgICAgPCEtLSBUaGUgPGZvb3Rlcj4gZWxlbWVudCBzcGVjaWZpZXMgYSBmb290ZXIgZm9yIGEgZG9jdW1lbnQgb3Igc2VjdGlvbiAtLT4KICAgICAgICA8cD4mY29weTsgMjAyNCBDb2RlIEFzc2lzdGFudC4gQWxsIHJpZ2h0cyByZXNlcnZlZC48L3A+CiAgICAgICAgPCEtLSBUaGUgJmNvcHk7IGlzIGFuIEhUTUwgZW50aXR5IGZvciB0aGUgY29weXJpZ2h0IHN5bWJvbCAtLT4KICAgIDwvZm9vdGVyPgoKPC9ib2R5PgoKPC9odG1sPg=="
+        }
+      }
+    ]
+  }
+]
+   > Error: ClientError: got status: 400 Bad Request. {"error":{"code":400,"message":"Unsupported MIME type: text/plain; charset=utf-8","status":"INVALID_ARGUMENT"}}
+    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13
+    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)
+    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30
+    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9)
+    at async Module.execute (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:51:20) {
+  [cause]: 'Error\n' +
+    '    at new ClientError (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8765:37)\n' +
+    '    at throwErrorIfNotOK (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:9186:33)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:8994:13\n' +
+    '    at async Models.generateContent (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:7750:20)\n' +
+    '    at async /home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2744:30\n' +
+    '    at async Chat.sendMessage (/home/oz/Desktop/discord-gemini-chatbot/node_modules/@google/genai/dist/node/index.js:2750:9)\n' +
+    '    at async Module.execute (file:///home/oz/Desktop/discord-gemini-chatbot/dist/events/messageCreate.js:51:20)'
+}
+[ Log: client ready ] > At: 7/27/2025, 10:37:42 PM
+
+--------------------------------------------------
+[ Log: mention ] > At: Sun Jul 27 2025 22:37:58 GMT-0400 (Eastern Daylight Time)
+   Author: θᴢγ𝒎α𝔫𝚍ⲓα𝘴
+   Location: Server: El servidor de NamlessChokko -> bot-playground 
+   content: "what is this ?"
+
+[ Log: response ] > At: Sun Jul 27 2025 22:37:58 GMT-0400 (Eastern Daylight Time)
+   Text: This is an example of an HTML (HyperText Markup Language) file! 📄
+
+It's the basic building block of web pages. Think of it like the skeleton of a website, providing the structure and content. The code you see defines elements like headings, paragraphs, lists, and sections that a web browser would then render into a visible page. 🌐
+
+Let me know if you'd like to dive deeper into any specific part of it! 😊
+   Model Version: gemini-2.5-flash
+   Usage Metadata:
+   {
+     "promptTokenCount": 1136,
+     "candidatesTokenCount": 94,
+     "totalTokenCount": 1230,
+     "promptTokensDetails": [
+       {
+         "modality": "TEXT",
+         "tokenCount": 1136
+       }
+     ]
+   }
+   Finish Reason: STOP
+
