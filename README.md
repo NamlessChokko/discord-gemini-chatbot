@@ -1,5 +1,10 @@
 # Gemini ChatBot 🤖✨
 
+[![CI/CD Pipeline](https://github.com/NamlessChokko/discord-gemini-chatbot/actions/workflows/ci.yml/badge.svg)](https://github.com/NamlessChokko/discord-gemini-chatbot/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
+
 **Gemini ChatBot** is a powerful Discord bot powered by the **Gemini 2.5 API**. It enables natural language interaction through direct messages, mentions, and slash commands. Designed for performance and easy customization, this bot provides intelligent responses, helps with basic queries, and includes utility slash commands for specific tasks.
 
 ## 📌 Features
@@ -35,14 +40,34 @@ discord-gemini-chatbot/
 
 ## 🔧 Environment Variables
 
-Create a `.env` file with the following:
+Create a `.env` file based on `.env.example`:
 
+```bash
+cp .env.example .env
 ```
+
+Then edit the `.env` file with your actual values:
+
+```env
 DISCORD_TOKEN=your-discord-token
 CLIENT_ID=your-bot-id
 GEMINI_API_KEY=your-gemini-api-key
-
 ```
+
+### Getting Discord Credentials
+
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a new application
+3. Go to the "Bot" section and create a bot
+4. Copy the bot token (this is your `DISCORD_TOKEN`)
+5. Go to "General Information" and copy the Application ID (this is your `CLIENT_ID`)
+6. Invite the bot to your server with appropriate permissions
+
+### Getting Gemini API Key
+
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Create a new API key
+3. Copy the API key (this is your `GEMINI_API_KEY`)
 
 ## 🚀 Running the Bot
 
@@ -72,6 +97,34 @@ There is a `config.json` file in the root directory, edit this file for specific
 - Mention the bot (`@Gemini`) or send it a DM to start chatting.
 - Responses are limited to \~2000 characters per message, if the bot reach the limit, it will split the response in multiple messages.
 - Use slash commands for specific functionalities.
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Quick Start for Contributors
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes
+4. Run tests: `npm run lint` and `npm run build`
+5. Commit your changes: `git commit -m 'Add amazing feature'`
+6. Push to the branch: `git push origin feature/amazing-feature`
+7. Open a Pull Request
+
+## 🔒 Security
+
+If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for reporting guidelines.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- 📖 [Documentation](README.md)
+- 🐛 [Issue Tracker](https://github.com/NamlessChokko/discord-gemini-chatbot/issues)
+- 💬 [Discussions](https://github.com/NamlessChokko/discord-gemini-chatbot/discussions)
 
 ---
 

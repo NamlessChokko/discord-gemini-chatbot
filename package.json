@@ -11,7 +11,7 @@
     },
     "keywords": [],
     "author": "NamlessChokko",
-    "license": "ISC",
+    "license": "MIT",
     "description": "A discord bot that use the Gemini api (kinda chatbot)",
     "type": "module",
     "dependencies": {
