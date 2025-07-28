@@ -5,15 +5,16 @@ const { default: config } = await import('../../config.json', {
 });
 
 const helpMessage = `
-**🤖 Gemini Chat Bot Help**
+**🤖 ${config.botInfo.customName} Help**
 
 **🗨️ How to Use**
-- **Mention the bot**: Just mention "@Gemini - Chatbot" in any message and ask anything.
+- **Mention the bot**: Just mention ${config.botInfo.customName} in any message and ask anything.
 - **Direct Messages**: You can chat with the bot privately via DMs.
 - **Slash Commands**: Use slash commands like "/code", "/imagine", and more (coming soon).
+- **Memory**: The bot will remember all chain of messages replies.
 
 
-Use "${config.botInfo.customName}" or try a command to begin!
+Use @${config.botInfo.customName} or try a command to begin!
 `;
 
 export const data = new SlashCommandBuilder()

@@ -1,16 +1,15 @@
 # Gemini ChatBot 🤖✨
 
-**Gemini ChatBot** is a powerful Discord bot powered by the **Gemini 2.5 API**. It enables natural language interaction through direct messages, mentions, and slash commands. Designed for performance and easy customization, this bot provides intelligent responses, helps with basic queries, and includes utility features like latency checks.
+**Gemini ChatBot** is a powerful Discord bot powered by the **Gemini 2.5 API**. It enables natural language interaction through direct messages, mentions, and slash commands. Designed for performance and easy customization, this bot provides intelligent responses, helps with basic queries, and includes utility slash commands for specific tasks.
 
 ## 📌 Features
 
 - 💬 **Natural Language Chat**: Responds to users via DM or mention using Google's Gemini API.
 - 🧠 **Context-Aware**: Replies with a tone depending on the detected mood (neutral or humorous).
-- 💻 **S"ash Commands**: Offers various commands like `/help` and `/ping` for guidance and performance checks.
-- 🌐 **Multi-language Support**: Accepts prompts in any language, responds in English.
+- 📖 **History Context**: The bot is capable of reading the chain of linked messages while maintaining the entire context of the conversation.
+- 💻 **Slash Commands**: Offers various commands like `/help`, `/ping`, `/code`, and `/imagine` for guidance, performance checks, code generation, and image creation.
 - ⚙️ **Configurable Behavior**: Uses system instructions to shape replies and stay within Discord's message limits.
-
-- 🚀 **Fly.io Ready**: Deployable to Fly.io or any hosting platform.
+- 🎬 **Multimodal**: You can interact with several types of data, not only text.
 
 ## 📁 Project Structure
 
@@ -18,13 +17,14 @@
 discord-gemini-chatbot/
 │
 ├── src/
-│   ├── commands/         # Slash commands like /help, /ping
+│   ├── commands/         # Slash commands like /help, /ping, /code, /imagine
 │   ├── events/           # Discord event handlers (e.g. messageCreate, interactionCreate)
-│   └── index.js          # Bot entry point
+│   ├── lib/              # Shared utilities, types, and internal logic reused across the bot
+│   └── index.ts          # Bot entry point
 │
 ├── .env                  # Environment variables (tokens and API keys)
+└── README.md             # Project documentation
 
-└── README.md             # This file
 ```
 
 ## 🛠️ Requirements
@@ -39,6 +39,7 @@ Create a `.env` file with the following:
 
 ```
 DISCORD_TOKEN=your-discord-token
+CLIENT_ID=your-bot-id
 GEMINI_API_KEY=your-gemini-api-key
 
 ```
@@ -47,35 +48,30 @@ GEMINI_API_KEY=your-gemini-api-key
 
 ```bash
 npm install
-node src/index.js
+npm run build
+npm run start
 ```
 
 Make sure your bot is invited with appropriate **Intents** and **Slash command scope**.
 
+## ⚙️ Config file
+
+There is a `config.json` file in the root directory, edit this file for specific behaviors, custom modifications or API usage. It provides easy access to bot functionality.
+
 ## 📚 Slash Commands
 
-| Command | Description                       |
-| ------- | --------------------------------- |
-| `/help` | Shows basic usage information     |
-| `/ping` | Displays response and API latency |
+| Command    | Description                            |
+| ---------- | -------------------------------------- |
+| `/help`    | Shows basic usage information          |
+| `/ping`    | Displays response and API latency      |
+| `/code`    | Generate code based on your prompt     |
+| `/imagine` | Generate an image based on your prompt |
 
 ## 💡 Usage Tips
 
 - Mention the bot (`@Gemini`) or send it a DM to start chatting.
-- Responses are limited to \~2000 characters due to Discord message limits.
+- Responses are limited to \~2000 characters per message, if the bot reach the limit, it will split the response in multiple messages.
 - Use slash commands for specific functionalities.
-
-## ⚠️ Limitations
-
-- Each response is capped to **499 tokens** for performance.
-- Bot responses are always in English, regardless of input language.
-- Inappropriate prompts may trigger predefined responses or be ignored.
-
-This limitations can be ignore by changing API usage config.
-
-## 📜 License
-
-This project is licensed for educational and personal use. For any public deployment or commercial application, please ensure compliance with Google's API usage policies.
 
 ---
 
