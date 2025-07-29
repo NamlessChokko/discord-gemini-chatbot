@@ -4,6 +4,9 @@ import {
     User,
     Client,
     Attachment,
+    TextChannel,
+    DMChannel,
+    NewsChannel,
     InteractionType,
 } from 'discord.js';
 import { GoogleGenAI, Part } from '@google/genai';
@@ -78,6 +81,16 @@ export function botShouldReply(message: Message, client: Client): boolean {
     }
 
     return true;
+}
+
+export function sendTypingIndicator(channel: unknown): void {
+    if (
+        channel instanceof TextChannel ||
+        channel instanceof DMChannel ||
+        channel instanceof NewsChannel
+    ) {
+        channel.sendTyping();
+    }
 }
 
 export function validReply(response: GenerateContentResponse | null): boolean {

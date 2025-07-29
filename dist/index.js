@@ -4,31 +4,27 @@ import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 import { loadCommands, loadEvents } from './lib/utils.js';
 import { clientReady, clientShutdown } from './lib/logging.js';
-var server = createServer();
+const server = createServer();
 server.listen(3000, '0.0.0.0');
-var client = new Client({
+const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
-        GatewayIntentBits.DirectMessages
+        GatewayIntentBits.DirectMessages,
     ],
-    partials: [
-        Partials.Channel
-    ]
+    partials: [Partials.Channel],
 });
-var gemini = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY
-});
+const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 loadCommands(client);
 loadEvents(client, gemini);
 client.login(process.env.DISCORD_TOKEN);
-client.on('ready', function() {
+client.on('ready', () => {
     clientReady(new Date().toLocaleString());
 });
-client.on('error', function(error) {
+client.on('error', (error) => {
     console.error('Discord client error:', error);
 });
-process.on('exit', function() {
+process.on('exit', () => {
     clientShutdown(new Date().toLocaleString());
 });
