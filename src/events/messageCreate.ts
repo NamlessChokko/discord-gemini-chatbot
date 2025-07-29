@@ -119,11 +119,16 @@ export async function execute(
             2000,
         );
         const firstMessage = longMessages.shift();
+
         if (firstMessage) {
             botReply.edit(firstMessage);
         }
+
+        let lastReply = botReply;
+
         for (const message of longMessages) {
-            await botReply.reply(message);
+            const newReply = await lastReply.reply(message);
+            lastReply = newReply;
         }
         return;
     }
