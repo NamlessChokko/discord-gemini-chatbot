@@ -6,3 +6,6 @@ dist/
 
 logs.log
 *.log
+
+package-lock.json
+
