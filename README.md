@@ -99,7 +99,7 @@ There is a `config.json` file in the root directory, edit this file for specific
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](doc/CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Quick Start for Contributors
 
@@ -113,7 +113,7 @@ We welcome contributions! Please see our [Contributing Guide](doc/CONTRIBUTING.m
 
 ## 🔒 Security
 
-If you discover a security vulnerability, please see our [Security Policy](doc/SECURITY.md) for reporting guidelines.
+If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for reporting guidelines.
 
 ## 📄 License
 
