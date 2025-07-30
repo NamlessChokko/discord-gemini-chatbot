@@ -3,7 +3,7 @@ import { createServer } from 'node:http';
 
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
-import { loadCommands, loadEvents } from './lib/utils.js';
+import { loadCommands, loadEvents } from './lib/discordApi.js';
 import { CustomClient } from './lib/types.js';
 import { clientReady, clientShutdown } from './lib/logging.js';
 

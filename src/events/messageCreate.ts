@@ -11,16 +11,19 @@ import {
     newSendMessageErrorLog,
 } from '../lib/logging.js';
 import {
-    validReply,
     botShouldReply,
+    sendTypingIndicator,
+    validReply,
+} from '../lib/discordApi.js';
+import {
     substituteMentionUsernames,
     substituteNamesWithMentions,
     createHistory,
-    formatUsageMetadata,
     createParts,
     devideLongMessages,
-    sendTypingIndicator,
-} from '../lib/utils.js';
+} from '../lib/replyBody.js';
+
+import { formatUsageMetadata } from '../lib/formatting.js';
 
 export const name = 'messageCreate';
 export async function execute(

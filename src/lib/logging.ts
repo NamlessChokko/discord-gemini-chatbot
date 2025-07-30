@@ -1,6 +1,17 @@
 import { Content } from '@google/genai';
-import { logToFile } from './utils.js';
 import util from 'node:util';
+import fs from 'node:fs';
+const { default: config } = await import('../../config.json', {
+    with: { type: 'json' },
+});
+
+const logFile = fs.createWriteStream(config.application.logFile, {
+    flags: 'a',
+});
+
+export function logToFile(message: string) {
+    logFile.write(util.format(message) + '\n');
+}
 
 export function newMentionLog(
     currentTime: string,
