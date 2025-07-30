@@ -1,41 +1,41 @@
 {
-  "application": {
-    "logFile": "logs.log"
-  },
-  "botInfo": {
-    "customName": "Gemini - Chatbot",
-    "description": "Gemini is powered by Google's Gemini 2.5 Flash API, enabling natural conversations directly inside Discord."
-  },
-  "loadCommands": {
-    "ignoreList": []
-  },
-  "messageCreate": {
-    "forceCustomName": false,
-    "errorMessage": "Sorry, there was an error while processing your message. Please try again later.",
-    "generation": {
-      "model": "gemini-2.5-flash",
-      "thinkingBudget": 0,
-      "temperature": 0.7,
-      "maxHistoryLength": 0
+    "application": {
+        "logFile": "logs.log"
+    },
+    "botInfo": {
+        "customName": "Gemini - Chatbot",
+        "description": "Gemini is powered by Google's Gemini 2.5 Flash API, enabling natural conversations directly inside Discord."
+    },
+    "loadCommands": {
+        "ignoreList": []
+    },
+    "messageCreate": {
+        "forceCustomName": false,
+        "errorMessage": "Sorry, there was an error while processing your message. Please try again later.",
+        "generation": {
+            "model": "gemini-2.5-flash",
+            "thinkingBudget": 0,
+            "temperature": 0.7,
+            "maxHistoryLength": 0
+        }
+    },
+    "imagine": {
+        "proccessingMessage": "Generating image...",
+        "successMessage": "Here is your image: ",
+        "errorMessage": "Sorry, I couldn’t generate that image right now.",
+        "generation": {
+            "model": "gemini-2.0-flash-preview-image-generation",
+            "temperature": 2,
+            "maxOutputTokens": 1024
+        }
+    },
+    "code": {
+        "proccessingMessage": "Vibe coding...",
+        "successMessage": "Here is your **generated** code:",
+        "errorMessage": "Sorry, I couldn't generate the code. Try again later.",
+        "generation": {
+            "model": "gemini-2.5-pro",
+            "temperature": 0.5
+        }
     }
-  },
-  "imagine" : {
-    "proccessingMessage": "Generating image...",
-    "successMessage" : "Here is your image: ",
-    "errorMessage" : "Sorry, I couldn’t generate that image right now.",
-    "generation" : {
-      "model" : "gemini-2.0-flash-preview-image-generation",
-      "temperature": 2,
-      "maxOutputTokens" : 1024
-    }
-  },
-  "code" : {
-    "proccessingMessage" : "Vibe coding...",
-    "successMessage" : "Here is your **generated** code:",
-    "errorMessage" : "Sorry, I couldn't generate the code. Try again later.",
-    "generation": {
-      "model": "gemini-2.5-pro", 
-      "temperature": 0.5
-    }
-  }
 }
