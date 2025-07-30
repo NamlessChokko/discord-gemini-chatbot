@@ -43,11 +43,8 @@ export async function createParts(
                 let mimeType =
                     attachment.contentType || 'application/octet-stream';
 
-                if (
-                    mimeType.startsWith('text/plain') &&
-                    mimeType.includes('charset=')
-                ) {
-                    mimeType = 'text/plain'; // Force it to just 'text/plain'
+                if (mimeType.includes('; charset=utf-8')) {
+                    mimeType = mimeType.split(';')[0].trim();
                 }
 
                 parts.push({

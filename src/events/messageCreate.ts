@@ -1,4 +1,4 @@
-import systemInstructions from '../lib/systemInstructions.js';
+import systemInstructions from '../ai/systemInstructions.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });

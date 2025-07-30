@@ -18,6 +18,7 @@ tsc --noEmit
 
 # Check if type check was successful
 if [ $? -ne 0 ]; then
+  clear
   echo -e "${RED}Type check failed. Please fix the errors above.${NC}" >&2
   exit 1
 fi

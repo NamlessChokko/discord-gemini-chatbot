@@ -1,7 +1,8 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-import systemInstructions from '../lib/systemInstructions.js';
+import systemInstructions from '../ai/systemInstructions.js';
+import responseSchemas from '../ai/responseSchemas.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -51,7 +52,8 @@ export async function execute(
             config: {
                 temperature: config.code.generation.temperature,
                 systemInstruction: systemInstruction,
-                responseMimeType: 'text/plain',
+                responseMimeType: 'application/json',
+                responseSchema: responseSchemas.code,
             },
         });
     } catch (error) {
@@ -60,18 +62,20 @@ export async function execute(
         console.error(`Error at ${currentTime}:`, error);
     }
 
-    const parts = response?.candidates?.[0]?.content?.parts || [];
+    const codeJSON = response?.candidates?.[0]?.content?.parts?.[0].text || '';
 
+    const codeData = JSON.parse(codeJSON);
     interaction.editReply({
-        content: config.code.successMessage,
-        files: [
-            {
-                attachment: Buffer.from(
-                    parts.map((part) => part.text).join(''),
-                    'utf-8',
-                ),
-                name: 'generated_code.txt',
-            },
-        ],
+        content: codeData[0].deliveryMessage,
+        files: codeData.map(
+            (file: {
+                rawCode: string;
+                fileNameWithoutExtension: string;
+                languageExtension: string;
+            }) => ({
+                attachment: Buffer.from(file.rawCode, 'utf-8'),
+                name: `${file.fileNameWithoutExtension}.${file.languageExtension}`,
+            }),
+        ),
     });
 }
