@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import { createServer } from 'node:http';
-
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 import { loadCommands, loadEvents } from './lib/discordApi.js';
@@ -10,6 +9,7 @@ import { clientReady, clientShutdown } from './lib/logging.js';
 const server = createServer();
 server.listen(3000, '0.0.0.0');
 
+// Creates a new Discord client with the necessary intents and partials
 const client: CustomClient = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -22,6 +22,7 @@ const client: CustomClient = new Client({
 
 const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
+// Load commands and events for the Discord client
 loadCommands(client);
 loadEvents(client, gemini);
 

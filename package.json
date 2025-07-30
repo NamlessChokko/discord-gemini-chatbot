@@ -5,7 +5,7 @@
     "scripts": {
         "build": "rm -rf dist && tsc",
         "start": "node dist/deploy-commands.js && node dist/index.js",
-        "dev": "nodemon -e ts --watch `./config.json` 'src/**/*.ts' --exec './run-dev.sh'",
+        "dev": "nodemon -e ts --watch `./config.json` 'src/**/*.ts' --exec './scripts/run-dev.sh'",
         "lint": "eslint . --ext .ts",
         "format": "prettier --write ."
     },
