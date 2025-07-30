@@ -6,6 +6,10 @@ dist/
 
 logs.log
 *.log
-fly.toml
+
 package-lock.json
+fly.toml
+Dockerfile
+.dockerignore
+
 
