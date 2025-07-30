@@ -15,7 +15,7 @@
 - ⚙️ **Configurable Behavior**: Uses system instructions to shape replies and stay within Discord's message limits.
 - 🎬 **Multimodal**: You can interact with several types of data, not only text.
 
-## �️ Usage Examples
+## 🔍 Usage Examples
 
 Here are some examples of the bot in action:
 
@@ -31,7 +31,7 @@ Here are some examples of the bot in action:
 
 ![Mario Response Example](img/mario-response.png)
 
-## ��� Project Structure
+## 📁 Project Structure
 
 ```
 discord-gemini-chatbot/
