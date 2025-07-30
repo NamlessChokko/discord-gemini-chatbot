@@ -3,7 +3,7 @@
 
 # Paths
 TARGET='dist/index.js'
-EXTRAS='dist/deploy-commands.js'
+EXTRAS='dist/deployCommands.js'
 
 # Colors
 RED='\033[0;31m'

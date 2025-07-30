@@ -15,7 +15,23 @@
 - ⚙️ **Configurable Behavior**: Uses system instructions to shape replies and stay within Discord's message limits.
 - 🎬 **Multimodal**: You can interact with several types of data, not only text.
 
-## 📁 Project Structure
+## �️ Usage Examples
+
+Here are some examples of the bot in action:
+
+### Text Response
+
+![Text Response Example](img/text-response.png)
+
+### Code Generation
+
+![Code Response Example](img/code-response.png)
+
+### Multimedia Interaction
+
+![Mario Response Example](img/mario-response.png)
+
+## ��� Project Structure
 
 ```
 discord-gemini-chatbot/
@@ -99,7 +115,7 @@ There is a `config.json` file in the root directory, edit this file for specific
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](doc/CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Quick Start for Contributors
 
@@ -113,7 +129,7 @@ We welcome contributions! Please see our [Contributing Guide](doc/CONTRIBUTING.m
 
 ## 🔒 Security
 
-If you discover a security vulnerability, please see our [Security Policy](doc/SECURITY.md) for reporting guidelines.
+If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for reporting guidelines.
 
 ## 📄 License
 

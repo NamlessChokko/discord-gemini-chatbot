@@ -11,15 +11,19 @@ import {
     newSendMessageErrorLog,
 } from '../lib/logging.js';
 import {
-    validReply,
     botShouldReply,
+    sendTypingIndicator,
+    validReply,
+} from '../lib/discordApi.js';
+import {
     substituteMentionUsernames,
     substituteNamesWithMentions,
     createHistory,
-    formatUsageMetadata,
     createParts,
     devideLongMessages,
-} from '../lib/utils.js';
+} from '../lib/replyBody.js';
+
+import { formatUsageMetadata } from '../lib/formatting.js';
 
 export const name = 'messageCreate';
 export async function execute(
@@ -31,7 +35,7 @@ export async function execute(
         return;
     }
 
-    const botReply = await message.reply('Thinking...');
+    sendTypingIndicator(message.channel);
 
     const currentTime = new Date().toString();
     const location = message.channel.isDMBased()
@@ -78,7 +82,7 @@ export async function execute(
             history: history,
         });
     } catch (error) {
-        botReply.edit(config.messageCreate.errorMessage);
+        message.reply(config.messageCreate.errorMessage);
         newCreateChatErrorLog(currentTime, error, history);
         return;
     }
@@ -90,7 +94,7 @@ export async function execute(
         });
     } catch (error) {
         newSendMessageErrorLog(currentTime, error, prompt, history);
-        botReply.edit(config.messageCreate.errorMessage);
+        message.reply(config.messageCreate.errorMessage);
         return;
     }
 
@@ -109,7 +113,7 @@ export async function execute(
     );
 
     if (!validReply(response)) {
-        botReply.edit(config.messageCreate.errorMessage);
+        message.reply(config.messageCreate.errorMessage);
         return;
     }
 
@@ -120,11 +124,12 @@ export async function execute(
         );
         const firstMessage = longMessages.shift();
 
-        if (firstMessage) {
-            botReply.edit(firstMessage);
+        if (!firstMessage) {
+            message.reply(config.messageCreate.errorMessage);
+            return;
         }
 
-        let lastReply = botReply;
+        let lastReply = await message.reply(firstMessage);
 
         for (const message of longMessages) {
             const newReply = await lastReply.reply(message);
@@ -138,7 +143,7 @@ export async function execute(
         message.mentions.users,
     );
 
-    botReply.edit(finalResponse);
+    message.reply(finalResponse);
 
     return;
 }
