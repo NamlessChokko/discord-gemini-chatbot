@@ -132,7 +132,6 @@ export async function sendMessage(
         }
     }
 
-    // Enviamos el último fragmento si queda contenido
     if (currentMessage.trim().length > 0) {
         callback(lastSentMessage, currentMessage.trim());
     }
