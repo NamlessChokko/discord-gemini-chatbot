@@ -47,7 +47,7 @@ export async function execute(
         const imagePath = imageFromParts(parts);
 
         await interaction.editReply({
-            content: parts.map((p) => p.text).join('\n'),
+            content: parts[0].text,
             files: [imagePath],
         });
     } catch (error) {

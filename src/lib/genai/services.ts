@@ -5,6 +5,7 @@ import {
     Content,
     Part,
     Modality,
+    Schema,
 } from '@google/genai';
 import { MessageData, GenerationConfig } from '../types.js';
 import systemInstructions from './systemInstructions.js';
@@ -122,6 +123,50 @@ export async function generateImage(
         config: {
             responseModalities: [Modality.IMAGE, Modality.TEXT],
             temperature: config.temperature,
+        },
+    });
+}
+
+/**
+ * Generates structured content using Google GenAI with a predefined JSON schema.
+ * This function forces the AI to respond in a specific JSON format defined by the provided schema.
+ *
+ * @param gemini - The GoogleGenAI client instance
+ * @param prompt - Text prompt describing what content to generate
+ * @param schema - JSON schema that defines the structure of the expected response (More information in https://ai.google.dev/gemini-api/docs/structured-output)
+ * @param config - Generation configuration including model and temperature settings
+ * @returns A promise that resolves to the generated content response in JSON format
+ *
+ * @remarks
+ * - Uses specialized system instructions for code generation contexts
+ * - Forces JSON response format using 'application/json' MIME type
+ * - The schema parameter constrains the AI's output to match the specified structure
+ * - Temperature controls randomness while maintaining schema compliance
+ * - Useful for generating structured data like code snippets, configurations, or formatted responses
+ *
+ * @throws Will throw an error if the API request fails, schema is invalid, or generated content doesn't match the schema
+ *
+ * @example
+ * ```typescript
+ * const codeSchema = { type: "object", properties: { language: { type: "string" }, code: { type: "string" } } };
+ * const response = await generateContentWithSchema(geminiClient, "Generate a Hello World in Python", codeSchema, genConfig);
+ * // Response will be structured JSON matching the schema
+ * ```
+ */
+export async function generateContentWithSchema(
+    gemini: GoogleGenAI,
+    prompt: string,
+    schema: Schema,
+    config: GenerationConfig,
+): Promise<GenerateContentResponse> {
+    return await gemini.models.generateContent({
+        model: config.model,
+        contents: prompt,
+        config: {
+            temperature: config.temperature,
+            systemInstruction: systemInstructions.code(),
+            responseMimeType: 'application/json',
+            responseSchema: schema,
         },
     });
 }

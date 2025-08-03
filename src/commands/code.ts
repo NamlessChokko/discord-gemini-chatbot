@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-import systemInstructions from '../lib/genai/systemInstructions.js';
 import responseSchemas from '../lib/genai/responseSchemas.js';
+import { generateContentWithSchema } from '../lib/genai/services.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -38,20 +38,18 @@ export async function execute(
         withResponse: true,
     });
 
-    const systemInstruction = systemInstructions.code();
-
     let response: GenerateContentResponse | null = null;
     try {
-        response = await gemini.models.generateContent({
-            model: config.code.generation.model,
-            contents: prompt,
-            config: {
+        // Creating multiple buffers with code schema
+        response = await generateContentWithSchema(
+            gemini,
+            prompt,
+            responseSchemas.Code,
+            {
+                model: config.code.generation.model,
                 temperature: config.code.generation.temperature,
-                systemInstruction: systemInstruction,
-                responseMimeType: 'application/json',
-                responseSchema: responseSchemas.Code,
             },
-        });
+        );
     } catch (error) {
         await interaction.editReply(config.code.errorMessage);
         const currentTime = new Date().toLocaleTimeString();
@@ -62,7 +60,9 @@ export async function execute(
 
     const codeData = JSON.parse(codeJSON);
     interaction.editReply({
-        content: codeData[0].deliveryMessage,
+        content: codeData[0].deliveryMessage, // Message to the user especified in the schema
+        // Attachments with code files
+        // Each file is a buffer with the code content
         files: codeData.map(
             (file: {
                 rawCode: string;
