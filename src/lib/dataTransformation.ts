@@ -15,6 +15,19 @@ const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
 
+/**
+ * Extracts and formats message data from a Discord message for processing.
+ *
+ * @param message - The Discord message object to extract data from
+ * @returns An object containing formatted message data including timestamp, location, author, and content
+ *
+ * @example
+ * ```typescript
+ * const messageData = getMessageData(discordMessage);
+ * console.log(messageData.author); // "John Doe"
+ * console.log(messageData.location); // "Server: My Server -> general"
+ * ```
+ */
 export function getMessageData(message: Message): MessageData {
     const currentTime = new Date().toString();
     const location = message.channel.isDMBased()
@@ -34,6 +47,26 @@ export function getMessageData(message: Message): MessageData {
     };
 }
 
+/**
+ * Creates a conversation history by traversing message references backwards.
+ * This function follows the reply chain to build context for AI generation.
+ *
+ * @param message - The starting Discord message to build history from
+ * @param client - The Discord client instance used to identify bot messages
+ * @returns A promise that resolves to an array of Content objects representing the conversation history
+ *
+ * @remarks
+ * - The function stops at slash command interactions or when maxHistoryLength is reached
+ * - Messages from the bot are marked with role 'model', user messages with role 'user'
+ * - History is built in reverse chronological order (oldest first)
+ * - Includes special handling for slash command metadata
+ *
+ * @example
+ * ```typescript
+ * const history = await createHistory(message, discordClient);
+ * console.log(history.length); // Number of messages in history
+ * ```
+ */
 export async function createHistory(
     message: Message,
     client: Client,
@@ -94,6 +127,28 @@ export async function createHistory(
     return history;
 }
 
+/**
+ * Converts a Discord message and its attachments into Google GenAI Part objects.
+ * This function handles both text content and media attachments for AI processing.
+ *
+ * @param message - The text content of the message
+ * @param media - A collection of Discord attachments to process
+ * @returns A promise that resolves to an array of Part objects suitable for GenAI
+ *
+ * @remarks
+ * - Text content is added as a text part if present
+ * - Media attachments are converted to base64 inline data parts
+ * - MIME types are cleaned to remove charset information
+ * - Failed attachment downloads are logged and skipped
+ * - Supports any attachment type that Discord allows
+ *
+ * @example
+ * ```typescript
+ * const parts = await createParts(message.content, message.attachments);
+ * console.log(parts[0].text); // Message text
+ * console.log(parts[1].inlineData); // First attachment data
+ * ```
+ */
 export async function createParts(
     message: string,
     media: Collection<string, Attachment>,
@@ -148,6 +203,30 @@ export async function createParts(
     return parts;
 }
 
+/**
+ * Formats Google GenAI usage metadata into a readable indented string.
+ * This function is used for logging and debugging API usage information.
+ *
+ * @param usageMetadata - The usage metadata object from a GenAI response, or undefined
+ * @returns A formatted string representation of the usage metadata
+ *
+ * @remarks
+ * - Returns a placeholder message if no metadata is provided
+ * - Formats the JSON with 2-space indentation
+ * - Adds 3 additional spaces at the beginning of each line for consistent formatting
+ * - Useful for logging token usage, costs, and other API metrics
+ *
+ * @example
+ * ```typescript
+ * const formatted = formatUsageMetadata(response.usageMetadata);
+ * console.log('Usage stats:', formatted);
+ * // Output:
+ * //    {
+ * //      "promptTokenCount": 150,
+ * //      "candidatesTokenCount": 75
+ * //    }
+ * ```
+ */
 export function formatUsageMetadata(
     usageMetadata: GenerateContentResponseUsageMetadata | undefined,
 ): string {

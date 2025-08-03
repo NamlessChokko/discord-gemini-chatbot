@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-import systemInstructions from '../genai/systemInstructions.js';
-import responseSchemas from '../genai/responseSchemas.js';
+import systemInstructions from '../lib/genai/systemInstructions.js';
+import responseSchemas from '../lib/genai/responseSchemas.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -49,7 +49,7 @@ export async function execute(
                 temperature: config.code.generation.temperature,
                 systemInstruction: systemInstruction,
                 responseMimeType: 'application/json',
-                responseSchema: responseSchemas.code,
+                responseSchema: responseSchemas.Code,
             },
         });
     } catch (error) {

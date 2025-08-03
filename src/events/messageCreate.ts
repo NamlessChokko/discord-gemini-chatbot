@@ -1,4 +1,4 @@
-import { createChat, generateResponseWithChat } from '../genai/services.js';
+import { createChat, generateResponseWithChat } from '../lib/genai/services.js';
 import { GenerationConfig } from '../lib/types.js';
 import { Message, Client } from 'discord.js';
 import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';

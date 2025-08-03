@@ -65,7 +65,7 @@ export async function execute(
             const imgPath = path.join(__dirname, 'out.png');
             fs.writeFileSync(imgPath, imageBuffer);
             await interaction.editReply({
-                content: 'Here’s your image:',
+                content: parts.map((p) => p.text).join('\n'),
                 files: [imgPath],
             });
             fs.unlinkSync(imgPath);
