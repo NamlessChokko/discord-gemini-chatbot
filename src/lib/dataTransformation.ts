@@ -1,3 +1,6 @@
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import path from 'path';
 import {
     Client,
     Message,
@@ -14,6 +17,9 @@ import { MessageData } from './types.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Extracts and formats message data from a Discord message for processing.
@@ -239,4 +245,22 @@ export function formatUsageMetadata(
         .map((line) => `   ${line}`)
         .join('\n');
     return responseFormated;
+}
+
+export function imageFromParts(parts: Part[]): string {
+    let imageBuffer: Buffer | null = null;
+
+    for (const part of parts) {
+        if (part.inlineData?.data) {
+            imageBuffer = Buffer.from(part.inlineData.data, 'base64');
+        }
+    }
+
+    if (!imageBuffer) {
+        throw new Error('No image data found in parts');
+    }
+
+    const imgPath = path.join(__dirname, 'out.png');
+    fs.writeFileSync(imgPath, imageBuffer);
+    return imgPath;
 }

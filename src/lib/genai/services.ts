@@ -4,6 +4,7 @@ import {
     GenerateContentResponse,
     Content,
     Part,
+    Modality,
 } from '@google/genai';
 import { MessageData, GenerationConfig } from '../types.js';
 import systemInstructions from './systemInstructions.js';
@@ -41,7 +42,7 @@ export async function createChat(
         config: {
             temperature: config.temperature,
             systemInstruction: systemInstructions.messageCreate(
-                config.botName,
+                config.botName || 'Unknown Bot',
                 messageData.author,
                 messageData.location,
                 messageData.currentTime,
@@ -84,5 +85,20 @@ export async function generateResponseWithChat(
 ): Promise<GenerateContentResponse> {
     return await chat.sendMessage({
         message: content,
+    });
+}
+
+export async function generateImage(
+    gemini: GoogleGenAI,
+    prompt: string,
+    config: GenerationConfig,
+): Promise<GenerateContentResponse> {
+    return await gemini.models.generateContent({
+        model: config.model,
+        contents: prompt,
+        config: {
+            responseModalities: [Modality.IMAGE, Modality.TEXT],
+            temperature: config.temperature,
+        },
     });
 }

@@ -28,6 +28,6 @@ export interface MessageData {
 export interface GenerationConfig {
     model: string;
     temperature: number;
-    thinkingBudget: number;
-    botName: string;
+    thinkingBudget?: number;
+    botName?: string;
 }
