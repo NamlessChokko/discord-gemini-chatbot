@@ -1,7 +1,8 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-import systemInstructions from '../lib/systemInstructions.js';
+import responseSchemas from '../lib/genai/responseSchemas.js';
+import { generateContentWithSchema } from '../lib/genai/services.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -25,53 +26,52 @@ export async function execute(
         return;
     }
 
-    newCodeCommandLog(
-        new Date().toLocaleString(),
-        interaction.user.username,
-        prompt,
-        interaction.guild?.name || 'Direct Message',
-    );
+    newCodeCommandLog({
+        currentTime: new Date().toLocaleString(),
+        authorName: interaction.user.username,
+        prompt: prompt,
+        location: interaction.guild?.name || 'Direct Message',
+    });
 
     await interaction.reply({
         content: config.code.proccessingMessage,
         withResponse: true,
     });
 
-    const systemInstruction = systemInstructions.code(
-        interaction.user.globalName ||
-            interaction.user.username ||
-            'Uknown User',
-    );
-
     let response: GenerateContentResponse | null = null;
     try {
-        response = await gemini.models.generateContent({
-            model: config.code.generation.model,
-            contents: prompt,
-            config: {
+        // Creating multiple buffers with code schema
+        response = await generateContentWithSchema(
+            gemini,
+            prompt,
+            responseSchemas.Code,
+            {
+                model: config.code.generation.model,
                 temperature: config.code.generation.temperature,
-                systemInstruction: systemInstruction,
-                responseMimeType: 'text/plain',
             },
-        });
+        );
     } catch (error) {
         await interaction.editReply(config.code.errorMessage);
         const currentTime = new Date().toLocaleTimeString();
         console.error(`Error at ${currentTime}:`, error);
     }
 
-    const parts = response?.candidates?.[0]?.content?.parts || [];
+    const codeJSON = response?.candidates?.[0]?.content?.parts?.[0].text || '';
 
+    const codeData = JSON.parse(codeJSON);
     interaction.editReply({
-        content: config.code.successMessage,
-        files: [
-            {
-                attachment: Buffer.from(
-                    parts.map((part) => part.text).join(''),
-                    'utf-8',
-                ),
-                name: 'generated_code.txt',
-            },
-        ],
+        content: codeData[0].deliveryMessage, // Message to the user especified in the schema
+        // Attachments with code files
+        // Each file is a buffer with the code content
+        files: codeData.map(
+            (file: {
+                rawCode: string;
+                fileNameWithoutExtension: string;
+                languageExtension: string;
+            }) => ({
+                attachment: Buffer.from(file.rawCode, 'utf-8'),
+                name: `${file.fileNameWithoutExtension}.${file.languageExtension}`,
+            }),
+        ),
     });
 }

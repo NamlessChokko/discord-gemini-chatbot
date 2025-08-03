@@ -17,3 +17,17 @@ export interface Command {
 export interface CustomClient extends Client {
     commands?: Collection<string, Command>;
 }
+
+export interface MessageData {
+    currentTime: string;
+    location: string;
+    author: string;
+    prompt: string;
+}
+
+export interface GenerationConfig {
+    model: string;
+    temperature: number;
+    thinkingBudget?: number;
+    botName?: string;
+}

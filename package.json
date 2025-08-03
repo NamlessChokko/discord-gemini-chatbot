@@ -1,10 +1,10 @@
 {
     "name": "discord-gemini-chatbot",
-    "version": "1.1.4",
+    "version": "2.3.1",
     "main": "dist/index.js",
     "scripts": {
         "build": "rm -rf dist && tsc",
-        "start": "node dist/deploy-commands.js && node dist/index.js",
+        "start": "node dist/deployCommands.js && node dist/index.js",
         "dev": "nodemon -e ts --watch `./config.json` 'src/**/*.ts' --exec './scripts/run-dev.sh'",
         "lint": "eslint . --ext .ts",
         "format": "prettier --write ."
@@ -19,12 +19,16 @@
         "@google/generative-ai": "^0.24.0",
         "axios": "^1.8.4",
         "discord.js": "^14.18.0",
-        "dotenv": "^16.5.0"
+        "dotenv": "^16.5.0",
+        "highlight.js": "^11.11.1",
+        "mime-types": "^3.0.1"
     },
     "devDependencies": {
         "@eslint/js": "^9.25.1",
         "@swc/cli": "^0.7.8",
         "@swc/core": "^1.12.11",
+        "@types/highlight.js": "^9.12.4",
+        "@types/mime-types": "^3.0.1",
         "@types/node": "^24.0.10",
         "eslint": "^9.25.1",
         "eslint-config-prettier": "^10.1.2",

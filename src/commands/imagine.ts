@@ -1,15 +1,11 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
-import { GoogleGenAI, Modality } from '@google/genai';
-import fs from 'fs';
-import path from 'path';
+import { GoogleGenAI } from '@google/genai';
+import { generateImage } from '../lib/genai/services.js';
 import { newImagineCommandLog } from '../lib/logging.js';
-import { fileURLToPath } from 'url';
+import { imageFromParts } from '../lib/dataTransformation.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const data = new SlashCommandBuilder()
     .setName('imagine')
@@ -30,12 +26,12 @@ export async function execute(
         return;
     }
 
-    newImagineCommandLog(
-        new Date().toLocaleString(),
-        interaction.user.username,
-        prompt,
-        interaction.guild?.name || 'Direct Message',
-    );
+    newImagineCommandLog({
+        currentTime: new Date().toLocaleString(),
+        authorName: interaction.user.username,
+        prompt: prompt,
+        location: interaction.guild?.name || 'Direct Message',
+    });
 
     await interaction.reply({
         content: 'Generating image...',
@@ -43,35 +39,17 @@ export async function execute(
     });
 
     try {
-        const response = await gemini.models.generateContent({
-            model: config.imagine.generation.model,
-            contents: prompt,
-            config: {
-                responseModalities: [Modality.IMAGE, Modality.TEXT],
-                temperature: config.imagine.generation.temperature,
-            },
+        const response = await generateImage(gemini, prompt, {
+            model: config.imagine.generation.model as string,
+            temperature: config.imagine.generation.temperature,
         });
-
         const parts = response.candidates?.[0]?.content?.parts || [];
-        let imageBuffer: Buffer | null = null;
+        const imagePath = imageFromParts(parts);
 
-        for (const part of parts) {
-            if (part.inlineData?.data) {
-                imageBuffer = Buffer.from(part.inlineData.data, 'base64');
-            }
-        }
-
-        if (imageBuffer) {
-            const imgPath = path.join(__dirname, 'out.png');
-            fs.writeFileSync(imgPath, imageBuffer);
-            await interaction.editReply({
-                content: 'Here’s your image:',
-                files: [imgPath],
-            });
-            fs.unlinkSync(imgPath);
-        } else {
-            await interaction.editReply(config.imagine.errorMessage);
-        }
+        await interaction.editReply({
+            content: parts[0].text,
+            files: [imagePath],
+        });
     } catch (error) {
         console.error('Error during Gemini image generation:', error);
         await interaction.editReply(config.imagine.errorMessage);

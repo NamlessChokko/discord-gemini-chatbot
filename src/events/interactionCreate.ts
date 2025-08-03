@@ -1,5 +1,5 @@
 import { Interaction } from 'discord.js';
-import handleInteractions from '../lib/interactionHandler.js';
+import handleInteractions from '../discord/interactionHandler.js';
 import { GoogleGenAI } from '@google/genai';
 
 export const name = 'interactionCreate';

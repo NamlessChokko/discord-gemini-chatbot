@@ -22,10 +22,10 @@ export const data = new SlashCommandBuilder()
     .setDescription('Displays usage instructions and bot capabilities.');
 
 export async function execute(interaction: ChatInputCommandInteraction) {
-    newHelpCommandLog(
-        new Date().toLocaleString(),
-        interaction.user.username,
-        interaction.guild?.name || 'DM',
-    );
+    newHelpCommandLog({
+        currentTime: new Date().toLocaleString(),
+        authorName: interaction.user.username,
+        location: interaction.guild?.name || 'DM',
+    });
     await interaction.reply(helpMessage);
 }
