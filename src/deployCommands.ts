@@ -1,8 +1,9 @@
 import 'dotenv/config';
-import { REST, Routes } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
+import { REST, Routes } from 'discord.js';
 import { fileURLToPath } from 'url';
+import { Command } from './lib/types.js';
 const { default: config } = await import('../config.json', {
     with: { type: 'json' },
 });
@@ -12,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 const ignoreList: string[] = config.loadCommands.ignoreList;
 
-const commands: unknown[] = [];
+const commands: Command[] = [];
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)

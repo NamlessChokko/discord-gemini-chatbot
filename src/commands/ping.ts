@@ -14,13 +14,13 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const latency = sent.createdTimestamp - interaction.createdTimestamp;
     const apiPing = interaction.client.ws.ping;
 
-    newPingCommandLog(
-        new Date().toLocaleString(),
-        interaction.user.username,
-        latency,
-        apiPing,
-        interaction.guild?.name || 'Direct Message',
-    );
+    newPingCommandLog({
+        currentTime: new Date().toLocaleString(),
+        authorName: interaction.user.username,
+        latency: latency,
+        apiPing: apiPing,
+        location: interaction.guild?.name || 'Direct Message',
+    });
 
     await interaction.editReply(
         `🏓 Pong!\n- Response Time: **${latency}ms**\n- API Latency: **${apiPing}ms**`,

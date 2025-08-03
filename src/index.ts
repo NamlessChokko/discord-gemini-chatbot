@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { createServer } from 'node:http';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
-import { loadCommands, loadEvents } from './lib/discordApi.js';
+import { loadCommands, loadEvents } from './discord/loadFiles.js';
 import { CustomClient } from './lib/types.js';
 import { clientReady, clientShutdown } from './lib/logging.js';
 
@@ -29,7 +29,7 @@ loadEvents(client, gemini);
 client.login(process.env.DISCORD_TOKEN);
 
 client.on('ready', () => {
-    clientReady(new Date().toLocaleString());
+    clientReady({ currentTime: new Date().toLocaleString() });
 });
 
 client.on('error', (error) => {
@@ -37,5 +37,5 @@ client.on('error', (error) => {
 });
 
 process.on('exit', () => {
-    clientShutdown(new Date().toLocaleString());
+    clientShutdown({ currentTime: new Date().toLocaleString() });
 });

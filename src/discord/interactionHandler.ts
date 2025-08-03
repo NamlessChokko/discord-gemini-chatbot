@@ -1,4 +1,4 @@
-import { CustomClient } from './types.js';
+import { CustomClient } from '../lib/types.js';
 import { ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI } from '@google/genai';
 

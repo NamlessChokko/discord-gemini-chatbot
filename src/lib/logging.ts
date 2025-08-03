@@ -1,6 +1,7 @@
-import { Content } from '@google/genai';
 import util from 'node:util';
 import fs from 'node:fs';
+import { MessageData } from './types.js';
+
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -13,28 +14,34 @@ export function logToFile(message: string) {
     logFile.write(util.format(message) + '\n');
 }
 
-export function newMentionLog(
-    currentTime: string,
-    authorName: string,
-    content: string,
-    location: string,
-) {
+export function newMentionLog({
+    currentTime,
+    author,
+    location,
+    prompt,
+}: MessageData) {
     const logMessage =
         `[ Log: mention ] > At: ${currentTime}\n` +
-        `   Author: ${authorName}\n` +
+        `   Author: ${author}\n` +
         `   Location: ${location}\n` +
-        `   content: "${content}"\n`;
+        `   content: "${prompt}"\n`;
     console.log(logMessage);
     logToFile(logMessage);
 }
 
-export function newResponseLog(
-    currentTime: string,
-    responseText: string,
-    modelVersion: string,
-    usageMetadata: string,
-    finishReason: string,
-) {
+export function newResponseLog({
+    currentTime,
+    responseText,
+    modelVersion,
+    usageMetadata,
+    finishReason,
+}: {
+    currentTime: string;
+    responseText: string;
+    modelVersion: string;
+    usageMetadata: string;
+    finishReason: string;
+}) {
     const logMessage =
         `[ Log: response ] > At: ${currentTime}\n` +
         `   Text: ${responseText}\n` +
@@ -46,11 +53,15 @@ export function newResponseLog(
     logToFile(logMessage);
 }
 
-export function newCreateChatErrorLog(
-    currentTime: string,
-    error: unknown,
-    history: Content[],
-) {
+export function newCreateChatErrorLog({
+    currentTime,
+    error,
+    history,
+}: {
+    currentTime: string;
+    error: unknown;
+    history: unknown[];
+}) {
     const logMessage =
         `[ Log: create chat error ] > At: ${currentTime}\n` +
         `   History Length: ${history.length}\n` +
@@ -60,12 +71,17 @@ export function newCreateChatErrorLog(
     logToFile(logMessage);
 }
 
-export function newSendMessageErrorLog(
-    time: string,
-    error: unknown,
-    content: string,
-    history: Content[],
-) {
+export function newSendMessageErrorLog({
+    time,
+    error,
+    content,
+    history,
+}: {
+    time: string;
+    error: unknown;
+    content: string;
+    history: unknown[];
+}) {
     const logMessage =
         `[ Log: send message error ] > At: ${time}\n` +
         `   Content: "${content}"\n` +
@@ -76,24 +92,28 @@ export function newSendMessageErrorLog(
     logToFile(logMessage);
 }
 
-export function clientReady(currentTime: string) {
+export function clientReady({ currentTime }: { currentTime: string }) {
     const logMessage = `[ Log: client ready ] > At: ${currentTime}\n`;
     console.log(logMessage);
     logToFile(logMessage);
     logToFile('--------------------------------------------------');
 }
 
-export function clientShutdown(currentTime: string) {
+export function clientShutdown({ currentTime }: { currentTime: string }) {
     const logMessage = `[ Log: client shutdown ] > At: ${currentTime}\n`;
     console.log(logMessage);
     logToFile(logMessage);
 }
 
-export function commandWarningLog(
-    commandName: string,
-    hasData: boolean,
-    hasExecute: boolean,
-) {
+export function commandWarningLog({
+    commandName,
+    hasData,
+    hasExecute,
+}: {
+    commandName: string;
+    hasData: boolean;
+    hasExecute: boolean;
+}) {
     const logMessage =
         `[ WARNING ] > A command file is missing required properties: ${
             commandName || 'unknown'
@@ -104,12 +124,17 @@ export function commandWarningLog(
     logToFile(logMessage);
 }
 
-export function newCodeCommandLog(
-    currentTime: string,
-    authorName: string,
-    prompt: string,
-    location: string,
-) {
+export function newCodeCommandLog({
+    currentTime,
+    authorName,
+    prompt,
+    location,
+}: {
+    currentTime: string;
+    authorName: string;
+    prompt: string;
+    location: string;
+}) {
     const logMessage =
         `[ Log: code command ] > At: ${currentTime}\n` +
         `   Author: ${authorName}\n` +
@@ -119,11 +144,15 @@ export function newCodeCommandLog(
     logToFile(logMessage);
 }
 
-export function newHelpCommandLog(
-    currentTime: string,
-    authorName: string,
-    location: string,
-) {
+export function newHelpCommandLog({
+    currentTime,
+    authorName,
+    location,
+}: {
+    currentTime: string;
+    authorName: string;
+    location: string;
+}) {
     const logMessage =
         `[ Log: help command ] > At: ${currentTime}\n` +
         `   Author: ${authorName}\n` +
@@ -132,12 +161,17 @@ export function newHelpCommandLog(
     logToFile(logMessage);
 }
 
-export function newImagineCommandLog(
-    currentTime: string,
-    authorName: string,
-    prompt: string,
-    location: string,
-) {
+export function newImagineCommandLog({
+    currentTime,
+    authorName,
+    prompt,
+    location,
+}: {
+    currentTime: string;
+    authorName: string;
+    prompt: string;
+    location: string;
+}) {
     const logMessage =
         `[ Log: imagine command ] > At: ${currentTime}\n` +
         `   Author: ${authorName}\n` +
@@ -147,13 +181,19 @@ export function newImagineCommandLog(
     logToFile(logMessage);
 }
 
-export function newPingCommandLog(
-    currentTime: string,
-    authorName: string,
-    latency: number,
-    apiPing: number,
-    location: string,
-) {
+export function newPingCommandLog({
+    currentTime,
+    authorName,
+    latency,
+    apiPing,
+    location,
+}: {
+    currentTime: string;
+    authorName: string;
+    latency: number;
+    apiPing: number;
+    location: string;
+}) {
     const logMessage =
         `[ Log: ping command ] > At: ${currentTime}\n` +
         `   Author: ${authorName}\n` +

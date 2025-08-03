@@ -20,10 +20,9 @@ const systemInstructions = {
     imagine: () => {
         return [];
     },
-    code: (authorName: string) => {
+    code: () => {
         return [
             `You are a code assistant`,
-            `User to respond: ${authorName}`,
             'Respond only with code.',
             'Use comments inside code if you need to explain something.',
             'Do not use Markdown formatting.',

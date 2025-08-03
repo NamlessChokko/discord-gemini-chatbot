@@ -30,12 +30,12 @@ export async function execute(
         return;
     }
 
-    newImagineCommandLog(
-        new Date().toLocaleString(),
-        interaction.user.username,
-        prompt,
-        interaction.guild?.name || 'Direct Message',
-    );
+    newImagineCommandLog({
+        currentTime: new Date().toLocaleString(),
+        authorName: interaction.user.username,
+        prompt: prompt,
+        location: interaction.guild?.name || 'Direct Message',
+    });
 
     await interaction.reply({
         content: 'Generating image...',

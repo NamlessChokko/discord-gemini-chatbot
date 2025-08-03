@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { newCodeCommandLog } from '../lib/logging.js';
-import systemInstructions from '../ai/systemInstructions.js';
-import responseSchemas from '../ai/responseSchemas.js';
+import systemInstructions from '../genai/systemInstructions.js';
+import responseSchemas from '../genai/responseSchemas.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
@@ -26,23 +26,19 @@ export async function execute(
         return;
     }
 
-    newCodeCommandLog(
-        new Date().toLocaleString(),
-        interaction.user.username,
-        prompt,
-        interaction.guild?.name || 'Direct Message',
-    );
+    newCodeCommandLog({
+        currentTime: new Date().toLocaleString(),
+        authorName: interaction.user.username,
+        prompt: prompt,
+        location: interaction.guild?.name || 'Direct Message',
+    });
 
     await interaction.reply({
         content: config.code.proccessingMessage,
         withResponse: true,
     });
 
-    const systemInstruction = systemInstructions.code(
-        interaction.user.globalName ||
-            interaction.user.username ||
-            'Uknown User',
-    );
+    const systemInstruction = systemInstructions.code();
 
     let response: GenerateContentResponse | null = null;
     try {

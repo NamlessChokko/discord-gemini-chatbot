@@ -22,7 +22,7 @@
     "imagine": {
         "proccessingMessage": "Generating image...",
         "successMessage": "Here is your image: ",
-        "errorMessage": "Sorry, I couldn’t generate that image right now.",
+        "errorMessage": "Sorry, I couldn’t generate that image. Try again later",
         "generation": {
             "model": "gemini-2.0-flash-preview-image-generation",
             "temperature": 2,
@@ -31,7 +31,6 @@
     },
     "code": {
         "proccessingMessage": "Vibe coding...",
-        "successMessage": "Here is your **generated** code:",
         "errorMessage": "Sorry, I couldn't generate the code. Try again later.",
         "generation": {
             "model": "gemini-2.5-pro",

@@ -18,7 +18,6 @@ tsc --noEmit
 
 # Check if type check was successful
 if [ $? -ne 0 ]; then
-  clear
   echo -e "${RED}Type check failed. Please fix the errors above.${NC}" >&2
   exit 1
 fi
@@ -28,8 +27,8 @@ npx swc src -d dist --strip-leading-paths
 
 # Check if compilation was successful
 if [ $? -eq 0 ]; then
-  echo -e "${GREEN}Build successful, starting the bot...${NC}"
   clear
+  echo -e "${GREEN}Build successful, starting the bot...${NC}"
   node $EXTRAS
   node $TARGET 
 else

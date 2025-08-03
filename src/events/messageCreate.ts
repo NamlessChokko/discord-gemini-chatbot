@@ -1,29 +1,17 @@
-import systemInstructions from '../ai/systemInstructions.js';
+import { createChat, generateResponseWithChat } from '../genai/services.js';
+import { GenerationConfig } from '../lib/types.js';
+import { Message, Client } from 'discord.js';
+import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';
+import * as dt from '../lib/dataTransformation.js';
+import * as log from '../lib/logging.js';
+import {
+    sendTypingIndicator,
+    botShouldReply,
+    sendMessage,
+} from '../discord/interactionUtils.js';
 const { default: config } = await import('../../config.json', {
     with: { type: 'json' },
 });
-import { Message, Client } from 'discord.js';
-import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';
-import {
-    newMentionLog,
-    newResponseLog,
-    newCreateChatErrorLog,
-    newSendMessageErrorLog,
-} from '../lib/logging.js';
-import {
-    botShouldReply,
-    sendTypingIndicator,
-    validReply,
-} from '../lib/discordApi.js';
-import {
-    substituteMentionUsernames,
-    substituteNamesWithMentions,
-    createHistory,
-    createParts,
-    devideLongMessages,
-} from '../lib/replyBody.js';
-
-import { formatUsageMetadata } from '../lib/formatting.js';
 
 export const name = 'messageCreate';
 export async function execute(
@@ -37,113 +25,89 @@ export async function execute(
 
     sendTypingIndicator(message.channel);
 
-    const currentTime = new Date().toString();
-    const location = message.channel.isDMBased()
-        ? 'Direct Message'
-        : `Server: ${message.guild?.name} -> ${message.channel.name} `;
-    const authorName =
-        message.author?.globalName ||
-        message.author?.username ||
-        'Unknown User';
+    const messageData = dt.getMessageData(message);
+
+    // Getting bot name: config file defines a custon name in case
+    // application don't load the bot's global name or username.
+    // Also, if the config option `forceCustomName` is set to true,
+    // the custom name will be used instead of the global name or username.
+    // This bot name is just used by the Gemini API in systemInstructions
     const botName = config.messageCreate.forceCustomName
         ? config.botInfo.customName
         : client.user?.globalName ||
           client.user?.username ||
           config.botInfo.customName;
 
-    const prompt = substituteMentionUsernames(
-        message.content,
-        message.mentions.users,
+    const content = await dt.createParts(
+        messageData.prompt,
+        message.attachments,
     );
 
-    const content = createParts(prompt, message.attachments);
-    const systemInstruction = systemInstructions.messageCreate(
-        botName,
-        authorName,
-        location,
-        currentTime,
-    );
+    log.newMentionLog(messageData);
 
-    newMentionLog(currentTime, authorName, prompt, location);
+    // Fetching the linked message chain for more context
+    const history = await dt.createHistory(message, client);
 
-    const history = await createHistory(message, client);
+    // This object is used to configure the chat generation.
+    // For more information, check the Google GenAI documentation.
+    const chatConfig: GenerationConfig = {
+        model: config.messageCreate.generation.model,
+        temperature: config.messageCreate.generation.temperature,
+        thinkingBudget: config.messageCreate.generation.thinkingBudget,
+        botName: botName,
+    };
+
     let chat: Chat | null = null;
     try {
-        chat = gemini.chats.create({
-            model: config.messageCreate.generation.model,
-            config: {
-                temperature: config.messageCreate.generation.temperature,
-                systemInstruction: systemInstruction,
-                thinkingConfig: {
-                    thinkingBudget:
-                        config.messageCreate.generation.thinkingBudget,
-                },
-            },
-            history: history,
-        });
+        chat = await createChat(gemini, history, messageData, chatConfig);
     } catch (error) {
         message.reply(config.messageCreate.errorMessage);
-        newCreateChatErrorLog(currentTime, error, history);
+        log.newCreateChatErrorLog({
+            currentTime: messageData.currentTime,
+            error: error,
+            history: history,
+        });
         return;
     }
 
     let response: GenerateContentResponse | null = null;
     try {
-        response = await chat.sendMessage({
-            message: await content,
-        });
+        response = await generateResponseWithChat(chat, content);
     } catch (error) {
-        newSendMessageErrorLog(currentTime, error, prompt, history);
+        log.newSendMessageErrorLog({
+            time: messageData.currentTime,
+            error: error,
+            content: messageData.prompt,
+            history: history,
+        });
         message.reply(config.messageCreate.errorMessage);
         return;
     }
 
-    const responseText = response?.text || '(no text)';
-    const modelVersion = response?.modelVersion || '(unknown model version)';
-    const usageMetadata = formatUsageMetadata(response?.usageMetadata);
-    const finishReason =
-        response?.candidates?.[0]?.finishReason || '(unknown finish reason)';
+    log.newResponseLog({
+        currentTime: messageData.currentTime,
+        responseText: response?.text || '(no text)',
+        modelVersion: response?.modelVersion || '(unknown model version)',
+        usageMetadata: dt.formatUsageMetadata(response?.usageMetadata),
+        finishReason:
+            response?.candidates?.[0]?.finishReason ||
+            '(unknown finish reason)',
+    });
 
-    newResponseLog(
-        currentTime,
-        responseText,
-        modelVersion,
-        usageMetadata,
-        finishReason,
-    );
-
-    if (!validReply(response)) {
+    if (!response || !response.text) {
         message.reply(config.messageCreate.errorMessage);
         return;
     }
 
-    if ((response as { text: string }).text.length > 2000) {
-        const longMessages = devideLongMessages(
-            (response as { text: string }).text,
-            2000,
-        );
-        const firstMessage = longMessages.shift();
-
-        if (!firstMessage) {
-            message.reply(config.messageCreate.errorMessage);
-            return;
-        }
-
-        let lastReply = await message.reply(firstMessage);
-
-        for (const message of longMessages) {
-            const newReply = await lastReply.reply(message);
-            lastReply = newReply;
-        }
-        return;
-    }
-
-    const finalResponse = substituteNamesWithMentions(
+    // This function split the response into multiple
+    // messages if it exceeds the maximum length allowed by Discord.
+    sendMessage(
         response.text,
-        message.mentions.users,
+        message,
+        async (messageToReply: Message, reply: string) => {
+            return await messageToReply.reply(reply);
+        },
     );
-
-    message.reply(finalResponse);
 
     return;
 }
