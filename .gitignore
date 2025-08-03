@@ -8,8 +8,4 @@ logs.log
 *.log
 
 package-lock.json
-fly.toml
-Dockerfile
-.dockerignore
-
 
