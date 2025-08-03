@@ -88,6 +88,29 @@ export async function generateResponseWithChat(
     });
 }
 
+/**
+ * Generates an image using Google GenAI based on a text prompt.
+ * This function uses the Gemini model to create visual content from textual descriptions.
+ *
+ * @param gemini - The GoogleGenAI client instance
+ * @param prompt - Text description of the image to generate
+ * @param config - Generation configuration including model and temperature settings
+ * @returns A promise that resolves to the generated content response containing image and text
+ *
+ * @remarks
+ * - Uses IMAGE and TEXT response modalities to generate both visual and textual content
+ * - Temperature controls the creativity level of the generated image (0.0 = conservative, 1.0 = creative)
+ * - The model specified in config determines the quality and capabilities of image generation
+ * - Response may include both the generated image and descriptive text about the image
+ *
+ * @throws Will throw an error if the API request fails, prompt violates content policies, or model doesn't support image generation
+ *
+ * @example
+ * ```typescript
+ * const imageResponse = await generateImage(geminiClient, "A sunset over mountains", genConfig);
+ * // Access generated image and accompanying text from imageResponse
+ * ```
+ */
 export async function generateImage(
     gemini: GoogleGenAI,
     prompt: string,

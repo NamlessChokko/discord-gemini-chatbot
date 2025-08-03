@@ -247,6 +247,30 @@ export function formatUsageMetadata(
     return responseFormated;
 }
 
+/**
+ * Extracts image data from Google GenAI Part objects and saves it to a file.
+ * This function processes the response from Gemini's image generation and creates a local PNG file.
+ *
+ * @param parts - Array of Part objects from Gemini's response containing image data
+ * @returns The absolute file path to the saved image file
+ *
+ * @remarks
+ * - Searches through all parts to find the first one containing inline image data
+ * - Converts base64 encoded image data back to binary format
+ * - Saves the image as 'out.png' in the current module's directory
+ * - Overwrites any existing 'out.png' file in the same location
+ * - Only processes the first image found if multiple images are present
+ *
+ * @throws Will throw an error if no image data is found in any of the provided parts
+ *
+ * @example
+ * ```typescript
+ * // After calling generateImage and getting a response with image data
+ * const imagePath = imageFromParts(response.candidates[0].content.parts);
+ * console.log(`Image saved to: ${imagePath}`);
+ * // Output: Image saved to: /path/to/project/src/lib/out.png
+ * ```
+ */
 export function imageFromParts(parts: Part[]): string {
     let imageBuffer: Buffer | null = null;
 
